@@ -3,6 +3,7 @@ package cabmed.model;
 import java.util.Date;
 import javax.persistence.*;
 
+@Entity
 public class Personne {
 
     @Id @GeneratedValue
