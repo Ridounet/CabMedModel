@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="persistence" transaction-type="RESOURCE_LOCAL">
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence                         http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+  <persistence-unit name="cabmed">
+    <!--  provider -->
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <!--<class>cabmed.model.Cp</class>
+    <class>cabmed.model.Personne</class>
+    <class>cabmed.model.Disponibilite</class>
+    <class>cabmed.model.Horaire</class>
+    <class>cabmed.model.Jour</class>
+    <class>cabmed.model.Mutualite</class>
+    <class>cabmed.model.Patient</class>
+    <class>cabmed.model.Planning</class>
+    <class>cabmed.model.Rdv</class>
+    <class>cabmed.model.Specialisation</class>
+    <class>cabmed.model.StatutRdv</class>
+    <class>cabmed.model.Tranche</class>-->
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
-      <property name="javax.persistence.jdbc.password" value="app"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.user" value="app"/>
-      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="hibernate.archive.autodetection" value="class"/>
+      <!-- logs SQL -->
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="use_sql_comments" value="true"/>
+      <!-- connexion JDBC -->
+      <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/db_cabmed"/>
+      <property name="hibernate.connection.username" value="Ridounet"/>
+      <property name="hibernate.connection.password" value="1234"/>
+      <!--  création automatique du schéma -->
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      <!-- Dialecte -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      <!--  propriétés DataSource c3p0 -->
+      <property name="hibernate.c3p0.min_size" value="5"/>
+      <property name="hibernate.c3p0.max_size" value="20"/>
+      <property name="hibernate.c3p0.timeout" value="300"/>
+      <property name="hibernate.c3p0.max_statements" value="50"/>
+      <property name="hibernate.c3p0.idle_test_period" value="3000"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

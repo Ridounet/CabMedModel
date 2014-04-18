@@ -1,25 +1,56 @@
 package cabmed.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
-public class Personne {
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type_personne")
+public abstract class Personne implements Serializable {
+    // Attributs
     @Id @GeneratedValue
+    @Column(nullable = false, unique = true)
     private int id;
+    
+    @Column(nullable = false, unique = false)
+    private String registreNat;
+    
+    @Column(nullable = false)
+    private String nom;
+    
+    @Column(nullable = false)
+    private String prenom;
 
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date dateNaissance;
     
     @Embedded
     private Adresse adresse;
     
-    private long registreNat;
+    @Column(nullable = true)
     private String tel;
-    private char sexe;
-    private String nom;
-
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Sexe sexe;
+    
+    // Constructeurs
+    public Personne() { }
+    
+    public Personne(String registreNat, String nom, String prenom, Date dateNaissance, Adresse adresse, String tel, Sexe sexe) {
+        this.registreNat = registreNat;
+        this.dateNaissance = dateNaissance;
+        this.adresse = adresse;
+        this.tel = tel;
+        this.sexe = sexe;
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+    
+    // Surcharge "Object"
     @Override
     public String toString() {
         return "Personne{ " 
@@ -29,42 +60,36 @@ public class Personne {
                 + ", registre national = " + registreNat 
                 + ", sexe = " + sexe + " }";
     }
-    private String prenom;
-    private Mutualite mutualite;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final Personne other = (Personne) obj;
+        if (!this.registreNat.equals(other.registreNat)) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.registreNat);
+        return hash;
+    }
+    
+    // Getters & Setters
     public Date getDateNaissance() { return dateNaissance; }
     public void setDateNaissance(Date dateNaissance) { this.dateNaissance = dateNaissance; }
     public Adresse getAdresse() { return adresse; }
     public void setAdresse(Adresse adresse) { this.adresse = adresse; }
-    public long getRegistreNat() { return registreNat; }
-    public void setRegistreNat(long registreNat) { this.registreNat = registreNat; }
+    public String getRegistreNat() { return registreNat; }
+    public void setRegistreNat(String registreNat) { this.registreNat = registreNat; }
     public String getTel() { return tel; }
     public void setTel(String tel) { this.tel = tel; }
-    public char getSexe() { return sexe; }
-    public void setSexe(char sexe) { this.sexe = sexe; }
+    public Sexe getSexe() { return sexe; }
+    public void setSexe(Sexe sexe) { this.sexe = sexe; }
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
     public String getPrenom() { return prenom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }
-    public Mutualite getMutualite() { return mutualite; }
-    public void setMutualite(Mutualite mutualite) { this.mutualite = mutualite; }
-    
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Personne other = (Personne) obj;
-        if (this.registreNat != other.registreNat) {
-            return false;
-        }
-        return true;
-    }
-    
 }

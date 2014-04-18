@@ -9,5 +9,6 @@ public class Horaire {
     @Id @GeneratedValue
     private int id;
     
+    @ElementCollection
     private Map<Tranche,Rdv> occupation;
 }

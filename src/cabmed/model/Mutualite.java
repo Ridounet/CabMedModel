@@ -2,12 +2,11 @@ package cabmed.model;
 
 import javax.persistence.*;
 
-
-@Entity
 public enum Mutualite {
     PARTENAMUT(1,"Partenamut"),
     MUTUALITE_CHRETIENNE(2,"Mutualite Chretienne"),
-    AUTRE(3,"Autre");
+    SANS_MUT(3,"Sans Mutuelle"),
+    AUTRE(4,"Autre");
 
     Mutualite() {
     }

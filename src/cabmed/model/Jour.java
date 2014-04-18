@@ -2,7 +2,6 @@ package cabmed.model;
 
 import javax.persistence.*;
 
-@Entity
 public enum Jour {
     LUNDI(0),
     MARDI(1),

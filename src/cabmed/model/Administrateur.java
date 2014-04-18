@@ -3,7 +3,16 @@ package cabmed.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@DiscriminatorValue(value="a")
+@Entity
+@DiscriminatorValue(value="adm")
 public class Administrateur extends Personnel {
+    
+    // Constructeurs
+    public Administrateur() { }
+
+    public Administrateur(Date debutTravail, String registreNat, String nom, 
+            String prenom, Date dateNaissance, Adresse adresse, String tel, Sexe sexe) {
+        super(debutTravail, registreNat, nom, prenom, dateNaissance, adresse, tel, sexe);
+    }
     
 }
