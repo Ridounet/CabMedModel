@@ -3,18 +3,6 @@
   <persistence-unit name="cabmed">
     <!--  provider -->
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <!--<class>cabmed.model.Cp</class>
-    <class>cabmed.model.Personne</class>
-    <class>cabmed.model.Disponibilite</class>
-    <class>cabmed.model.Horaire</class>
-    <class>cabmed.model.Jour</class>
-    <class>cabmed.model.Mutualite</class>
-    <class>cabmed.model.Patient</class>
-    <class>cabmed.model.Planning</class>
-    <class>cabmed.model.Rdv</class>
-    <class>cabmed.model.Specialisation</class>
-    <class>cabmed.model.StatutRdv</class>
-    <class>cabmed.model.Tranche</class>-->
     <properties>
       <property name="hibernate.archive.autodetection" value="class"/>
       <!-- logs SQL -->
@@ -36,7 +24,7 @@
       <property name="hibernate.c3p0.timeout" value="300"/>
       <property name="hibernate.c3p0.max_statements" value="50"/>
       <property name="hibernate.c3p0.idle_test_period" value="3000"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

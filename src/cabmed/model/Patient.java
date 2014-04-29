@@ -13,7 +13,7 @@ public class Patient extends Personne implements Serializable {
     private Mutualite mutualite;
     
     @OneToMany
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<Rdv> rdv;
 
     // Constructeurs
@@ -24,7 +24,17 @@ public class Patient extends Personne implements Serializable {
     
     public Patient() { }
     
+    // Override "Object"
+    @Override
+    public String toString() {
+        return getPrenom() + " " + getNom() + " (patient)";
+    }
+    
+    
     // Getters & Setters
     public Mutualite getMutualite() { return mutualite; }
     public void setMutualite(Mutualite mutualite) { this.mutualite = mutualite; }
+    public List<Rdv> getRdv() { return rdv; }
+    public void setRdv(List<Rdv> rdv) { this.rdv = rdv; }
+    
 }

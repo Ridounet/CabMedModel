@@ -11,9 +11,11 @@ public class Disponibilite implements Serializable {
     private int id;
     
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Tranche heureDebut;
     
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Tranche heureFin;
 
     // Constructeurs
@@ -55,7 +57,5 @@ public class Disponibilite implements Serializable {
     public void setHeureDebut(Tranche heureDebut) { this.heureDebut = heureDebut; }
     public Tranche getHeureFin() { return heureFin; }
     public void setHeureFin(Tranche heureFin) { this.heureFin = heureFin; }
-    
-    
     
 }
