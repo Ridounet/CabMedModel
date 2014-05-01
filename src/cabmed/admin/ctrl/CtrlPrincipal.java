@@ -1,27 +1,49 @@
 package cabmed.admin.ctrl;
 
-import javax.swing.SwingUtilities;
+import cabmed.admin.ihm.VueLogin;
+import cabmed.admin.main.Facade;
+import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
 
-public class CtrlPrincipal {
+public final class CtrlPrincipal {
     
-    private CtrlLogin ctrlLogin;
+    private final CtrlLogin ctrlLogin;
+    private final CtrlAdmin ctrlAdmin;
+    private final Facade facade;
     
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new CtrlPrincipal();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        new CtrlPrincipal();
     }
     
     private CtrlPrincipal() {
-        ctrlLogin = new CtrlLogin(this);
         
+        facade = new Facade();
+        ctrlAdmin = new CtrlAdmin(this, facade);
+        ctrlLogin = new CtrlLogin(this, facade);
+        
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException 
+                | InstantiationException 
+                | IllegalAccessException 
+                | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(VueLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        showLogin();
+    }
+    
+    public void showLogin() {
+        ctrlLogin.showView();
+    }
+
+    public void showAdmin() {
+        ctrlAdmin.showView();
     }
     
     

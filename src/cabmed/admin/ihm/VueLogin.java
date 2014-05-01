@@ -16,34 +16,27 @@ public class VueLogin extends javax.swing.JFrame implements Observer {
     private final CtrlLogin ctrlLogin;
     
     public VueLogin(CtrlLogin ctrlLogin) {
-        super("Login - Cabmed");
+        super("Cabmed - Login");
         this.ctrlLogin = ctrlLogin;
         initComponents();
     }
     
+    
+    
     private void actionLogin(ActionEvent evt) {
-        String login = ztLogin.getText();
-        String password = ztPassword.getText();
+        //String login = ;
+        //String password = ;
         
+        //boolean result = ;
         
-        
-        if (login.equals("Ridounet") && password.equals("Ridounet")) {
-            JOptionPane.showMessageDialog(null, "Login ok");
+        if (ctrlLogin.login(ztLogin.getText(), ztPassword.getText())) {
+            ctrlLogin.showAdmin();
         } else {
             JOptionPane.showMessageDialog(null, "Login pas ok");
         }
         
     }
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        
-    }
-
-    
     private JButton btLogin;
     private JLabel lblLogin;
     private JLabel lblPassword;

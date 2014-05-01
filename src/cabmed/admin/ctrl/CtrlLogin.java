@@ -2,42 +2,49 @@ package cabmed.admin.ctrl;
 
 import cabmed.admin.ihm.VueLogin;
 import cabmed.admin.main.Facade;
-import cabmed.ressources.Observer;
-import java.awt.EventQueue;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.SwingUtilities;
 
 public class CtrlLogin {
     
+    private final Facade facade;
+    private final CtrlPrincipal ctrlPrincipal;
+    private final CtrlLogin me;
     private VueLogin vueLogin;
-    private CtrlLogin me;
-    private CtrlPrincipal ctrlPrincipal;
     
-    public CtrlLogin (CtrlPrincipal ctrlPrincipal) {
+    public CtrlLogin (CtrlPrincipal ctrlPrincipal, Facade facade) {
         this.ctrlPrincipal = ctrlPrincipal;
+        this.facade = facade;
         me = this;
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+        
+        //showView();
+        
+        // Recherche DB
+        
+    }
+    
+    public void showView() {
+        if (vueLogin == null) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    vueLogin = new VueLogin(me);
+                    Facade.addObserver(vueLogin);
+                    vueLogin.setVisible(true);
                 }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            });
+        } else {
+            vueLogin.setVisible(true);
         }
         
+    }
+    
+    public void showAdmin() {
+        vueLogin.setVisible(false);
+        ctrlPrincipal.showAdmin();
+    }
 
-        /* Create and display the form */
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                vueLogin = new VueLogin(me);
-                Facade.addObserver(vueLogin);
-                vueLogin.setVisible(true);
-            }
-        });
-        
-        
+    public boolean login(String login, String password) {
+        return facade.login(login, password);
     }
     
 }

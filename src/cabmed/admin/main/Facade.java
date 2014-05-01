@@ -17,6 +17,14 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     public static void addObserver(Observer o) {
         listObservers.add(o);
     }
+
+    public boolean login(String login, String password) {
+        boolean result = false;
+        if (login.equals("") && password.equals("")) {
+            result = true;
+        }
+        return result;
+    }
     
     
     
