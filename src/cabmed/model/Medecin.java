@@ -13,7 +13,7 @@ public class Medecin extends Personnel {
     @Column(name = "medecin_specialisations")
     private List<Specialisation> specialisation;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.DETACH)
     @ElementCollection(fetch = FetchType.LAZY)
     private List<Rdv> rdv;
     

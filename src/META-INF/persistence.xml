@@ -15,7 +15,7 @@
       <property name="hibernate.connection.username" value="Ridounet"/>
       <property name="hibernate.connection.password" value="1234"/>
       <!--  création automatique du schéma -->
-      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
       <!-- Dialecte -->
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <!--  propriétés DataSource c3p0 -->
@@ -24,7 +24,7 @@
       <property name="hibernate.c3p0.timeout" value="300"/>
       <property name="hibernate.c3p0.max_statements" value="50"/>
       <property name="hibernate.c3p0.idle_test_period" value="3000"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop"/>
     </properties>
   </persistence-unit>
 </persistence>

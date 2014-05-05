@@ -13,9 +13,6 @@ public class MainClasseABCDEFGHIJKL {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("cabmed");
     private static EntityManager em = null;
     
-    private DAOMySQL daoMySQL;
-    private DAOMySQL getDAOMySQL() { if (daoMySQL == null) daoMySQL = new DAOMySQL(); return daoMySQL; }
-    
     public static void main (String[] args) {
         em = emf.createEntityManager();
         setupDB();
@@ -117,7 +114,7 @@ public class MainClasseABCDEFGHIJKL {
         em.persist(cp6); em.persist(cp7); em.persist(cp8); em.persist(cp9); em.persist(cp10);
         tx.commit();
         em.close();
-        boolean result = DAOMySQL.savePatient(p1);
+        boolean result = DAOMySQL.getInstance().savePatient(p1);
         em = emf.createEntityManager();
         tx.begin();
         //em.persist(p1);

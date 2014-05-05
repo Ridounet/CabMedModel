@@ -1,208 +1,494 @@
 package cabmed.admin.ihm;
 
 import cabmed.admin.ctrl.CtrlAdmin;
+import cabmed.model.Adresse;
+import cabmed.model.Cp;
+import cabmed.model.Infirmiere;
+import cabmed.model.Medecin;
+import cabmed.model.Secretaire;
+import cabmed.model.Sexe;
+import cabmed.model.Specialisation;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
 
     private final CtrlAdmin ctrlAdmin;
     
-//    public VueAdmin() {
-//        ctrlAdmin = new CtrlAdmin(new CtrlPrincipal(), new Facade());
-//        initComponents();
-//    }
-
     public VueAdmin(CtrlAdmin ctrlAdmin) {
         super("Cabmed - Administration");
         this.ctrlAdmin = ctrlAdmin;
         initComponents();
     }
-
+    
+    private void initAttributes() { // Initialise tous les attributs de cette classe
+        sdf = ctrlAdmin.getSdf();
+        actions = new Actions();
+//        listMedecin = new LinkedList<>();
+//        listMedecin.add(new Medecin(new Date(), "abc", "a", "Medecin", new Date(), new Adresse("abc", ctrlAdmin.getListCp().get(0)), "abc", Sexe.HOMME));
+//        listMedecin.add(new Medecin(new Date(), "xyz", "b", "Medecin", new Date(), new Adresse("xyz", ctrlAdmin.getListCp().get(1)), "xyz", Sexe.FEMME));
+//        listMedecin.add(new Medecin(new Date(), "123", "c", "Medecin", new Date(), new Adresse("123", ctrlAdmin.getListCp().get(4)), "123", Sexe.HOMME));
+        listMedecin = ctrlAdmin.getListMedecin();
+        listSecretaire = new LinkedList<>();
+        listSecretaire.add(new Secretaire(new Date(), "abc", "a", "Secretaire", new Date(), new Adresse("abc", ctrlAdmin.getListCp().get(0)), "abc", Sexe.FEMME));
+        listSecretaire.add(new Secretaire(new Date(), "xyz", "b", "Secretaire", new Date(), new Adresse("xyz", ctrlAdmin.getListCp().get(2)), "xyz", Sexe.HOMME));
+        listSecretaire.add(new Secretaire(new Date(), "123", "c", "Secretaire", new Date(), new Adresse("123", ctrlAdmin.getListCp().get(1)), "123", Sexe.FEMME));
+        listInfirmiere = new LinkedList<>();
+        listInfirmiere.add(new Infirmiere(new Date(), "abc", "a", "Infirmiere", new Date(), new Adresse("abc", ctrlAdmin.getListCp().get(3)), "abc", Sexe.FEMME));
+        listInfirmiere.add(new Infirmiere(new Date(), "xyz", "b", "Infirmiere", new Date(), new Adresse("xyz", ctrlAdmin.getListCp().get(1)), "xyz", Sexe.HOMME));
+        listInfirmiere.add(new Infirmiere(new Date(), "123", "c", "Infirmiere", new Date(), new Adresse("123", ctrlAdmin.getListCp().get(4)), "123", Sexe.FEMME));
+        listSpecialisation = new LinkedList<>();
+        listSpecialisation.add(new Specialisation(2, "Gynécologue"));
+        listSpecialisation.add(new Specialisation(2, "Généraliste"));
+        listSpecialisation.add(new Specialisation(4, "Oencologue"));
+        listSpecialisation.add(new Specialisation(3, "Chirurgien"));
+        entetePersonnel = new Vector();
+        entetePersonnel.add("ID"); entetePersonnel.add("Name"); entetePersonnel.add("Birthdate");
+        entetePersonnel.add("Sex"); entetePersonnel.add("National Number"); entetePersonnel.add("Tel.");
+        entetePersonnel.add("Beginning work at"); entetePersonnel.add("Address"); entetePersonnel.add("Postal code");
+        enteteSpecialisation = new Vector();
+        enteteSpecialisation.add("ID"); enteteSpecialisation.add("Label"); enteteSpecialisation.add("Delay");
+        tabbedPane = new JTabbedPane();
+        panelMedecin = new JPanel();
+        scrollPaneMedecin = new JScrollPane();
+        tableMedecin = new JTable();
+        btMedecinUpdate = new JButton();
+        btMedecinUpdatePlanning = new JButton();
+        btMedecinDelete = new JButton();
+        btMedecinAdd = new JButton();
+        panelMedecinListSpec = new JPanel();
+        btMedecinDeleteSpec = new JButton();
+        btMedecinAddSpec = new JButton();
+        scrollPaneMedecinListSpec = new JScrollPane();
+        listMedecinSpec = new JList();
+        panelSecretaire = new JPanel();
+        scrollPaneSecretaire = new JScrollPane();
+        tableSecretaire = new JTable();
+        btSecretaireDelete = new JButton();
+        btSecretaireUpdatePlanning = new JButton();
+        btSecretaireUpdate = new JButton();
+        btSecretaireAdd = new JButton();
+        panelInfirmiere = new JPanel();
+        scrollPaneInfirmiere = new JScrollPane();
+        tableInfirmiere = new JTable();
+        btInfirmiereUpdate = new JButton();
+        btInfirmiereUpdatePlanning = new JButton();
+        btInfirmiereDelete = new JButton();
+        btInfirmiereAdd = new JButton();
+        panelSpecialisation = new JPanel();
+        scrollPaneSpec = new JScrollPane();
+        tableSpec = new JTable();
+        btSpecUpdate = new JButton();
+        btSpecDelete = new JButton();
+        paneSpecAdd = new JPanel();
+        btSpecAdd = new JButton();
+        ztSpecDuree = new JFormattedTextField();
+        lblSpecDuree = new JLabel();
+        ztSpecLabel = new JTextField();
+        lblSpecLabel = new JLabel();
+        lblSpecAjout = new JLabel();
+        
+        modeleMedecin = new ModeleJTableMedecin();
+        modeleSecretaire = new ModeleJTableSecretaire();
+        modeleInfirmiere = new ModeleJTableInfirmiere();
+        modeleSpecialisation = new ModeleJTableSpecialisation();
+    }
+    
+    private void initJTables() { // Initialise la taille et le non redimensionnement des colonnes
+        if (tableMedecin.getColumnModel().getColumnCount() > 0) {
+            tableMedecin.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableMedecin.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableMedecin.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableMedecin.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableMedecin.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tableMedecin.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tableMedecin.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tableMedecin.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tableMedecin.getColumnModel().getColumn(8).setPreferredWidth(45);
+        }
+        
+        if (tableSecretaire.getColumnModel().getColumnCount() > 0) {
+            tableSecretaire.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableSecretaire.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableSecretaire.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableSecretaire.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableSecretaire.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tableSecretaire.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tableSecretaire.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tableSecretaire.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tableSecretaire.getColumnModel().getColumn(8).setPreferredWidth(45);
+        }
+        
+        if (tableInfirmiere.getColumnModel().getColumnCount() > 0) {
+            tableInfirmiere.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableInfirmiere.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableInfirmiere.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableInfirmiere.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableInfirmiere.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tableInfirmiere.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tableInfirmiere.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tableInfirmiere.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tableInfirmiere.getColumnModel().getColumn(8).setPreferredWidth(45);
+        }
+        
+        if (tableSpec.getColumnModel().getColumnCount() > 0) {
+            tableSpec.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableSpec.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tableSpec.getColumnModel().getColumn(2).setPreferredWidth(20);
+        }
+        
+        for (int i = 0; i < tableMedecin.getColumnCount(); i++) {
+            tableMedecin.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        for (int i = 0; i < tableSecretaire.getColumnCount(); i++) {
+            tableSecretaire.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        for (int i = 0; i < tableInfirmiere.getColumnCount(); i++) {
+            tableInfirmiere.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        for (int i = 0; i < tableSpec.getColumnCount(); i++) {
+            tableSpec.getColumnModel().getColumn(i).setResizable(false);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        tabbedPane = new javax.swing.JTabbedPane();
-        panelMedecin = new javax.swing.JPanel();
-        scrollPaneMedecin = new javax.swing.JScrollPane();
-        tableMedecin = new javax.swing.JTable();
-        btMedecinUpdate = new javax.swing.JButton();
-        btMedecinUpdatePlanning = new javax.swing.JButton();
-        btMedecinDelete = new javax.swing.JButton();
-        btMedecinAdd = new javax.swing.JButton();
-        panelMedecinListSpec = new javax.swing.JPanel();
-        btMedecinDeleteSpec = new javax.swing.JButton();
-        btMedecinAddSpec = new javax.swing.JButton();
-        scrollPaneMedecinListSpec = new javax.swing.JScrollPane();
-        listMedecinSpec = new javax.swing.JList();
-        panelSecretaire = new javax.swing.JPanel();
-        scrollPaneSecretaire = new javax.swing.JScrollPane();
-        tableSecretaire = new javax.swing.JTable();
-        btSecretaireDelete = new javax.swing.JButton();
-        btSecretaireUpdatePlanning = new javax.swing.JButton();
-        btSecretaireUpdate = new javax.swing.JButton();
-        btSecretaireAdd = new javax.swing.JButton();
-        panelInfirmiere = new javax.swing.JPanel();
-        scrollPaneInfirmiere = new javax.swing.JScrollPane();
-        tableInfirmiere = new javax.swing.JTable();
-        btInfirmiereUpdate = new javax.swing.JButton();
-        btInfirmiereUpdatePlanning = new javax.swing.JButton();
-        btInfirmiereDelete = new javax.swing.JButton();
-        btInfirmiereAdd = new javax.swing.JButton();
-        panelSpecialisation = new javax.swing.JPanel();
-        scrollPaneSpec = new javax.swing.JScrollPane();
-        tableSpec = new javax.swing.JTable();
-        btSpecUpdate = new javax.swing.JButton();
-        btSpecDelete = new javax.swing.JButton();
-        paneSpecAdd = new javax.swing.JPanel();
-        btSpecAdd = new javax.swing.JButton();
-        ztSpecDuree = new javax.swing.JFormattedTextField();
-        lblSpecDuree = new javax.swing.JLabel();
-        ztSpecLabel = new javax.swing.JTextField();
-        lblSpecLabel = new javax.swing.JLabel();
-        lblSpecAjout = new javax.swing.JLabel();
-        menubar = new javax.swing.JMenuBar();
-        menuActionFile = new javax.swing.JMenu();
-        MenuActionEdit = new javax.swing.JMenu();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        initAttributes();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Administration");
         setResizable(false);
 
-        tabbedPane.setName("Médecin"); // NOI18N
-
+        // -------------------- Debut Medecin --------------------
+        tabbedPane.setName("Médecin");
         tableMedecin.setAutoCreateRowSorter(true);
-        tableMedecin.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Name", "Birthdate", "Sex", "National Number", "Tel.", "Beginning work at", "Address", "Postal code"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tableMedecin.setModel(modeleMedecin);
         scrollPaneMedecin.setViewportView(tableMedecin);
-        if (tableMedecin.getColumnModel().getColumnCount() > 0) {
-            tableMedecin.getColumnModel().getColumn(0).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableMedecin.getColumnModel().getColumn(1).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tableMedecin.getColumnModel().getColumn(2).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tableMedecin.getColumnModel().getColumn(3).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tableMedecin.getColumnModel().getColumn(4).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tableMedecin.getColumnModel().getColumn(5).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableMedecin.getColumnModel().getColumn(6).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableMedecin.getColumnModel().getColumn(7).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tableMedecin.getColumnModel().getColumn(8).setResizable(false);
-            tableMedecin.getColumnModel().getColumn(8).setPreferredWidth(45);
-        }
-
         btMedecinUpdate.setText("Modification");
-        btMedecinUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMedecinUpdateActionPerformed(evt);
+        btMedecinUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btMedecinUpdate(evt);
             }
         });
-
         btMedecinUpdatePlanning.setText("Modif. Planning");
-        btMedecinUpdatePlanning.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMedecinUpdatePlanningActionPerformed(evt);
+        btMedecinUpdatePlanning.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btMedecinUpdatePlanning(evt);
             }
         });
-
         btMedecinDelete.setBackground(new java.awt.Color(255, 0, 0));
         btMedecinDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btMedecinDelete.setForeground(new java.awt.Color(255, 255, 255));
         btMedecinDelete.setText("DELETE");
         btMedecinDelete.setToolTipText("");
-        btMedecinDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMedecinDeleteActionPerformed(evt);
+        btMedecinDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btMedecinDelete(evt);
             }
         });
-
         btMedecinAdd.setText("Add a Physician");
+        btMedecinAdd.addActionListener(new ActionListener() {
 
-        panelMedecinListSpec.setBorder(javax.swing.BorderFactory.createTitledBorder("List of Specialization"));
-
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                actions.btMedecinAdd(evt);
+            }
+        });
+        panelMedecinListSpec.setBorder(BorderFactory.createTitledBorder("List of Specialization"));
         btMedecinDeleteSpec.setText("Delete Specialization");
         btMedecinDeleteSpec.setFocusable(false);
         btMedecinDeleteSpec.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btMedecinDeleteSpec.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btMedecinDeleteSpec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMedecinDeleteSpecActionPerformed(evt);
+        btMedecinDeleteSpec.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btMedecinDeleteSpec(evt);
             }
         });
-
         btMedecinAddSpec.setText("Add Specialization");
-
-        listMedecinSpec.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        listMedecinSpec.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "item", "item", "item" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        listMedecinSpec.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listMedecinSpec.setBorder(BorderFactory.createEtchedBorder());
+        listMedecinSpec.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listMedecinSpec.setToolTipText("");
         scrollPaneMedecinListSpec.setViewportView(listMedecinSpec);
+        placementMedecin();
+        tabbedPane.addTab("Physician", panelMedecin);
 
-        javax.swing.GroupLayout panelMedecinListSpecLayout = new javax.swing.GroupLayout(panelMedecinListSpec);
+        // -------------------- Debut Secretaire --------------------
+        tableSecretaire.setModel(modeleSecretaire);
+        scrollPaneSecretaire.setViewportView(tableSecretaire);
+        btSecretaireDelete.setBackground(new java.awt.Color(255, 0, 0));
+        btSecretaireDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btSecretaireDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btSecretaireDelete.setText("DELETE");
+        btSecretaireDelete.setToolTipText("");
+        btSecretaireDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btSecretaireDelete(evt);
+            }
+        });
+        btSecretaireUpdatePlanning.setText("Modif. Planning");
+        btSecretaireUpdatePlanning.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btSecretaireUpdatePlanning(evt);
+            }
+        });
+        btSecretaireUpdate.setText("Modification");
+        btSecretaireUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btSecretaireUpdate(evt);
+            }
+        });
+        btSecretaireAdd.setText("Add a Secretary");
+        placementSecretaire();
+        tabbedPane.addTab("Secretary", panelSecretaire);
+
+        // -------------------- Debut Infirmiere --------------------
+        tableInfirmiere.setModel(modeleInfirmiere);
+        scrollPaneInfirmiere.setViewportView(tableInfirmiere);
+        btInfirmiereUpdate.setText("Modification");
+        btInfirmiereUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btInfirmiereUpdate(evt);
+            }
+        });
+        btInfirmiereUpdatePlanning.setText("Modif. Planning");
+        btInfirmiereUpdatePlanning.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btInfirmiereUpdatePlanning(evt);
+            }
+        });
+        btInfirmiereDelete.setBackground(new java.awt.Color(255, 0, 0));
+        btInfirmiereDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btInfirmiereDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btInfirmiereDelete.setText("DELETE");
+        btInfirmiereDelete.setToolTipText("");
+        btInfirmiereDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btInfirmiereDelete(evt);
+            }
+        });
+        btInfirmiereAdd.setText("Add a Nurse");
+        placementInfirmiere();
+        tabbedPane.addTab("Nurse", panelInfirmiere);
+
+        // -------------------- Debut Specialisation --------------------
+        tableSpec.setModel(modeleSpecialisation);
+        scrollPaneSpec.setViewportView(tableSpec);
+        btSpecUpdate.setText("Modification");
+        btSpecUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btSpecUpdate(evt);
+            }
+        });
+        btSpecDelete.setBackground(new java.awt.Color(255, 0, 0));
+        btSpecDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btSpecDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btSpecDelete.setText("DELETE");
+        btSpecDelete.setToolTipText("");
+        btSpecDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btSpecDelete(evt);
+            }
+        });
+        paneSpecAdd.setBorder(BorderFactory.createTitledBorder("Add a new Specialization"));
+        btSpecAdd.setText("Add");
+        btSpecAdd.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                actions.btSpecAdd(evt);
+            }
+        });
+        ztSpecDuree.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
+        lblSpecDuree.setText("Delay");
+        lblSpecLabel.setText("Label");
+        placementSpecialisation();
+        tabbedPane.addTab("Specialization", panelSpecialisation);
+
+        initJTables();
+        placementGeneral();
+        pack();
+    }
+
+    @Override
+    public void update() {
+        tableMedecin.setBackground(Color.red);
+    }
+    
+    // Modeles JTable
+    // ---------------- Modele Medecin ----------------
+    public class ModeleJTableMedecin extends DefaultTableModel{
+
+        public ModeleJTableMedecin() {
+            super(entetePersonnel, listMedecin.size());
+        }
+
+        @Override public int getRowCount() { return listMedecin.size(); }
+        @Override public int getColumnCount() { return 9; }
+        @Override public boolean isCellEditable(int row, int column) { return false; }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case ID: return listMedecin.get(rowIndex).getId();
+                case NAME: return listMedecin.get(rowIndex).getPrenom() + " " + listMedecin.get(rowIndex).getNom();
+                case BIRTHDATE: return sdf.format(listMedecin.get(rowIndex).getDateNaissance());
+                case SEX: return listMedecin.get(rowIndex).getSexe().toString();
+                case NATIONAL_NUMBER: return listMedecin.get(rowIndex).getRegistreNat();
+                case TEL: return listMedecin.get(rowIndex).getTel();
+                case BEGIN_WORK: return sdf.format(listMedecin.get(rowIndex).getDebutTravail());
+                case ADDRESS: return listMedecin.get(rowIndex).getAdresse().getAdresse();
+                case CP: return listMedecin.get(rowIndex).getAdresse().getCp().getCodePostal();
+                default: return "NO DATA";
+            }
+        }
+        
+        public void update() {
+            fireTableDataChanged();
+        }
+
+    }
+    // ---------------- Modele Secretaire ----------------
+    public class ModeleJTableSecretaire extends DefaultTableModel{
+
+        public ModeleJTableSecretaire() {
+            super(entetePersonnel, listSecretaire.size());
+        }
+
+        @Override public int getRowCount() { return listSecretaire.size(); }
+        @Override public int getColumnCount() { return 9; }
+        @Override public boolean isCellEditable(int row, int column) { return false; }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case ID: return listSecretaire.get(rowIndex).getId();
+                case NAME: return listSecretaire.get(rowIndex).getPrenom() + " " + listSecretaire.get(rowIndex).getNom();
+                case BIRTHDATE: return sdf.format(listSecretaire.get(rowIndex).getDateNaissance());
+                case SEX: return listSecretaire.get(rowIndex).getSexe().toString();
+                case NATIONAL_NUMBER: return listSecretaire.get(rowIndex).getRegistreNat();
+                case TEL: return listSecretaire.get(rowIndex).getTel();
+                case BEGIN_WORK: return sdf.format(listSecretaire.get(rowIndex).getDebutTravail());
+                case ADDRESS: return listSecretaire.get(rowIndex).getAdresse().getAdresse();
+                case CP: return listSecretaire.get(rowIndex).getAdresse().getCp().getCodePostal();
+                default: return "NO DATA";
+            }
+        }
+
+    }
+    // ---------------- Modele Infirmiere ----------------
+    public class ModeleJTableInfirmiere extends DefaultTableModel{
+
+        public ModeleJTableInfirmiere() {
+            super(entetePersonnel, listInfirmiere.size());
+        }
+
+        @Override public int getRowCount() { return listInfirmiere.size(); }
+        @Override public int getColumnCount() { return 9; }
+        @Override public boolean isCellEditable(int row, int column) { return false; }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case ID: return listInfirmiere.get(rowIndex).getId();
+                case NAME: return listInfirmiere.get(rowIndex).getPrenom() + " " + listInfirmiere.get(rowIndex).getNom();
+                case BIRTHDATE: return sdf.format(listInfirmiere.get(rowIndex).getDateNaissance());
+                case SEX: return listInfirmiere.get(rowIndex).getSexe().toString();
+                case NATIONAL_NUMBER: return listInfirmiere.get(rowIndex).getRegistreNat();
+                case TEL: return listInfirmiere.get(rowIndex).getTel();
+                case BEGIN_WORK: return sdf.format(listInfirmiere.get(rowIndex).getDebutTravail());
+                case ADDRESS: return listInfirmiere.get(rowIndex).getAdresse().getAdresse();
+                case CP: return listInfirmiere.get(rowIndex).getAdresse().getCp().getCodePostal();
+                default: return "NO DATA";
+            }
+        }
+
+    }
+    // ---------------- Modele Specialisation ----------------
+    public class ModeleJTableSpecialisation extends DefaultTableModel{
+
+        public ModeleJTableSpecialisation() {
+            super(enteteSpecialisation, listSpecialisation.size());
+        }
+
+        @Override public int getRowCount() { return listSpecialisation.size(); }
+        @Override public int getColumnCount() { return 3; }
+        @Override public boolean isCellEditable(int row, int column) { return false; }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case ID: return listSpecialisation.get(rowIndex).getId();
+                case LABEL: return listSpecialisation.get(rowIndex).getLabel();
+                case DELAY: return listSpecialisation.get(rowIndex).getDuree();
+                default: return "NO DATA";
+            }
+        }
+
+    }
+    
+    // Placement des composants
+    private void placementMedecin() {
+        GroupLayout panelMedecinListSpecLayout = new GroupLayout(panelMedecinListSpec);
         panelMedecinListSpec.setLayout(panelMedecinListSpecLayout);
         panelMedecinListSpecLayout.setHorizontalGroup(
-            panelMedecinListSpecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneMedecinListSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneMedecinListSpec, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelMedecinListSpecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(btMedecinDeleteSpec)
                     .addComponent(btMedecinAddSpec))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelMedecinListSpecLayout.setVerticalGroup(
-            panelMedecinListSpecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelMedecinListSpecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrollPaneMedecinListSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(scrollPaneMedecinListSpec, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
-                        .addComponent(btMedecinAddSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btMedecinDeleteSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btMedecinAddSpec, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btMedecinDeleteSpec, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout panelMedecinLayout = new javax.swing.GroupLayout(panelMedecin);
+        GroupLayout panelMedecinLayout = new GroupLayout(panelMedecin);
         panelMedecin.setLayout(panelMedecinLayout);
         panelMedecinLayout.setHorizontalGroup(
-            panelMedecinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelMedecinLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelMedecinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(panelMedecinLayout.createSequentialGroup()
-                        .addComponent(scrollPaneMedecin, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                        .addComponent(scrollPaneMedecin, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
                         .addGap(117, 117, 117))
                     .addGroup(panelMedecinLayout.createSequentialGroup()
                         .addComponent(btMedecinUpdate)
@@ -212,111 +498,38 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                         .addComponent(btMedecinAdd)
                         .addGap(18, 18, 18)
                         .addComponent(btMedecinDelete)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelMedecinLayout.createSequentialGroup()
-                        .addComponent(panelMedecinListSpec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelMedecinListSpec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelMedecinLayout.setVerticalGroup(
-            panelMedecinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelMedecinLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneMedecin, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneMedecin, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelMedecinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btMedecinDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btMedecinAdd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelMedecinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btMedecinUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btMedecinUpdatePlanning, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btMedecinDelete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btMedecinAdd, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(btMedecinUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btMedecinUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(panelMedecinListSpec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(panelMedecinListSpec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
-
-        tabbedPane.addTab("Physician", panelMedecin);
-
-        tableSecretaire.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Name", "Birthdate", "Sex", "National Number", "Tel.", "Beginning work at", "Address", "Postal code"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        scrollPaneSecretaire.setViewportView(tableSecretaire);
-        if (tableSecretaire.getColumnModel().getColumnCount() > 0) {
-            tableSecretaire.getColumnModel().getColumn(0).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableSecretaire.getColumnModel().getColumn(1).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tableSecretaire.getColumnModel().getColumn(2).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tableSecretaire.getColumnModel().getColumn(3).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tableSecretaire.getColumnModel().getColumn(4).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tableSecretaire.getColumnModel().getColumn(5).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableSecretaire.getColumnModel().getColumn(6).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableSecretaire.getColumnModel().getColumn(7).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tableSecretaire.getColumnModel().getColumn(8).setResizable(false);
-            tableSecretaire.getColumnModel().getColumn(8).setPreferredWidth(45);
-        }
-
-        btSecretaireDelete.setBackground(new java.awt.Color(255, 0, 0));
-        btSecretaireDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btSecretaireDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btSecretaireDelete.setText("DELETE");
-        btSecretaireDelete.setToolTipText("");
-        btSecretaireDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSecretaireDeleteActionPerformed(evt);
-            }
-        });
-
-        btSecretaireUpdatePlanning.setText("Modif. Planning");
-        btSecretaireUpdatePlanning.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSecretaireUpdatePlanningActionPerformed(evt);
-            }
-        });
-
-        btSecretaireUpdate.setText("Modification");
-        btSecretaireUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSecretaireUpdateActionPerformed(evt);
-            }
-        });
-
-        btSecretaireAdd.setText("Add a Secretary");
-
-        javax.swing.GroupLayout panelSecretaireLayout = new javax.swing.GroupLayout(panelSecretaire);
+    }
+    private void placementSecretaire() {
+        GroupLayout panelSecretaireLayout = new GroupLayout(panelSecretaire);
         panelSecretaire.setLayout(panelSecretaireLayout);
         panelSecretaireLayout.setHorizontalGroup(
-            panelSecretaireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelSecretaireLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelSecretaireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSecretaireLayout.createSequentialGroup()
-                        .addComponent(scrollPaneSecretaire, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, panelSecretaireLayout.createSequentialGroup()
+                        .addComponent(scrollPaneSecretaire, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
                         .addGap(117, 117, 117))
                     .addGroup(panelSecretaireLayout.createSequentialGroup()
                         .addComponent(btSecretaireUpdate)
@@ -326,105 +539,32 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                         .addComponent(btSecretaireAdd)
                         .addGap(18, 18, 18)
                         .addComponent(btSecretaireDelete)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelSecretaireLayout.setVerticalGroup(
-            panelSecretaireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelSecretaireLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneSecretaire, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneSecretaire, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelSecretaireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSecretaireUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSecretaireUpdatePlanning, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSecretaireAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                    .addComponent(btSecretaireDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSecretaireUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSecretaireUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSecretaireAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                    .addComponent(btSecretaireDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
-
-        tabbedPane.addTab("Secretary", panelSecretaire);
-
-        tableInfirmiere.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Name", "Birthdate", "Sex", "National Number", "Tel.", "Beginning work at", "Address", "Postal code"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        scrollPaneInfirmiere.setViewportView(tableInfirmiere);
-        if (tableInfirmiere.getColumnModel().getColumnCount() > 0) {
-            tableInfirmiere.getColumnModel().getColumn(0).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableInfirmiere.getColumnModel().getColumn(1).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(1).setPreferredWidth(60);
-            tableInfirmiere.getColumnModel().getColumn(2).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tableInfirmiere.getColumnModel().getColumn(3).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tableInfirmiere.getColumnModel().getColumn(4).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tableInfirmiere.getColumnModel().getColumn(5).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableInfirmiere.getColumnModel().getColumn(6).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableInfirmiere.getColumnModel().getColumn(7).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tableInfirmiere.getColumnModel().getColumn(8).setResizable(false);
-            tableInfirmiere.getColumnModel().getColumn(8).setPreferredWidth(45);
-        }
-
-        btInfirmiereUpdate.setText("Modification");
-        btInfirmiereUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btInfirmiereUpdateActionPerformed(evt);
-            }
-        });
-
-        btInfirmiereUpdatePlanning.setText("Modif. Planning");
-        btInfirmiereUpdatePlanning.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btInfirmiereUpdatePlanningActionPerformed(evt);
-            }
-        });
-
-        btInfirmiereDelete.setBackground(new java.awt.Color(255, 0, 0));
-        btInfirmiereDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btInfirmiereDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btInfirmiereDelete.setText("DELETE");
-        btInfirmiereDelete.setToolTipText("");
-        btInfirmiereDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btInfirmiereDeleteActionPerformed(evt);
-            }
-        });
-
-        btInfirmiereAdd.setText("Add a Nurse");
-
-        javax.swing.GroupLayout panelInfirmiereLayout = new javax.swing.GroupLayout(panelInfirmiere);
+    }
+    private void placementInfirmiere() {
+        GroupLayout panelInfirmiereLayout = new GroupLayout(panelInfirmiere);
         panelInfirmiere.setLayout(panelInfirmiereLayout);
         panelInfirmiereLayout.setHorizontalGroup(
-            panelInfirmiereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelInfirmiereLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelInfirmiereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(panelInfirmiereLayout.createSequentialGroup()
-                        .addComponent(scrollPaneInfirmiere, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                        .addComponent(scrollPaneInfirmiere, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
                         .addGap(117, 117, 117))
                     .addGroup(panelInfirmiereLayout.createSequentialGroup()
                         .addComponent(btInfirmiereUpdate)
@@ -434,313 +574,338 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                         .addComponent(btInfirmiereAdd)
                         .addGap(18, 18, 18)
                         .addComponent(btInfirmiereDelete)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelInfirmiereLayout.setVerticalGroup(
-            panelInfirmiereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelInfirmiereLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneInfirmiere, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneInfirmiere, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelInfirmiereLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btInfirmiereUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btInfirmiereUpdatePlanning, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btInfirmiereAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                    .addComponent(btInfirmiereDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btInfirmiereUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btInfirmiereUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btInfirmiereAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                    .addComponent(btInfirmiereDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                 .addGap(98, 98, 98))
         );
-
-        tabbedPane.addTab("Nurse", panelInfirmiere);
-
-        tableSpec.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Label", "Delay"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        scrollPaneSpec.setViewportView(tableSpec);
-        if (tableSpec.getColumnModel().getColumnCount() > 0) {
-            tableSpec.getColumnModel().getColumn(0).setResizable(false);
-            tableSpec.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableSpec.getColumnModel().getColumn(1).setResizable(false);
-            tableSpec.getColumnModel().getColumn(1).setPreferredWidth(40);
-            tableSpec.getColumnModel().getColumn(2).setResizable(false);
-            tableSpec.getColumnModel().getColumn(2).setPreferredWidth(20);
-        }
-
-        btSpecUpdate.setText("Modification");
-        btSpecUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSpecUpdateActionPerformed(evt);
-            }
-        });
-
-        btSpecDelete.setBackground(new java.awt.Color(255, 0, 0));
-        btSpecDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btSpecDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btSpecDelete.setText("DELETE");
-        btSpecDelete.setToolTipText("");
-        btSpecDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSpecDeleteActionPerformed(evt);
-            }
-        });
-
-        paneSpecAdd.setBorder(javax.swing.BorderFactory.createTitledBorder("Add a new Specialization"));
-
-        btSpecAdd.setText("Add");
-
-        ztSpecDuree.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-
-        lblSpecDuree.setText("Delay");
-
-        ztSpecLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ztSpecLabelActionPerformed(evt);
-            }
-        });
-
-        lblSpecLabel.setText("Label");
-
-        javax.swing.GroupLayout paneSpecAddLayout = new javax.swing.GroupLayout(paneSpecAdd);
+    }
+    private void placementSpecialisation() {
+        GroupLayout paneSpecAddLayout = new GroupLayout(paneSpecAdd);
         paneSpecAdd.setLayout(paneSpecAddLayout);
         paneSpecAddLayout.setHorizontalGroup(
-            paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(paneSpecAddLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSpecAjout, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSpecAjout, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
                     .addGroup(paneSpecAddLayout.createSequentialGroup()
-                        .addGroup(paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblSpecLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ztSpecLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblSpecLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ztSpecLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSpecDuree, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ztSpecDuree, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSpecDuree, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ztSpecDuree, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))))
                 .addGap(24, 24, 24)
-                .addComponent(btSpecAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btSpecAdd, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paneSpecAddLayout.setVerticalGroup(
-            paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(paneSpecAddLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblSpecAjout)
                 .addGap(18, 18, 18)
-                .addGroup(paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(lblSpecDuree)
-                    .addComponent(lblSpecLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lblSpecLabel, GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(paneSpecAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ztSpecLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(ztSpecLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSpecAdd)
-                    .addComponent(ztSpecDuree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ztSpecDuree, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelSpecialisationLayout = new javax.swing.GroupLayout(panelSpecialisation);
+        GroupLayout panelSpecialisationLayout = new GroupLayout(panelSpecialisation);
         panelSpecialisation.setLayout(panelSpecialisationLayout);
         panelSpecialisationLayout.setHorizontalGroup(
-            panelSpecialisationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelSpecialisationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelSpecialisationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(panelSpecialisationLayout.createSequentialGroup()
                         .addComponent(btSpecUpdate)
                         .addGap(18, 18, 18)
                         .addComponent(btSpecDelete))
-                    .addComponent(scrollPaneSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paneSpecAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPaneSpec, GroupLayout.PREFERRED_SIZE, 395, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paneSpecAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(494, Short.MAX_VALUE))
         );
         panelSpecialisationLayout.setVerticalGroup(
-            panelSpecialisationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSpecialisationLayout.createSequentialGroup()
+            panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, panelSpecialisationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneSpec, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelSpecialisationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSpecUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSpecDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSpecUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSpecDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(paneSpecAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(paneSpecAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
-
-        tabbedPane.addTab("Specialization", panelSpecialisation);
-
-        menuActionFile.setText("File");
-        menubar.add(menuActionFile);
-
-        MenuActionEdit.setText("Edit");
-        menubar.add(MenuActionEdit);
-
-        setJMenuBar(menubar);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    }
+    private void placementGeneral() {
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPane, javax.swing.GroupLayout.Alignment.TRAILING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(tabbedPane, GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(tabbedPane)
                 .addContainerGap())
         );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void ztSpecLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ztSpecLabelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ztSpecLabelActionPerformed
-
-    private void btMedecinUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMedecinUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btMedecinUpdateActionPerformed
-
-    private void btMedecinUpdatePlanningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMedecinUpdatePlanningActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btMedecinUpdatePlanningActionPerformed
-
-    private void btMedecinDeleteSpecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMedecinDeleteSpecActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btMedecinDeleteSpecActionPerformed
-
-    private void btMedecinDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMedecinDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btMedecinDeleteActionPerformed
-
-    private void btSecretaireUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSecretaireUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSecretaireUpdateActionPerformed
-
-    private void btSecretaireUpdatePlanningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSecretaireUpdatePlanningActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSecretaireUpdatePlanningActionPerformed
-
-    private void btSecretaireDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSecretaireDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSecretaireDeleteActionPerformed
-
-    private void btInfirmiereUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInfirmiereUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btInfirmiereUpdateActionPerformed
-
-    private void btInfirmiereUpdatePlanningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInfirmiereUpdatePlanningActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btInfirmiereUpdatePlanningActionPerformed
-
-    private void btInfirmiereDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInfirmiereDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btInfirmiereDeleteActionPerformed
-
-    private void btSpecUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSpecUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSpecUpdateActionPerformed
-
-    private void btSpecDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSpecDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSpecDeleteActionPerformed
-
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(VueAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(VueAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(VueAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(VueAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new VueAdmin().setVisible(true);
-//            }
-//        });
-//    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu MenuActionEdit;
-    private javax.swing.JButton btInfirmiereAdd;
-    private javax.swing.JButton btInfirmiereDelete;
-    private javax.swing.JButton btInfirmiereUpdate;
-    private javax.swing.JButton btInfirmiereUpdatePlanning;
-    private javax.swing.JButton btMedecinAdd;
-    private javax.swing.JButton btMedecinAddSpec;
-    private javax.swing.JButton btMedecinDelete;
-    private javax.swing.JButton btMedecinDeleteSpec;
-    private javax.swing.JButton btMedecinUpdate;
-    private javax.swing.JButton btMedecinUpdatePlanning;
-    private javax.swing.JButton btSecretaireAdd;
-    private javax.swing.JButton btSecretaireDelete;
-    private javax.swing.JButton btSecretaireUpdate;
-    private javax.swing.JButton btSecretaireUpdatePlanning;
-    private javax.swing.JButton btSpecAdd;
-    private javax.swing.JButton btSpecDelete;
-    private javax.swing.JButton btSpecUpdate;
-    private javax.swing.JLabel lblSpecAjout;
-    private javax.swing.JLabel lblSpecDuree;
-    private javax.swing.JLabel lblSpecLabel;
-    private javax.swing.JList listMedecinSpec;
-    private javax.swing.JMenu menuActionFile;
-    private javax.swing.JMenuBar menubar;
-    private javax.swing.JPanel paneSpecAdd;
-    private javax.swing.JPanel panelInfirmiere;
-    private javax.swing.JPanel panelMedecin;
-    private javax.swing.JPanel panelMedecinListSpec;
-    private javax.swing.JPanel panelSecretaire;
-    private javax.swing.JPanel panelSpecialisation;
-    private javax.swing.JScrollPane scrollPaneInfirmiere;
-    private javax.swing.JScrollPane scrollPaneMedecin;
-    private javax.swing.JScrollPane scrollPaneMedecinListSpec;
-    private javax.swing.JScrollPane scrollPaneSecretaire;
-    private javax.swing.JScrollPane scrollPaneSpec;
-    private javax.swing.JTabbedPane tabbedPane;
-    private javax.swing.JTable tableInfirmiere;
-    private javax.swing.JTable tableMedecin;
-    private javax.swing.JTable tableSecretaire;
-    private javax.swing.JTable tableSpec;
-    private javax.swing.JFormattedTextField ztSpecDuree;
-    private javax.swing.JTextField ztSpecLabel;
-    // End of variables declaration//GEN-END:variables
-    
-    @Override
-    public void update() {
-        // TODO
     }
+    
+    // Composants à afficher
+    private JButton btInfirmiereAdd;
+    private JButton btInfirmiereDelete;
+    private JButton btInfirmiereUpdate;
+    private JButton btInfirmiereUpdatePlanning;
+    private JButton btMedecinAdd;
+    private JButton btMedecinAddSpec;
+    private JButton btMedecinDelete;
+    private JButton btMedecinDeleteSpec;
+    private JButton btMedecinUpdate;
+    private JButton btMedecinUpdatePlanning;
+    private JButton btSecretaireAdd;
+    private JButton btSecretaireDelete;
+    private JButton btSecretaireUpdate;
+    private JButton btSecretaireUpdatePlanning;
+    private JButton btSpecAdd;
+    private JButton btSpecDelete;
+    private JButton btSpecUpdate;
+    private JLabel lblSpecAjout;
+    private JLabel lblSpecDuree;
+    private JLabel lblSpecLabel;
+    private JList listMedecinSpec;
+    private JPanel paneSpecAdd;
+    private JPanel panelInfirmiere;
+    private JPanel panelMedecin;
+    private JPanel panelMedecinListSpec;
+    private JPanel panelSecretaire;
+    private JPanel panelSpecialisation;
+    private JScrollPane scrollPaneInfirmiere;
+    private JScrollPane scrollPaneMedecin;
+    private JScrollPane scrollPaneMedecinListSpec;
+    private JScrollPane scrollPaneSecretaire;
+    private JScrollPane scrollPaneSpec;
+    private JTabbedPane tabbedPane;
+    private JTable tableInfirmiere;
+    private JTable tableMedecin;
+    private JTable tableSecretaire;
+    private JTable tableSpec;
+    private JFormattedTextField ztSpecDuree;
+    private JTextField ztSpecLabel;
+    private ModeleJTableMedecin modeleMedecin;
+    private ModeleJTableSecretaire modeleSecretaire;
+    private ModeleJTableInfirmiere modeleInfirmiere;
+    private ModeleJTableSpecialisation modeleSpecialisation;
+    
+    // Autres vues
+    private VueAdminModifPersonnel vueModifPersonnel;
+
+    // Colonnes dans les JTable
+    private static final int ID = 0;
+    private static final int NAME = 1;
+    private static final int BIRTHDATE = 2;
+    private static final int SEX = 3;
+    private static final int NATIONAL_NUMBER = 4;
+    private static final int TEL = 5;
+    private static final int BEGIN_WORK = 6;
+    private static final int ADDRESS = 7;
+    private static final int CP = 8;
+    private static final int LABEL = 1;
+    private static final int DELAY = 2;
+    
+    // Autres attributs
+    private List<Medecin> listMedecin;
+    private List<Secretaire> listSecretaire;
+    private List<Infirmiere> listInfirmiere;
+    private List<Specialisation> listSpecialisation;
+
+    private Vector<String> entetePersonnel;
+    private Vector<String> enteteSpecialisation;
+    private SimpleDateFormat sdf;
+    private Actions actions;
+    
+    private class Actions {
+        //----------------------------------------------------------------------
+        //-----------------------------Medecin----------------------------------
+        //----------------------------------------------------------------------
+        public void btMedecinUpdate(ActionEvent evt) { // Bouton update Medecin
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_MEDECIN, med);
+            }
+        }
+        
+        public void btMedecinAdd(ActionEvent evt) { // Affiche la fenêtre d'ajout d'un Medecin
+            ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_MEDECIN, null);
+        }
+        
+        public void btMedecinUpdatePlanning(ActionEvent evt) { // Bouton update planning Medecin
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        public void btMedecinDeleteSpec(ActionEvent evt) { // Bouton suppression d'une spécialisation
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        public void btMedecinDelete(ActionEvent evt) { // Supprime un médecin de la DB
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                ctrlAdmin.deleteMedecin(med);
+            }
+        }
+        
+        //----------------------------------------------------------------------
+        //---------------------------Secretaire---------------------------------
+        //----------------------------------------------------------------------
+        public void btSecretaireUpdate(ActionEvent evt) {
+            if (tableSecretaire.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Secretaire sec = listSecretaire.get(tableSecretaire.getSelectedRow());
+                ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_SECRETAIRE, sec);
+            }
+        }
+        
+        public void btSecretaireAdd(ActionEvent evt) {
+            ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_SECRETAIRE, null);
+        }
+
+        public void btSecretaireUpdatePlanning(ActionEvent evt) {
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        public void btSecretaireDelete(ActionEvent evt) {
+            if (tableSecretaire.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Secretaire sec = listSecretaire.get(tableSecretaire.getSelectedRow());
+                ctrlAdmin.deleteSecretaire(sec);
+            }
+        }
+        
+        //----------------------------------------------------------------------
+        //---------------------------Infirmiere---------------------------------
+        //----------------------------------------------------------------------
+        public void btInfirmiereUpdate(ActionEvent evt) {
+            if (tableInfirmiere.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Infirmiere inf = listInfirmiere.get(tableInfirmiere.getSelectedRow());
+                ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_INFIRMIERE, inf);
+            }
+        }
+        
+        public void btInfirmiereAdd(ActionEvent evt) {
+            ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_INFIRMIERE, null);
+        }
+
+        public void btInfirmiereUpdatePlanning(ActionEvent evt) {
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        public void btInfirmiereDelete(ActionEvent evt) {
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        //----------------------------------------------------------------------
+        //-------------------------Specialisation-------------------------------
+        //----------------------------------------------------------------------
+        public void btSpecUpdate(ActionEvent evt) {
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+
+        public void btSpecDelete(ActionEvent evt) {
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        public void btSpecAdd(ActionEvent evt) {
+            if (tableMedecin.getSelectedRowCount() != 1) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+            } else {
+                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+        
+        
+    private void actions(String s, ActionEvent evt) {
+        Medecin med = null;
+        Secretaire sec = null;
+        Infirmiere inf = null;
+        Specialisation sp = null;
+        if (true){
+            
+            //------------------------------------------------------------------
+            //-----------------------Specialisation-----------------------------
+            //------------------------------------------------------------------
+        } else if(s.equals("btSpecUpdate")) {
+            //------------------------------------------------------------------
+        } else if(s.equals("btSpecDelete")) {
+            //------------------------------------------------------------------
+        } else if(s.equals("btSpecAdd")) {
+            //------------------------------------------------------------------
+        }
+    }
+    }
+    
 }

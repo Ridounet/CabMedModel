@@ -37,6 +37,9 @@ public abstract class Personne implements Serializable {
     @Column(nullable = false)
     private Sexe sexe;
     
+    
+    private boolean visible = true;
+
     // Constructeurs
     public Personne() { }
     
@@ -94,4 +97,6 @@ public abstract class Personne implements Serializable {
     public void setPrenom(String prenom) { this.prenom = prenom; }
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+    public boolean isVisible() { return visible; }
+    public void setVisible(boolean visible) { this.visible = visible; }
 }

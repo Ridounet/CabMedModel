@@ -5,15 +5,11 @@ import javax.persistence.*;
 
 public class PatientDAO implements IPatientDAO{
     
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("cabmed");
-    private EntityManager em = null;
-    private EntityManager getEntityManager() { if (em == null) em = emf.createEntityManager(); return em; }
-
     @Override
     public boolean savePatient(Patient patient) {
         boolean result;
         try {
-            EntityManager em = getEntityManager();
+            EntityManager em = DAOMySQL.getEntityManager();
             EntityTransaction tx = em.getTransaction();
             tx.begin();
             em.persist(patient);
