@@ -15,6 +15,8 @@ public class Specialisation implements Serializable {
     
     @Column(nullable = false, unique = true)
     private String label;
+    
+    private boolean visible = true;
 
     // Constructeurs
     public Specialisation(int duree, String label) {
@@ -55,4 +57,6 @@ public class Specialisation implements Serializable {
     public void setDuree(int duree) { this.duree = duree; }
     public String getLabel() { return label; }
     public void setLabel(String label) { this.label = label; }
+    public boolean isVisible() { return visible; }
+    public void setVisible(boolean visible) { this.visible = visible; }
 }

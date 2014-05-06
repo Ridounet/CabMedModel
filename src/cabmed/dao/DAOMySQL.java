@@ -26,16 +26,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO {
+public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO, IPatientDAO, IPlanningDAO {
     
     private DAOMySQL() {
         cpDAO = new CpDAO();
         medecinDAO = new MedecinDAO();
         patientDAO = new PatientDAO();
         personnelDAO = new PersonnelDAO();
-        panningDAO = new PlanningDAO();
-        
-        main(null);
+        planningDAO = new PlanningDAO();
+        specialisationDAO = new SpecialisationDAO();
+        initDB();
     }
     
     public static DAOMySQL getInstance() {
@@ -51,11 +51,12 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
     private static EntityManager em = null;
     public static EntityManager getEntityManager() { if (em == null) em = emf.createEntityManager(); return em; }
     
-    private final CpDAO cpDAO;
-    private final MedecinDAO medecinDAO;
-    private final PatientDAO patientDAO;
-    private final PersonnelDAO personnelDAO;
-    private final PlanningDAO panningDAO;
+    private final ICpDAO cpDAO;
+    private final IMedecinDAO medecinDAO;
+    private final IPatientDAO patientDAO;
+    private final IPersonnelDAO personnelDAO;
+    private final IPlanningDAO planningDAO;
+    private final ISpecialisationDAO specialisationDAO;
     
     
     
@@ -65,11 +66,6 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
     }
     
     public static boolean saveMedecin(Medecin medecin, Planning planning) {
-        
-        return true;
-    }
-    
-    public static boolean savePersonnel(Personnel personnel) {
         
         return true;
     }
@@ -102,8 +98,11 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
     
     
     
-    
-    
+    @Override
+    public boolean addMedecin(Medecin medecin) {
+        return medecinDAO.addMedecin(medecin);
+    }
+
     @Override
     public boolean deleteMedecin(Medecin med) {
         return medecinDAO.deleteMedecin(med);
@@ -115,18 +114,18 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
     }
 
     @Override
-    public boolean saveInfirmiere(Infirmiere infirmiere) {
-        return personnelDAO.saveInfirmiere(infirmiere);
+    public boolean addInfirmiere(Infirmiere infirmiere) {
+        return personnelDAO.addInfirmiere(infirmiere);
     }
 
     @Override
-    public boolean saveSecretaire(Secretaire secretaire) {
-        return personnelDAO.saveSecretaire(secretaire);
+    public boolean addSecretaire(Secretaire secretaire) {
+        return personnelDAO.addSecretaire(secretaire);
     }
 
     @Override
-    public boolean addPersonnel(Personnel personne) {
-        return personnelDAO.addPersonnel(personne);
+    public boolean savePersonnel(Personnel personne) {
+        return personnelDAO.savePersonnel(personne);
     }
 
     @Override
@@ -139,6 +138,17 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
         return medecinDAO.getListMedecin();
     }
     
+    public List<Secretaire> getListSecretaire() {
+        return personnelDAO.getListSecretaire();
+    }
+
+    public List<Infirmiere> getListInfirmiere() {
+        return personnelDAO.getListInfirmiere();
+    }
+
+    public List<Specialisation> getListSpecialisation() {
+        return specialisationDAO.getListSpecialisation();
+    }
     
     
     
@@ -152,8 +162,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
     
     
     
-    
-        public static void main (String[] args) {
+        public static void initDB() {
         em = getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -162,8 +171,10 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
         tx.commit();
 
         tx.begin();
-        em.persist(i1); em.persist(i2); em.persist(p1); em.persist(s1); em.persist(s2);
-        em.persist(m1); em.persist(m2); em.persist(m3); em.persist(m4); 
+        em.persist(i1); em.persist(m1); em.persist(i2); em.persist(m4); 
+        em.persist(p1); em.persist(s1);  em.persist(m3); em.persist(s2); em.persist(m2);
+        em.persist(s3); em.persist(i4); em.persist(i3); em.persist(s4);
+        
         tx.commit();
 
         tx.begin();
@@ -242,10 +253,18 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
         "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
     private static Personnel i2 = new Infirmiere(new Date(), "19081052047", "Machin", "Chose", 
         new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
-    
-    private static Personnel s1 = new Secretaire(new Date(), "91012335418", "Louise", "Marie", 
+    private static Personnel i3 = new Secretaire(new Date(), "91017335418", "Louise", "Marie", 
         new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
-    private static Personnel s2 = new Secretaire(new Date(), "63010124101", "Desaedeleer", 
+    private static Personnel i4 = new Secretaire(new Date(), "63010124101", "Desaedeleer", 
+        "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
+    
+    private static Personnel s1 = new Infirmiere(new Date(), "87123274535", "Amar Ouaali", 
+        "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
+    private static Personnel s2 = new Infirmiere(new Date(), "19089052047", "Machin", "Chose", 
+        new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
+    private static Personnel s3 = new Secretaire(new Date(), "91015335418", "Louise", "Marie", 
+        new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
+    private static Personnel s4 = new Secretaire(new Date(), "63019124101", "Desaedeleer", 
         "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
     
     private static Medecin m1 = new Medecin(new Date(), REG_MED1, "VO", "Didier",
@@ -262,9 +281,4 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO 
     private static Specialisation sp2 = new Specialisation(3, "Gynécologue");
     private static Specialisation sp3 = new Specialisation(2, "Obstétricien");
 
-    @Override
-    public boolean addMedecin(Medecin medecin) {
-        return medecinDAO.addMedecin(medecin);
-    }
-    
 }

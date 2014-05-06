@@ -8,6 +8,7 @@ import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
 import cabmed.model.Personnel;
 import cabmed.model.Secretaire;
+import cabmed.model.Specialisation;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -46,6 +47,10 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     }
     
     // Généralités
+    public void initDB() {
+        DAOMySQL.getInstance();
+    }
+    
     public boolean login(String login, String password) {
         boolean result = false;
         if (login.equals("") && password.equals("")) {
@@ -56,6 +61,23 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
 
     public List<Cp> getListCp() {
         return listCp;
+    }
+    
+    @Override
+    public List<Medecin> getListMedecin() {
+        return DAOMySQL.getInstance().getListMedecin();
+    }
+    
+    public List<Secretaire> getListSecretaire() {
+        return DAOMySQL.getInstance().getListSecretaire();
+    }
+
+    public List<Infirmiere> getListInfirmiere() {
+        return DAOMySQL.getInstance().getListInfirmiere();
+    }
+
+    public List<Specialisation> getListSpecialisation() {
+        return DAOMySQL.getInstance().getListSpecialisation();
     }
     
     // Medecin
@@ -70,43 +92,33 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
         // TODO
         return DAOMySQL.getInstance().saveMedecin(medecin);
     }
+    
+    @Override
+    public boolean addMedecin(Medecin medecin) {
+        return DAOMySQL.getInstance().addMedecin(medecin);
+    }
 
     // Personnel
     @Override
-    public boolean saveInfirmiere(Infirmiere infirmiere) {
+    public boolean addInfirmiere(Infirmiere infirmiere) {
         // TODO
-        return DAOMySQL.getInstance().saveInfirmiere(infirmiere);
+        return DAOMySQL.getInstance().addInfirmiere(infirmiere);
     }
 
     @Override
-    public boolean saveSecretaire(Secretaire secretaire) {
+    public boolean addSecretaire(Secretaire secretaire) {
         // TODO
-        return DAOMySQL.getInstance().saveSecretaire(secretaire);
+        return DAOMySQL.getInstance().addSecretaire(secretaire);
     }
 
     @Override
-    public boolean addPersonnel(Personnel personne) {
+    public boolean savePersonnel(Personnel personne) {
         // TODO
-        return DAOMySQL.getInstance().addPersonnel(personne);
+        return DAOMySQL.getInstance().savePersonnel(personne);
     }
 
     @Override
     public boolean deleteSecretaire(Secretaire secretaire) {
        return DAOMySQL.getInstance().deleteSecretaire(secretaire);
     }
-
-    public void initDB() {
-        DAOMySQL.getInstance();
-    }
-
-    @Override
-    public List<Medecin> getListMedecin() {
-        return DAOMySQL.getInstance().getListMedecin();
-    }
-
-    @Override
-    public boolean addMedecin(Medecin medecin) {
-        return DAOMySQL.getInstance().addMedecin(medecin);
-    }
-
 }

@@ -5,6 +5,7 @@ import cabmed.model.Planning;
 import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -29,11 +30,11 @@ public class MedecinDAO implements IMedecinDAO{
     @Override
     public List<Medecin> getListMedecin() {
         String sql = "SELECT m FROM Medecin m WHERE m.visible = " + Constantes.VISIBLE;
-        List<Medecin> listMedecin;
+        List<Medecin> listMedecin = new LinkedList<>();
         try {
             return DAOMySQL.getEntityManager().createQuery(sql).getResultList();
         } catch (Exception ex) {
-            return null;
+            return listMedecin;
         }
     }
 

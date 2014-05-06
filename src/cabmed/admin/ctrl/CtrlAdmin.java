@@ -8,6 +8,7 @@ import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
 import cabmed.model.Personnel;
 import cabmed.model.Secretaire;
+import cabmed.model.Specialisation;
 import java.awt.Dialog;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -83,6 +84,7 @@ public class CtrlAdmin {
         return ctrlPrincipal.getSdf();
     }
 
+    // Actions
     public boolean deleteMedecin(Medecin medecin) {
         return facade.deleteMedecin(medecin);
     }
@@ -92,11 +94,11 @@ public class CtrlAdmin {
     }
 
     public boolean saveInfirmiere(Infirmiere infirmiere) {
-        return facade.saveInfirmiere(infirmiere);
+        return facade.addInfirmiere(infirmiere);
     }
 
     public boolean saveSecretaire(Secretaire secretaire) {
-        return facade.saveSecretaire(secretaire);
+        return facade.addSecretaire(secretaire);
     }
     
     public boolean deleteSecretaire(Secretaire secretaire) {
@@ -104,7 +106,7 @@ public class CtrlAdmin {
     }
 
     public boolean addPersonnel(Personnel personne) {
-        return facade.addPersonnel(personne);
+        return facade.savePersonnel(personne);
     }
     
     public boolean addMedecin(Medecin medecin) {
@@ -115,12 +117,25 @@ public class CtrlAdmin {
         return false;
     }
 
+    // Generalites
     public List<Cp> getListCp() {
         return facade.getListCp();
     }
 
     public List<Medecin> getListMedecin() {
         return facade.getListMedecin();
+    }
+
+    public List<Secretaire> getListSecretaire() {
+        return facade.getListSecretaire();
+    }
+
+    public List<Infirmiere> getListInfirmiere() {
+        return facade.getListInfirmiere();
+    }
+
+    public List<Specialisation> getListSpecialisation() {
+        return facade.getListSpecialisation();
     }
     
 }
