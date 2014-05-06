@@ -330,8 +330,6 @@
                           <Group type="102" attributes="0">
                               <Component id="btSecretaireUpdate" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btSecretaireUpdatePlanning" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btSecretaireAdd" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btSecretaireDelete" min="-2" max="-2" attributes="0"/>
@@ -349,7 +347,6 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btSecretaireUpdate" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
-                          <Component id="btSecretaireUpdatePlanning" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                           <Component id="btSecretaireAdd" alignment="3" pref="56" max="32767" attributes="0"/>
                           <Component id="btSecretaireDelete" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                       </Group>
@@ -455,14 +452,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSecretaireDeleteActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btSecretaireUpdatePlanning">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Modif. Planning"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSecretaireUpdatePlanningActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btSecretaireUpdate">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modification"/>
@@ -500,8 +489,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btInfirmiereUpdate" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btInfirmiereUpdatePlanning" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btInfirmiereAdd" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btInfirmiereDelete" min="-2" max="-2" attributes="0"/>
@@ -519,7 +506,6 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btInfirmiereUpdate" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
-                          <Component id="btInfirmiereUpdatePlanning" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                           <Component id="btInfirmiereAdd" alignment="3" pref="56" max="32767" attributes="0"/>
                           <Component id="btInfirmiereDelete" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                       </Group>
@@ -613,14 +599,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btInfirmiereUpdateActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btInfirmiereUpdatePlanning">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Modif. Planning"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btInfirmiereUpdatePlanningActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btInfirmiereDelete">

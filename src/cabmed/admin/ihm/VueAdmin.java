@@ -50,10 +50,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private void initAttributes() { // Initialise tous les attributs de cette classe
         sdf = ctrlAdmin.getSdf();
         actions = new Actions();
-//        listMedecin = new LinkedList<>();
-//        listMedecin.add(new Medecin(new Date(), "abc", "a", "Medecin", new Date(), new Adresse("abc", ctrlAdmin.getListCp().get(0)), "abc", Sexe.HOMME));
-//        listMedecin.add(new Medecin(new Date(), "xyz", "b", "Medecin", new Date(), new Adresse("xyz", ctrlAdmin.getListCp().get(1)), "xyz", Sexe.FEMME));
-//        listMedecin.add(new Medecin(new Date(), "123", "c", "Medecin", new Date(), new Adresse("123", ctrlAdmin.getListCp().get(4)), "123", Sexe.HOMME));
         listMedecin = ctrlAdmin.getListMedecin();
         listSecretaire = new LinkedList<>();
         listSecretaire.add(new Secretaire(new Date(), "abc", "a", "Secretaire", new Date(), new Adresse("abc", ctrlAdmin.getListCp().get(0)), "abc", Sexe.FEMME));
@@ -91,14 +87,12 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         scrollPaneSecretaire = new JScrollPane();
         tableSecretaire = new JTable();
         btSecretaireDelete = new JButton();
-        btSecretaireUpdatePlanning = new JButton();
         btSecretaireUpdate = new JButton();
         btSecretaireAdd = new JButton();
         panelInfirmiere = new JPanel();
         scrollPaneInfirmiere = new JScrollPane();
         tableInfirmiere = new JTable();
         btInfirmiereUpdate = new JButton();
-        btInfirmiereUpdatePlanning = new JButton();
         btInfirmiereDelete = new JButton();
         btInfirmiereAdd = new JButton();
         panelSpecialisation = new JPanel();
@@ -253,12 +247,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btSecretaireDelete(evt);
             }
         });
-        btSecretaireUpdatePlanning.setText("Modif. Planning");
-        btSecretaireUpdatePlanning.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actions.btSecretaireUpdatePlanning(evt);
-            }
-        });
         btSecretaireUpdate.setText("Modification");
         btSecretaireUpdate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -276,12 +264,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btInfirmiereUpdate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 actions.btInfirmiereUpdate(evt);
-            }
-        });
-        btInfirmiereUpdatePlanning.setText("Modif. Planning");
-        btInfirmiereUpdatePlanning.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actions.btInfirmiereUpdatePlanning(evt);
             }
         });
         btInfirmiereDelete.setBackground(new java.awt.Color(255, 0, 0));
@@ -534,8 +516,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                     .addGroup(panelSecretaireLayout.createSequentialGroup()
                         .addComponent(btSecretaireUpdate)
                         .addGap(18, 18, 18)
-                        .addComponent(btSecretaireUpdatePlanning)
-                        .addGap(18, 18, 18)
                         .addComponent(btSecretaireAdd)
                         .addGap(18, 18, 18)
                         .addComponent(btSecretaireDelete)
@@ -549,7 +529,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 .addGap(18, 18, 18)
                 .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btSecretaireUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSecretaireUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSecretaireAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                     .addComponent(btSecretaireDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(215, Short.MAX_VALUE))
@@ -569,8 +548,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                     .addGroup(panelInfirmiereLayout.createSequentialGroup()
                         .addComponent(btInfirmiereUpdate)
                         .addGap(18, 18, 18)
-                        .addComponent(btInfirmiereUpdatePlanning)
-                        .addGap(18, 18, 18)
                         .addComponent(btInfirmiereAdd)
                         .addGap(18, 18, 18)
                         .addComponent(btInfirmiereDelete)
@@ -584,7 +561,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 .addGap(18, 18, 18)
                 .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btInfirmiereUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btInfirmiereUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btInfirmiereAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                     .addComponent(btInfirmiereDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
                 .addGap(98, 98, 98))
@@ -677,7 +653,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private JButton btInfirmiereAdd;
     private JButton btInfirmiereDelete;
     private JButton btInfirmiereUpdate;
-    private JButton btInfirmiereUpdatePlanning;
     private JButton btMedecinAdd;
     private JButton btMedecinAddSpec;
     private JButton btMedecinDelete;
@@ -687,7 +662,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private JButton btSecretaireAdd;
     private JButton btSecretaireDelete;
     private JButton btSecretaireUpdate;
-    private JButton btSecretaireUpdatePlanning;
     private JButton btSpecAdd;
     private JButton btSpecDelete;
     private JButton btSpecUpdate;
@@ -718,9 +692,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private ModeleJTableInfirmiere modeleInfirmiere;
     private ModeleJTableSpecialisation modeleSpecialisation;
     
-    // Autres vues
-    private VueAdminModifPersonnel vueModifPersonnel;
-
     // Colonnes dans les JTable
     private static final int ID = 0;
     private static final int NAME = 1;
@@ -886,26 +857,5 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
-        
-        
-    private void actions(String s, ActionEvent evt) {
-        Medecin med = null;
-        Secretaire sec = null;
-        Infirmiere inf = null;
-        Specialisation sp = null;
-        if (true){
-            
-            //------------------------------------------------------------------
-            //-----------------------Specialisation-----------------------------
-            //------------------------------------------------------------------
-        } else if(s.equals("btSpecUpdate")) {
-            //------------------------------------------------------------------
-        } else if(s.equals("btSpecDelete")) {
-            //------------------------------------------------------------------
-        } else if(s.equals("btSpecAdd")) {
-            //------------------------------------------------------------------
-        }
     }
-    }
-    
 }

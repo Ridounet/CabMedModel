@@ -37,7 +37,7 @@ public abstract class Personne implements Serializable {
     @Column(nullable = false)
     private Sexe sexe;
     
-    
+    @Column(name = "visible", nullable = false)
     private boolean visible = true;
 
     // Constructeurs
@@ -51,6 +51,7 @@ public abstract class Personne implements Serializable {
         this.sexe = sexe;
         this.nom = nom;
         this.prenom = prenom;
+        visible = false;
     }
     
     // Surcharge "Object"
