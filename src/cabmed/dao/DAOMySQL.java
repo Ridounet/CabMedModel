@@ -178,10 +178,13 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         tx.commit();
 
         tx.begin();
-        listSpec.add(sp1);
-        listSpec.add(sp2);
-        listSpec.add(sp3);
+        listSpec.put(sp1, "9876");
+        listSpec.put(sp2, "1234");
+        listSpec.put(sp3, "0918");
         m1.setSpecialisation(listSpec);
+        m2.setSpecialisation(listSpec);
+        m3.setSpecialisation(listSpec);
+        m4.setSpecialisation(listSpec);
         em.persist(sp1); em.persist(sp2); em.persist(sp3);
         tx.commit();
         
@@ -253,14 +256,14 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
     private static Personnel i2 = new Infirmiere(new Date(), "19081052047", "Machin", "Chose", 
         new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
-    private static Personnel i3 = new Secretaire(new Date(), "91017335418", "Louise", "Marie", 
+    private static Personnel i3 = new Infirmiere(new Date(), "91017335418", "Louise", "Marie", 
         new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
-    private static Personnel i4 = new Secretaire(new Date(), "63010124101", "Desaedeleer", 
+    private static Personnel i4 = new Infirmiere(new Date(), "63010124101", "Desaedeleer", 
         "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
     
-    private static Personnel s1 = new Infirmiere(new Date(), "87123274535", "Amar Ouaali", 
+    private static Personnel s1 = new Secretaire(new Date(), "87123274535", "Amar Ouaali", 
         "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
-    private static Personnel s2 = new Infirmiere(new Date(), "19089052047", "Machin", "Chose", 
+    private static Personnel s2 = new Secretaire(new Date(), "19089052047", "Machin", "Chose", 
         new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
     private static Personnel s3 = new Secretaire(new Date(), "91015335418", "Louise", "Marie", 
         new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
@@ -276,7 +279,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static Medecin m4 = new Medecin(new Date(), REG_MED4, "Amar", "Machin",
         new Date(), new Adresse("Avenue de Moi 429", cp9), "0478439089", Sexe.HOMME);
     
-    private static List<Specialisation> listSpec = new ArrayList<>();
+    private static Map<Specialisation, String> listSpec = new HashMap<>();
     private static Specialisation sp1 = new Specialisation(1, "Généraliste");
     private static Specialisation sp2 = new Specialisation(3, "Gynécologue");
     private static Specialisation sp3 = new Specialisation(2, "Obstétricien");

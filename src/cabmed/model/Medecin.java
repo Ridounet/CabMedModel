@@ -2,16 +2,16 @@ package cabmed.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue(value="med")
 public class Medecin extends Personnel {
     // Attributs
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
+    
     @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "medecin_specialisations")
-    private List<Specialisation> specialisation;
+    private Map<Specialisation, String> specialisation;
     
     @OneToMany(cascade = CascadeType.DETACH)
     @ElementCollection(fetch = FetchType.LAZY)
@@ -34,8 +34,8 @@ public class Medecin extends Personnel {
     public Medecin() { }
     
     // Getters & Setters
-    public List<Specialisation> getSpecialisation() { return specialisation; }
-    public void setSpecialisation(List<Specialisation> specialisation) { this.specialisation = specialisation; }
+    public Map<Specialisation, String> getSpecialisation() { return specialisation; }
+    public void setSpecialisation(Map<Specialisation, String> specialisation) { this.specialisation = specialisation; }
     public Planning getPlanning() { return planning; }
     public void setPlanning(Planning planning) { this.planning = planning; }
     

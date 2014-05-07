@@ -5,6 +5,7 @@ import cabmed.model.Planning;
 import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,7 +42,7 @@ public class MedecinDAO implements IMedecinDAO{
     @Override
     public boolean addMedecin(Medecin medecin) {
         medecin.setPlanning(new Planning(medecin));
-        medecin.setSpecialisation(new ArrayList<Specialisation>());
+        medecin.setSpecialisation(new HashMap<Specialisation, String>());
         EntityManager em = DAOMySQL.getEntityManager();
         try {
             em.getTransaction().begin();

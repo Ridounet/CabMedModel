@@ -10,11 +10,15 @@ import cabmed.model.Specialisation;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -173,15 +177,27 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         tabbedPane.setName("Médecin");
         tableMedecin.setAutoCreateRowSorter(true);
         tableMedecin.setModel(modeleMedecin);
+        tableMedecin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Medecin m = listMedecin.get(tableMedecin.getSelectedRow());
+                Map<Specialisation, String> mapSpec = m.getSpecialisation();
+                for (int i = 0; i < mapSpec.size(); i++) {
+                    listMedecinSpec.add(mapSpec.get(i));
+                }
+            }
+        });
         scrollPaneMedecin.setViewportView(tableMedecin);
         btMedecinUpdate.setText("Modification");
         btMedecinUpdate.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btMedecinUpdate(evt);
             }
         });
         btMedecinUpdatePlanning.setText("Modif. Planning");
         btMedecinUpdatePlanning.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btMedecinUpdatePlanning(evt);
             }
