@@ -3,6 +3,7 @@ package cabmed.admin.main;
 import cabmed.ressources.Observer;
 import java.util.List;
 import cabmed.dao.*;
+import cabmed.model.Administrateur;
 import cabmed.model.Cp;
 import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
@@ -51,12 +52,8 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
         DAOMySQL.getInstance();
     }
     
-    public boolean login(String login, String password) {
-        boolean result = false;
-        if (login.equals("") && password.equals("")) {
-            result = true;
-        }
-        return result;
+    public Administrateur login(String login, String password) {
+        return DAOMySQL.getInstance().login(login, password);
     }
 
     public List<Cp> getListCp() {

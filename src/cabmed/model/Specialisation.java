@@ -29,7 +29,7 @@ public class Specialisation implements Serializable {
     // Surcharge "Object"
     @Override
     public String toString() {
-        return "Specialisation: " + label + " avec durée par défaut de " + duree + "min";
+        return label;
     }
     
     @Override

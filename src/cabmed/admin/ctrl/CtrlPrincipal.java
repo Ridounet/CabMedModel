@@ -2,6 +2,7 @@ package cabmed.admin.ctrl;
 
 import cabmed.admin.ihm.VueLogin;
 import cabmed.admin.main.Facade;
+import cabmed.model.Administrateur;
 import cabmed.model.Cp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ public final class CtrlPrincipal {
     private final Facade facade;
     private final SimpleDateFormat sdf;
     private List<Cp> listCp;
+    private Administrateur logged;
     
     public static void main(String[] args) {
         new CtrlPrincipal();
@@ -54,6 +56,14 @@ public final class CtrlPrincipal {
 
     public List<Cp> getListCp() {
         return listCp;
+    }
+
+    public void putLogged(Administrateur admin) {
+        logged = admin;
+    }
+    
+    public Administrateur getLogged() {
+        return logged;
     }
     
     

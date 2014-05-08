@@ -1,6 +1,7 @@
 package cabmed.admin.ihm;
 
 import cabmed.admin.ctrl.CtrlLogin;
+import cabmed.model.Administrateur;
 import cabmed.ressources.Observer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,16 +25,20 @@ public class VueLogin extends javax.swing.JFrame implements Observer {
     
     
     private void actionLogin(ActionEvent evt) {
-        //String login = ;
-        //String password = ;
-        
-        //boolean result = ;
-        
-        if (ctrlLogin.login(ztLogin.getText(), ztPassword.getText())) {
-            ctrlLogin.showAdmin();
-        } else {
-            JOptionPane.showMessageDialog(null, "Login pas ok");
-        }
+//        String login = ztLogin.getText();
+//        String password = ztPassword.getText();
+//        if (login.equals("") || password.equals("")) {
+//            JOptionPane.showMessageDialog(null, "Please fill all fields");
+//        } else {
+//            Administrateur admin = ctrlLogin.login(login, password);
+//            if (admin != null) {
+//                ctrlLogin.putLogged(admin);
+//                ctrlLogin.showAdmin();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Login or password not correct");
+//            }
+//        }
+        ctrlLogin.showAdmin();
         
     }
 

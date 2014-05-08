@@ -2,6 +2,7 @@ package cabmed.admin.ctrl;
 
 import cabmed.admin.ihm.VueLogin;
 import cabmed.admin.main.Facade;
+import cabmed.model.Administrateur;
 import javax.swing.SwingUtilities;
 
 public class CtrlLogin {
@@ -43,8 +44,12 @@ public class CtrlLogin {
         ctrlPrincipal.showAdmin();
     }
 
-    public boolean login(String login, String password) {
+    public Administrateur login(String login, String password) {
         return facade.login(login, password);
+    }
+
+    public void putLogged(Administrateur admin) {
+        ctrlPrincipal.putLogged(admin);
     }
     
 }

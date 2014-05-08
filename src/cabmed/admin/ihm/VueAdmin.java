@@ -7,6 +7,7 @@ import cabmed.model.Medecin;
 import cabmed.model.Secretaire;
 import cabmed.model.Sexe;
 import cabmed.model.Specialisation;
+import cabmed.ressources.Observer;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,8 +20,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -33,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -74,7 +78,8 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btMedecinDeleteSpec = new JButton();
         btMedecinAddSpec = new JButton();
         scrollPaneMedecinListSpec = new JScrollPane();
-        listMedecinSpec = new JList();
+        listModelSpec = new DefaultListModel<Specialisation>();
+        listMedecinSpec = new JList(listModelSpec);
         panelSecretaire = new JPanel();
         scrollPaneSecretaire = new JScrollPane();
         tableSecretaire = new JTable();
@@ -175,16 +180,11 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
 
         // -------------------- Debut Medecin --------------------
         tabbedPane.setName("Médecin");
-        tableMedecin.setAutoCreateRowSorter(true);
         tableMedecin.setModel(modeleMedecin);
         tableMedecin.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Medecin m = listMedecin.get(tableMedecin.getSelectedRow());
-                Map<Specialisation, String> mapSpec = m.getSpecialisation();
-                for (int i = 0; i < mapSpec.size(); i++) {
-                    listMedecinSpec.add(mapSpec.get(i));
-                }
+                actions.jTableClick();
             }
         });
         scrollPaneMedecin.setViewportView(tableMedecin);
@@ -323,12 +323,15 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
 
     @Override
     public void update() {
-        tableMedecin.setBackground(Color.red);
+        ((Observer)tableMedecin.getModel()).update();
+        ((Observer)tableSecretaire.getModel()).update();
+        ((Observer)tableInfirmiere.getModel()).update();
+        ((Observer)tableSpec.getModel()).update();
     }
     
     // Modeles JTable
     // ---------------- Modele Medecin ----------------
-    public class ModeleJTableMedecin extends DefaultTableModel{
+    public class ModeleJTableMedecin extends DefaultTableModel implements Observer {
 
         public ModeleJTableMedecin() {
             super(entetePersonnel, listMedecin.size());
@@ -360,7 +363,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
 
     }
     // ---------------- Modele Secretaire ----------------
-    public class ModeleJTableSecretaire extends DefaultTableModel{
+    public class ModeleJTableSecretaire extends DefaultTableModel implements Observer {
 
         public ModeleJTableSecretaire() {
             super(entetePersonnel, listSecretaire.size());
@@ -386,9 +389,14 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             }
         }
 
+        @Override
+        public void update() {
+            fireTableDataChanged();
+        }
+
     }
     // ---------------- Modele Infirmiere ----------------
-    public class ModeleJTableInfirmiere extends DefaultTableModel{
+    public class ModeleJTableInfirmiere extends DefaultTableModel implements Observer {
 
         public ModeleJTableInfirmiere() {
             super(entetePersonnel, listInfirmiere.size());
@@ -413,10 +421,15 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 default: return "NO DATA";
             }
         }
+        
+        @Override
+        public void update() {
+            fireTableDataChanged();
+        }
 
     }
     // ---------------- Modele Specialisation ----------------
-    public class ModeleJTableSpecialisation extends DefaultTableModel{
+    public class ModeleJTableSpecialisation extends DefaultTableModel implements Observer {
 
         public ModeleJTableSpecialisation() {
             super(enteteSpecialisation, listSpecialisation.size());
@@ -435,7 +448,43 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 default: return "NO DATA";
             }
         }
+        
+        @Override
+        public void update() {
+            fireTableDataChanged();
+        }
 
+    }
+    // ---------------- Modele Specialisation Medecin ----------------
+    public class ModeleJTableSpecialisationMedecin extends DefaultTableModel implements Observer {
+        
+        public ModeleJTableSpecialisationMedecin() {
+            super(enteteSpecialisation, listSpecialisation.size());
+        }
+
+        @Override public int getRowCount() { return 3; }
+        @Override public int getColumnCount() { return 1; }
+        @Override public boolean isCellEditable(int row, int column) { return false; }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (rowIndex == 1) {
+                
+            }
+            
+            switch (columnIndex) {
+                case ID: return listSpecialisation.get(rowIndex).getId();
+                case LABEL: return listSpecialisation.get(rowIndex).getLabel();
+                case DELAY: return listSpecialisation.get(rowIndex).getDuree();
+                default: return "NO DATA";
+            }
+        }
+        
+        @Override
+        public void update() {
+            fireTableDataChanged();
+        }
+        
     }
     
     // Placement des composants
@@ -672,6 +721,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private JLabel lblSpecAjout;
     private JLabel lblSpecDuree;
     private JLabel lblSpecLabel;
+    private DefaultListModel listModelSpec;
     private JList listMedecinSpec;
     private JPanel paneSpecAdd;
     private JPanel panelInfirmiere;
@@ -859,6 +909,16 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             } else {
                 Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+            }
+        }
+
+        private void jTableClick() {
+            listModelSpec.removeAllElements();
+            Medecin m = listMedecin.get(tableMedecin.getSelectedRow());
+            if (m.getSpecialisation() != null) {
+                for (Specialisation s : m.getSpecialisation()) {
+                    listModelSpec.addElement(s);
+                }
             }
         }
     }

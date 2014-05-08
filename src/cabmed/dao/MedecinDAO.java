@@ -42,7 +42,7 @@ public class MedecinDAO implements IMedecinDAO{
     @Override
     public boolean addMedecin(Medecin medecin) {
         medecin.setPlanning(new Planning(medecin));
-        medecin.setSpecialisation(new HashMap<Specialisation, String>());
+        medecin.setSpecialisation(new ArrayList<Specialisation>());
         EntityManager em = DAOMySQL.getEntityManager();
         try {
             em.getTransaction().begin();

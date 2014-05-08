@@ -1,5 +1,6 @@
 package cabmed.dao;
 
+import cabmed.model.Administrateur;
 import cabmed.model.Adresse;
 import cabmed.model.Cp;
 import cabmed.model.Disponibilite;
@@ -25,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO, IPatientDAO, IPlanningDAO {
     
@@ -47,7 +49,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     private static DAOMySQL instance;
     
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("cabmed");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("cabmed");
     private static EntityManager em = null;
     public static EntityManager getEntityManager() { if (em == null) em = emf.createEntityManager(); return em; }
     
@@ -61,6 +63,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     
     // CRUD Personne
+    @Override
     public boolean savePatient(Patient patient) {
         return patientDAO.savePatient(patient);
     }
@@ -96,7 +99,16 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     
     
-    
+    public Administrateur login(String login, String password) {
+        Administrateur result;
+        try {
+            result = (Administrateur) getEntityManager().createQuery("SELECT a FROM Administrateur a "
+                + "WHERE a.nom = '" + login + "' AND a.prenom = '" + password + "'").getSingleResult();
+        } catch(Exception e) {
+            result = null;
+        }
+        return result;
+    }
     
     @Override
     public boolean addMedecin(Medecin medecin) {
@@ -153,16 +165,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        public static void initDB() {
+    public static void initDB() {
         em = getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -171,22 +174,23 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         tx.commit();
 
         tx.begin();
-        em.persist(i1); em.persist(m1); em.persist(i2); em.persist(m4); 
+        em.persist(i1); em.persist(m1); em.persist(i2); em.persist(m4); em.persist(a1);
         em.persist(p1); em.persist(s1);  em.persist(m3); em.persist(s2); em.persist(m2);
         em.persist(s3); em.persist(i4); em.persist(i3); em.persist(s4);
         
         tx.commit();
 
         tx.begin();
-        listSpec.put(sp1, "9876");
-        listSpec.put(sp2, "1234");
-        listSpec.put(sp3, "0918");
-        m1.setSpecialisation(listSpec);
-        m2.setSpecialisation(listSpec);
-        m3.setSpecialisation(listSpec);
-        m4.setSpecialisation(listSpec);
+        listSpec.add(sp1);
+        listSpec.add(sp2);
+        listSpec.add(sp3);
         em.persist(sp1); em.persist(sp2); em.persist(sp3);
         tx.commit();
+        
+        m1.setSpecialisation(listSpec);
+//        m2.setSpecialisation(listSpec);
+//        m3.setSpecialisation(listSpec);
+//        m4.setSpecialisation(listSpec);
         
 //        tx.begin();
         mapDisponibilite.put(Jour.LUNDI, dis1);
@@ -251,6 +255,8 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     private static Patient p1 = new Patient(Mutualite.PARTENAMUT, REG_PAT, "Amar Ouaali", "Riduan",
         new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484848849", Sexe.HOMME);
+    private static Personnel a1 = new Administrateur(new Date(), REG_MED1, "Administrateur", "Moi",
+            new Date(), new Adresse("Rue test 43", cp1), "0453945632", Sexe.HOMME);
     
     private static Personnel i1 = new Infirmiere(new Date(), "87122274535", "Amar Ouaali", 
         "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
@@ -279,7 +285,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static Medecin m4 = new Medecin(new Date(), REG_MED4, "Amar", "Machin",
         new Date(), new Adresse("Avenue de Moi 429", cp9), "0478439089", Sexe.HOMME);
     
-    private static Map<Specialisation, String> listSpec = new HashMap<>();
+    private static List<Specialisation> listSpec = new ArrayList<>();
     private static Specialisation sp1 = new Specialisation(1, "Généraliste");
     private static Specialisation sp2 = new Specialisation(3, "Gynécologue");
     private static Specialisation sp3 = new Specialisation(2, "Obstétricien");
