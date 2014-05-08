@@ -226,24 +226,35 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         if (newEnregistrement) { // Si nouvel enregistrement, faire un nouvel objet.
-            Personnel personne;
             if (type.equals(CtrlAdmin.TYPE_MEDECIN)) {
-                personne = new Medecin();
-                getDatas(personne);
-                if (ctrlAdmin.addMedecin((Medecin)personne)) {
+                Medecin med = new Medecin();
+                getDatas(med);
+                if (ctrlAdmin.addMedecin(med)) {
                     JOptionPane.showMessageDialog(null, "Physician saved");
                     ctrlAdmin.hideVueModifPersonnel();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Physician not saved");
+                    JOptionPane.showMessageDialog(null, "Physician not saved", "An error has occured!", JOptionPane.ERROR);
                 }
             } else if (type.equals(CtrlAdmin.TYPE_INFIRMIERE)) {
-                personne = new Infirmiere();
-                getDatas(personne);
-                ctrlAdmin.saveInfirmiere((Infirmiere)personne);
+                Infirmiere inf = new Infirmiere();
+                getDatas(inf);
+                if (ctrlAdmin.addInfirmiere(inf)) {
+                    JOptionPane.showMessageDialog(null, "Nurse saved");
+                    ctrlAdmin.hideVueModifPersonnel();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nurse not saved");
+                }
+                ctrlAdmin.addInfirmiere(inf);
             } else {
-                personne = new Secretaire();
-                getDatas(personne);
-                ctrlAdmin.saveSecretaire((Secretaire)personne);
+                Secretaire sec = new Secretaire();
+                getDatas(sec);
+                if (ctrlAdmin.addSecretaire(sec)) {
+                    JOptionPane.showMessageDialog(null, "Secretary saved");
+                    ctrlAdmin.hideVueModifPersonnel();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Secretary not saved");
+                }
+                ctrlAdmin.addSecretaire(sec);
             }
         } else { // Si pas nouvel enregistrement, renvoyer l'objet déjà créé avec les nouvelles valeurs
             getDatas(this.personne);
@@ -255,38 +266,6 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         ctrlAdmin.hideVueModifPersonnel();
     }//GEN-LAST:event_btCancelActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueAdminModifPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueAdminModifPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueAdminModifPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueAdminModifPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VueAdminModifPersonnel().setVisible(true);
-            }
-        });
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
@@ -365,7 +344,13 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
 
     private void getDatas(Personnel personne) {
         personne.setAdresse(new Adresse(ztAdresse.getText(),(Cp)cbCp.getSelectedItem()));
-        
+        personne.setNom(ztNom.getText());
+        personne.setPrenom(ztPrenom.getText());
+        personne.setRegistreNat(ztNumeroNational.getText());
+        personne.setDateNaissance(dpDateNaissance.getDate());
+        personne.setDebutTravail(dpDebutTravail.getDate());
+        personne.setSexe((Sexe)cbSexe.getSelectedItem());
+        personne.setTel(ztTel.getText());
     }
     
     private boolean ctrlFields() {

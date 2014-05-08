@@ -15,27 +15,7 @@ import java.util.LinkedList;
 
 public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     
-    private final List<Cp> listCp;
-    
-    public Facade() {
-        listCp = new LinkedList<>();
-        Cp c1 = new Cp(1000, "Bruxelles");
-        c1.setId(1);
-        Cp c2 = new Cp(1020, "Laeken");
-        c2.setId(2);
-        Cp c3 = new Cp(1030, "Schaerbeek");
-        c3.setId(3);
-        Cp c4 = new Cp(1040, "Etterbeek");
-        c4.setId(4);
-        Cp c5 = new Cp(1050, "Ixelles");
-        c5.setId(5);
-        
-        listCp.add(c1);
-        listCp.add(c2);
-        listCp.add(c3);
-        listCp.add(c4);
-        listCp.add(c5);
-    }
+    public Facade() { }
     // Pattern Observer
     private static final List<Observer> listObservers = new ArrayList<>();
     private static void notifyObservers() {
@@ -57,7 +37,7 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     }
 
     public List<Cp> getListCp() {
-        return listCp;
+        return DAOMySQL.getInstance().getListCp();
     }
     
     @Override
@@ -92,7 +72,9 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     
     @Override
     public boolean addMedecin(Medecin medecin) {
-        return DAOMySQL.getInstance().addMedecin(medecin);
+        boolean result = DAOMySQL.getInstance().addMedecin(medecin);
+        notifyObservers();
+        return result;
     }
 
     // Personnel

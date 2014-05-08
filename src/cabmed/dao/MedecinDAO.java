@@ -1,5 +1,7 @@
 package cabmed.dao;
 
+import cabmed.model.Disponibilite;
+import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Planning;
 import cabmed.model.Specialisation;
@@ -8,16 +10,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 public class MedecinDAO implements IMedecinDAO{
 
     @Override
     public boolean deleteMedecin(Medecin med) {
-        boolean result = false;
-        
-        
-        return result;
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
+        try{
+            DAOMySQL.getEntityManager().remove(med);
+            tx.commit();
+            return true;
+        } catch(Exception e) {
+            tx.rollback();
+            return false;
+        }
     }
 
     @Override
@@ -30,27 +40,34 @@ public class MedecinDAO implements IMedecinDAO{
 
     @Override
     public List<Medecin> getListMedecin() {
-        String sql = "SELECT m FROM Medecin m WHERE m.visible = " + Constantes.VISIBLE;
-        List<Medecin> listMedecin = new LinkedList<>();
         try {
-            return DAOMySQL.getEntityManager().createQuery(sql).getResultList();
+            return DAOMySQL.getEntityManager().createQuery(
+                    "SELECT m FROM Medecin m WHERE m.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return listMedecin;
+            return new ArrayList<Medecin>();
         }
     }
 
     @Override
     public boolean addMedecin(Medecin medecin) {
-        medecin.setPlanning(new Planning(medecin));
+        Planning planning = new Planning(medecin);
+        Map<Jour, Disponibilite> disponibilite = new HashMap<>();
+        disponibilite.put(Jour.LUNDI, new Disponibilite());
+        disponibilite.put(Jour.MARDI, new Disponibilite());
+        disponibilite.put(Jour.MERCREDI, new Disponibilite());
+        disponibilite.put(Jour.JEUDI, new Disponibilite());
+        disponibilite.put(Jour.VENDREDI, new Disponibilite());
+        disponibilite.put(Jour.SAMEDI, new Disponibilite());
+        planning.setDisponibilite(disponibilite);
         medecin.setSpecialisation(new ArrayList<Specialisation>());
-        EntityManager em = DAOMySQL.getEntityManager();
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
         try {
-            em.getTransaction().begin();
-            em.persist(medecin);
-            em.getTransaction().commit();
+            DAOMySQL.getEntityManager().persist(medecin);
+            tx.commit();
             return true;
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            tx.rollback();
             return false;
         }
     }

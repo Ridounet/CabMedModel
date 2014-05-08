@@ -89,16 +89,20 @@ public class CtrlAdmin {
         return facade.deleteMedecin(medecin);
     }
 
-    public boolean saveMedecin(Medecin medecin) {
-        return facade.saveMedecin(medecin);
+    public boolean addInfirmiere(Infirmiere infirmiere) {
+        if (facade.addInfirmiere(infirmiere)) {
+            vueAdmin.update();
+            return true;
+        }
+        return false;
     }
 
-    public boolean saveInfirmiere(Infirmiere infirmiere) {
-        return facade.addInfirmiere(infirmiere);
-    }
-
-    public boolean saveSecretaire(Secretaire secretaire) {
-        return facade.addSecretaire(secretaire);
+    public boolean addSecretaire(Secretaire secretaire) {
+        if (facade.addSecretaire(secretaire)) {
+            vueAdmin.update();
+            return true;
+        }
+        return false;
     }
     
     public boolean deleteSecretaire(Secretaire secretaire) {
@@ -111,7 +115,6 @@ public class CtrlAdmin {
     
     public boolean addMedecin(Medecin medecin) {
         if (facade.addMedecin(medecin)) {
-            vueAdmin.update();
             return true;
         }
         return false;
@@ -137,5 +140,5 @@ public class CtrlAdmin {
     public List<Specialisation> getListSpecialisation() {
         return facade.getListSpecialisation();
     }
-    
+
 }

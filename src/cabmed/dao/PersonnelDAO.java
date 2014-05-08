@@ -7,19 +7,37 @@ import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 public class PersonnelDAO implements IPersonnelDAO {
 
     @Override
     public boolean addInfirmiere(Infirmiere infirmiere) {
-        // TODO
-        return true;
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
+        try{
+            DAOMySQL.getEntityManager().persist(infirmiere);
+            tx.commit();
+            return true;
+        } catch(Exception e) {
+            tx.rollback();
+            return false;
+        }
     }
 
     @Override
     public boolean addSecretaire(Secretaire secretaire) {
-        // TODO
-        return true;
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
+        try{
+            DAOMySQL.getEntityManager().persist(secretaire);
+            tx.commit();
+            return true;
+        } catch(Exception e) {
+            tx.rollback();
+            return false;
+        }
     }
 
     @Override
@@ -36,23 +54,21 @@ public class PersonnelDAO implements IPersonnelDAO {
 
     @Override
     public List<Secretaire> getListSecretaire() {
-        String sql = "SELECT s FROM Secretaire s WHERE s.visible = " + Constantes.VISIBLE;
-        List<Secretaire> listSecretaire = new LinkedList<>();
         try {
-            return DAOMySQL.getEntityManager().createQuery(sql).getResultList();
+            return DAOMySQL.getEntityManager().createQuery(
+                    "SELECT s FROM Secretaire s WHERE s.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return listSecretaire;
+            return new LinkedList<>();
         }
     }
 
     @Override
     public List<Infirmiere> getListInfirmiere() {
-        String sql = "SELECT i FROM Infirmiere i WHERE i.visible = " + Constantes.VISIBLE;
-        List<Infirmiere> listInfirmiere = new LinkedList<>();
         try {
-            return DAOMySQL.getEntityManager().createQuery(sql).getResultList();
+            return DAOMySQL.getEntityManager().createQuery(
+                    "SELECT i FROM Infirmiere i WHERE i.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return listInfirmiere;
+            return new LinkedList<>();
         }
     }
     

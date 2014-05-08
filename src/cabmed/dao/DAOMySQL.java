@@ -74,7 +74,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     }
     
     // CRUD Cp
-    public static List<Cp> getListCp() {
+    public List<Cp> getListCp() {
         
         return null;
     }
@@ -215,14 +215,6 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Rdv rdv1 = new Rdv(new Date(), p1, m2, sp1, StatutRdv.EN_COURS, Tranche.H0900, 2);
         em.persist(rdv1);
         tx.commit();
-        
-        Rdv rdv2 = (Rdv) em.createQuery("SELECT r FROM Rdv r WHERE r.patient.registreNat = " + REG_PAT).getSingleResult();
-        System.out.println(rdv2);
-        
-        EntityManager em1 = Persistence.createEntityManagerFactory("cabmed").createEntityManager();
-        EntityTransaction tx1 = em1.getTransaction();
-        Patient p2 = em1.find(Patient.class, p1.getId());
-        //System.out.println(p2.getRdv().toString());
         
     }
     

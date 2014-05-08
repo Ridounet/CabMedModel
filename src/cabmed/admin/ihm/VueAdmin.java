@@ -114,7 +114,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private void initJTables() { // Initialise la taille et le non redimensionnement des colonnes
         if (tableMedecin.getColumnModel().getColumnCount() > 0) {
             tableMedecin.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableMedecin.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableMedecin.getColumnModel().getColumn(1).setPreferredWidth(90);
             tableMedecin.getColumnModel().getColumn(2).setPreferredWidth(60);
             tableMedecin.getColumnModel().getColumn(3).setPreferredWidth(30);
             tableMedecin.getColumnModel().getColumn(4).setPreferredWidth(70);
@@ -126,7 +126,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         if (tableSecretaire.getColumnModel().getColumnCount() > 0) {
             tableSecretaire.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableSecretaire.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableSecretaire.getColumnModel().getColumn(1).setPreferredWidth(90);
             tableSecretaire.getColumnModel().getColumn(2).setPreferredWidth(60);
             tableSecretaire.getColumnModel().getColumn(3).setPreferredWidth(30);
             tableSecretaire.getColumnModel().getColumn(4).setPreferredWidth(70);
@@ -138,7 +138,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         if (tableInfirmiere.getColumnModel().getColumnCount() > 0) {
             tableInfirmiere.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableInfirmiere.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableInfirmiere.getColumnModel().getColumn(1).setPreferredWidth(90);
             tableInfirmiere.getColumnModel().getColumn(2).setPreferredWidth(60);
             tableInfirmiere.getColumnModel().getColumn(3).setPreferredWidth(30);
             tableInfirmiere.getColumnModel().getColumn(4).setPreferredWidth(70);
@@ -358,6 +358,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         }
         
         public void update() {
+            listMedecin = ctrlAdmin.getListMedecin();
             fireTableDataChanged();
         }
 
@@ -792,13 +793,13 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
                 Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
-                JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
+                JOptionPane.showMessageDialog(null, "Update planning for physician: " + med.getNom() + " " + med.getPrenom());
             }
         }
         
-        public void btMedecinDeleteSpec(ActionEvent evt) { // Bouton suppression d'une spécialisation
-            if (tableMedecin.getSelectedRowCount() != 1) {
-                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+        public void btMedecinDeleteSpec(ActionEvent evt) { // Bouton suppression d'une spécialisation pour un médecin
+            if (listMedecinSpec.getSelectedValue() == null) {
+                JOptionPane.showMessageDialog(null, "Please select one and only one specialisation");
             } else {
                 Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
@@ -809,8 +810,11 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
-                ctrlAdmin.deleteMedecin(med);
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this person?", "Delete this physician", JOptionPane.YES_NO_OPTION);
+                if (option == 0) {
+                    Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                    ctrlAdmin.deleteMedecin(med);
+                }
             }
         }
         
