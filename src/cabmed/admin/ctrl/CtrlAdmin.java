@@ -70,7 +70,6 @@ public class CtrlAdmin {
     }
     
     public void hideVueModifPersonnel() {
-        vueAdmin.setVisible(true);
         vueModifPersonnel.setVisible(false);
     }
     
@@ -81,16 +80,16 @@ public class CtrlAdmin {
                 public void run() {
                     vueModifPlanning = new VueAdminModifPlanning();
                     Facade.addObserver(vueModifPersonnel);
-                    vueModifPlanning.setPersonne(med);
-                    vueModifPlanning.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-                    vueModifPlanning.setVisible(true);
+                    vueModifPlanning.showView(med);
                 }
             });
         } else {
-            vueModifPlanning.setPersonne(med);
-            vueModifPlanning.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-            vueModifPlanning.showView(true);
+            vueModifPlanning.showView(med);
         }
+    }
+    
+    public void hideVueModifPlanning() {
+        vueModifPlanning.setVisible(false);
     }
     
     

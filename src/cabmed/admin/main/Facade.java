@@ -12,20 +12,19 @@ import cabmed.model.Personnel;
 import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
+public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, ICpDAO {
     
-    private CtrlPrincipal ctrl;
+    private final CtrlPrincipal ctrl;
     
     public Facade(CtrlPrincipal ctrlPrincipal) { this.ctrl = ctrlPrincipal; }
     
     // Pattern Observer
     private static final List<Observer> listObservers = new ArrayList<>();
     private static void notifyObservers() {
-        for (Observer ob : listObservers) {
+        listObservers.stream().forEach((ob) -> {
             ob.update();
-        }
+        });
     }
     public static void addObserver(Observer o) {
         listObservers.add(o);
@@ -40,6 +39,7 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
         return DAOMySQL.getInstance().login(login, password);
     }
 
+    @Override
     public List<Cp> getListCp() {
         return DAOMySQL.getInstance().getListCp();
     }
@@ -49,14 +49,17 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
         return DAOMySQL.getInstance().getListMedecin();
     }
     
+    @Override
     public List<Secretaire> getListSecretaire() {
         return DAOMySQL.getInstance().getListSecretaire();
     }
 
+    @Override
     public List<Infirmiere> getListInfirmiere() {
         return DAOMySQL.getInstance().getListInfirmiere();
     }
 
+    @Override
     public List<Specialisation> getListSpecialisation() {
         return DAOMySQL.getInstance().getListSpecialisation();
     }

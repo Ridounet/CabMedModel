@@ -225,41 +225,44 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        if (newEnregistrement) { // Si nouvel enregistrement, faire un nouvel objet.
-            if (type.equals(CtrlAdmin.TYPE_MEDECIN)) {
-                Medecin med = new Medecin();
-                getDatas(med);
-                if (ctrlAdmin.addMedecin(med)) {
-                    JOptionPane.showMessageDialog(null, "Physician saved");
-                    ctrlAdmin.hideVueModifPersonnel();
+        if (ctrlFields()) {
+            if (newEnregistrement) { // Si nouvel enregistrement, faire un nouvel objet.
+                if (type.equals(CtrlAdmin.TYPE_MEDECIN)) {
+                    Medecin med = new Medecin();
+                    getDatas(med);
+                    if (ctrlAdmin.addMedecin(med)) {
+                        JOptionPane.showMessageDialog(null, "Physician saved");
+                        ctrlAdmin.hideVueModifPersonnel();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Physician not saved", "An error has occured!", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else if (type.equals(CtrlAdmin.TYPE_INFIRMIERE)) {
+                    Infirmiere inf = new Infirmiere();
+                    getDatas(inf);
+                    if (ctrlAdmin.addInfirmiere(inf)) {
+                        JOptionPane.showMessageDialog(null, "Nurse saved");
+                        ctrlAdmin.hideVueModifPersonnel();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nurse not saved");
+                    }
+                    ctrlAdmin.addInfirmiere(inf);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Physician not saved", "An error has occured!", JOptionPane.ERROR);
+                    Secretaire sec = new Secretaire();
+                    getDatas(sec);
+                    if (ctrlAdmin.addSecretaire(sec)) {
+                        JOptionPane.showMessageDialog(null, "Secretary saved");
+                        ctrlAdmin.hideVueModifPersonnel();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Secretary not saved");
+                    }
+                    ctrlAdmin.addSecretaire(sec);
                 }
-            } else if (type.equals(CtrlAdmin.TYPE_INFIRMIERE)) {
-                Infirmiere inf = new Infirmiere();
-                getDatas(inf);
-                if (ctrlAdmin.addInfirmiere(inf)) {
-                    JOptionPane.showMessageDialog(null, "Nurse saved");
-                    ctrlAdmin.hideVueModifPersonnel();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nurse not saved");
-                }
-                ctrlAdmin.addInfirmiere(inf);
-            } else {
-                Secretaire sec = new Secretaire();
-                getDatas(sec);
-                if (ctrlAdmin.addSecretaire(sec)) {
-                    JOptionPane.showMessageDialog(null, "Secretary saved");
-                    ctrlAdmin.hideVueModifPersonnel();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Secretary not saved");
-                }
-                ctrlAdmin.addSecretaire(sec);
+            } else { // Si pas nouvel enregistrement, renvoyer l'objet déjà créé avec les nouvelles valeurs
+                getDatas(this.personne);
+                ctrlAdmin.addPersonnel(this.personne);
             }
-        } else { // Si pas nouvel enregistrement, renvoyer l'objet déjà créé avec les nouvelles valeurs
-            getDatas(this.personne);
-            ctrlAdmin.addPersonnel(this.personne);
         }
+            
         
     }//GEN-LAST:event_btSaveActionPerformed
 
@@ -359,11 +362,11 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
                 ztPrenom.getText().isEmpty() ||
                 ztNumeroNational.getText().isEmpty() ||
                 ztTel.getText().isEmpty() ||
-                true ||
-                true ) {
-            return true;
-        } else {
+                dpDateNaissance.getDate() == null ||
+                dpDebutTravail.getDate() == null ) {
             return false;
+        } else {
+            return true;
         }
     }
 }

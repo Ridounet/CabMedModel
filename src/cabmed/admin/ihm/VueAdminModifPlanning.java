@@ -1,6 +1,7 @@
 package cabmed.admin.ihm;
 
 import cabmed.admin.ctrl.CtrlAdmin;
+import cabmed.model.Disponibilite;
 import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Tranche;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VueAdminModifPlanning extends javax.swing.JFrame implements Observer {
@@ -17,16 +19,24 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
     private Medecin medecin;
     private List<Tranche> listTranche;
     private CtrlAdmin ctrl;
+    private Disponibilite lundi, mardi, mercredi, jeudi, vendredi, samedi;
     
     public VueAdminModifPlanning() {
         enteteTable = new Vector();
         enteteTable.add("");
         enteteTable.addAll(Arrays.asList(Jour.values()));
+        lundi = new Disponibilite(Tranche.H0900, Tranche.H1500);
+        mardi = new Disponibilite(Tranche.H0900, Tranche.H1800);
+        mercredi = new Disponibilite(Tranche.H0900, Tranche.H1200);
+        jeudi = new Disponibilite(Tranche.H0900, Tranche.H1200);
+        vendredi = new Disponibilite(Tranche.H0900, Tranche.H1200);
+        samedi = new Disponibilite();
         //enteteTable.addAll(Arrays.asList(ctrl.getJours()));
         listTranche = Arrays.asList(Tranche.values());
         //listTranche = Arrays.asList(ctrl.getTranches());
         medecin = new Medecin();
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -58,16 +68,13 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
             }
         });
 
-        tablePlanning.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Test", null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Lundi", "Mardi", "Mercredi"
-            }
-        ));
+        tablePlanning.setModel(new ModeleTablePlanning());
         tablePlanning.getTableHeader().setReorderingAllowed(false);
+        tablePlanning.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePlanningMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablePlanning);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -111,8 +118,18 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
     }//GEN-LAST:event_btSaveActionPerformed
 
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
-        
+        ctrl.hideVueModifPlanning();
     }//GEN-LAST:event_btCancelActionPerformed
+
+    private void tablePlanningMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePlanningMouseClicked
+        if (tablePlanning.getSelectedColumn() != 0) {
+            if (evt.getClickCount() == 1) {
+                Jour j = (Jour)enteteTable.get(tablePlanning.getSelectedColumn());
+                Tranche t = listTranche.get(tablePlanning.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "Tranche selectionnée: " + t.getLabel() + " pour " + j);
+            }
+        }
+    }//GEN-LAST:event_tablePlanningMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -147,61 +164,60 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
         });
     }
 
-    public void showView(boolean b) {
-        if (b) {
-            medecin = ctrl.getSelectedPhysician();
-            update();
-        }
-        setVisible(b);
+    public void showView(Medecin medecin) {
+        this.medecin = medecin;
+        update();
+        setVisible(true);
     }
 
+    // ***************************** ModeleJTable *****************************
     public class ModeleTablePlanning extends DefaultTableModel implements Observer {
         
         public static final int ROW_COUNT = 40;
         
         public ModeleTablePlanning() {
-            super(enteteTable, ROW_COUNT);
-            
+            super(enteteTable, listTranche.size());
         }
 
-        @Override public int getRowCount() { return ROW_COUNT; }
+        @Override public int getRowCount() { return listTranche.size(); }
         @Override public int getColumnCount() { return 7; }
-        @Override public boolean isCellEditable(int row, int column) { return false; }
         
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            if (column == 0) return false;
+            else return true;
+        }
         
-
+        @Override
+        public Class getColumnClass(int col) {
+            if (col == 0) {
+                return String.class;
+            } else {
+                return Boolean.class;
+            }
+        }
+        
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             if (columnIndex == 0) { // Si la première colonne
-                if (rowIndex == (ROW_COUNT-1)) { // Si la dernière ligne
-                    setBackground(Color.RED);
+                if (rowIndex == (getRowCount()-1)) { // Si la dernière ligne
                     return listTranche.get(rowIndex).getLabel() + " - 19h00";
                 } else { // Si autres lignes
-                    return listTranche.get(rowIndex).getLabel() + " - " + listTranche.get(rowIndex+1).getLabel();
+                    return listTranche.get(rowIndex).getLabel() + 
+                            " - " + listTranche.get(rowIndex+1).getLabel();
                 }
             } else {
-                return new JButton("Test");
+                return true;
             }
-
-//            switch (columnIndex) {
-//                case ID: return ctrlAdmin.getListSpecialisation().get(rowIndex).getId();
-//                case LABEL: return ctrlAdmin.getListSpecialisation().get(rowIndex).getLabel();
-//                case DELAY: return ctrlAdmin.getListSpecialisation().get(rowIndex).getDuree();
-//                default: return "NO DATA";
-//            }
         }
         
         @Override
         public void update() {
             fireTableDataChanged();
         }
-        
     }
+    // *************************** Fin ModeleJTable ***************************
     
-    public void setPersonne(Medecin med) {
-        
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btSave;
@@ -214,7 +230,9 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
     
     @Override
     public void update() {
-        medecin = ctrl.getSelectedPhysician();
+        medecin = new Medecin();
+        lbTitre.setText("Update Planning");
+        //lbTitre.setText(medecin.getPrenom()+ " " + medecin.getNom());
         ((ModeleTablePlanning)tablePlanning.getModel()).update();
     }
 

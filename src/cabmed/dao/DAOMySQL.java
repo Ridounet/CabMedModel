@@ -222,8 +222,8 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static Disponibilite dis1 = new Disponibilite(Tranche.H0900, Tranche.H1400);
     private static Disponibilite dis2 = new Disponibilite(Tranche.H0900, Tranche.H1400);
     private static Disponibilite dis3 = new Disponibilite(Tranche.H0900, Tranche.H1400);
-    private static Disponibilite dis4 = new Disponibilite(Tranche.H0900, Tranche.H1845);
-    private static Disponibilite dis5 = new Disponibilite(Tranche.H1200, Tranche.H1545);
+    private static Disponibilite dis4 = new Disponibilite(Tranche.H0900, Tranche.H1830);
+    private static Disponibilite dis5 = new Disponibilite(Tranche.H1200, Tranche.H1530);
     private static Cp cp1 = new Cp(1000, "Bruxelles");
     private static Cp cp2 = new Cp(1020, "Laeken");
     private static Cp cp3 = new Cp(1030, "Schaerbeek");
