@@ -56,10 +56,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private void initAttributes() { // Initialise tous les attributs de cette classe
         sdf = ctrlAdmin.getSdf();
         actions = new Actions();
-        listMedecin = ctrlAdmin.getListMedecin();
-        listSecretaire = ctrlAdmin.getListSecretaire();
-        listInfirmiere = ctrlAdmin.getListInfirmiere();
-        listSpecialisation = ctrlAdmin.getListSpecialisation();
         entetePersonnel = new Vector();
         entetePersonnel.add("ID"); entetePersonnel.add("Name"); entetePersonnel.add("Birthdate");
         entetePersonnel.add("Sex"); entetePersonnel.add("National Number"); entetePersonnel.add("Tel.");
@@ -208,13 +204,13 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btMedecinDelete.setText("DELETE");
         btMedecinDelete.setToolTipText("");
         btMedecinDelete.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btMedecinDelete(evt);
             }
         });
         btMedecinAdd.setText("Add a Physician");
         btMedecinAdd.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btMedecinAdd(evt);
@@ -226,6 +222,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btMedecinDeleteSpec.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btMedecinDeleteSpec.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btMedecinDeleteSpec.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btMedecinDeleteSpec(evt);
             }
@@ -247,12 +244,14 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btSecretaireDelete.setText("DELETE");
         btSecretaireDelete.setToolTipText("");
         btSecretaireDelete.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btSecretaireDelete(evt);
             }
         });
         btSecretaireUpdate.setText("Modification");
         btSecretaireUpdate.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btSecretaireUpdate(evt);
             }
@@ -266,6 +265,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         scrollPaneInfirmiere.setViewportView(tableInfirmiere);
         btInfirmiereUpdate.setText("Modification");
         btInfirmiereUpdate.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btInfirmiereUpdate(evt);
             }
@@ -276,6 +276,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btInfirmiereDelete.setText("DELETE");
         btInfirmiereDelete.setToolTipText("");
         btInfirmiereDelete.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btInfirmiereDelete(evt);
             }
@@ -289,6 +290,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         scrollPaneSpec.setViewportView(tableSpec);
         btSpecUpdate.setText("Modification");
         btSpecUpdate.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btSpecUpdate(evt);
             }
@@ -299,6 +301,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         btSpecDelete.setText("DELETE");
         btSpecDelete.setToolTipText("");
         btSpecDelete.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btSpecDelete(evt);
             }
@@ -334,31 +337,31 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     public class ModeleJTableMedecin extends DefaultTableModel implements Observer {
 
         public ModeleJTableMedecin() {
-            super(entetePersonnel, listMedecin.size());
+            super(entetePersonnel, ctrlAdmin.getListMedecin().size());
         }
 
-        @Override public int getRowCount() { return listMedecin.size(); }
+        @Override public int getRowCount() { return ctrlAdmin.getListMedecin().size(); }
         @Override public int getColumnCount() { return 9; }
         @Override public boolean isCellEditable(int row, int column) { return false; }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
-                case ID: return listMedecin.get(rowIndex).getId();
-                case NAME: return listMedecin.get(rowIndex).getPrenom() + " " + listMedecin.get(rowIndex).getNom();
-                case BIRTHDATE: return sdf.format(listMedecin.get(rowIndex).getDateNaissance());
-                case SEX: return listMedecin.get(rowIndex).getSexe().toString();
-                case NATIONAL_NUMBER: return listMedecin.get(rowIndex).getRegistreNat();
-                case TEL: return listMedecin.get(rowIndex).getTel();
-                case BEGIN_WORK: return sdf.format(listMedecin.get(rowIndex).getDebutTravail());
-                case ADDRESS: return listMedecin.get(rowIndex).getAdresse().getAdresse();
-                case CP: return listMedecin.get(rowIndex).getAdresse().getCp().getCodePostal();
+                case ID: return ctrlAdmin.getListMedecin().get(rowIndex).getId();
+                case NAME: return ctrlAdmin.getListMedecin().get(rowIndex).getPrenom() + " " + ctrlAdmin.getListMedecin().get(rowIndex).getNom();
+                case BIRTHDATE: return sdf.format(ctrlAdmin.getListMedecin().get(rowIndex).getDateNaissance());
+                case SEX: return ctrlAdmin.getListMedecin().get(rowIndex).getSexe().toString();
+                case NATIONAL_NUMBER: return ctrlAdmin.getListMedecin().get(rowIndex).getRegistreNat();
+                case TEL: return ctrlAdmin.getListMedecin().get(rowIndex).getTel();
+                case BEGIN_WORK: return sdf.format(ctrlAdmin.getListMedecin().get(rowIndex).getDebutTravail());
+                case ADDRESS: return ctrlAdmin.getListMedecin().get(rowIndex).getAdresse().getAdresse();
+                case CP: return ctrlAdmin.getListMedecin().get(rowIndex).getAdresse().getCp().getCodePostal();
                 default: return "NO DATA";
             }
         }
         
         public void update() {
-            listMedecin = ctrlAdmin.getListMedecin();
+            
             fireTableDataChanged();
         }
 
@@ -367,25 +370,25 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     public class ModeleJTableSecretaire extends DefaultTableModel implements Observer {
 
         public ModeleJTableSecretaire() {
-            super(entetePersonnel, listSecretaire.size());
+            super(entetePersonnel, ctrlAdmin.getListSecretaire().size());
         }
 
-        @Override public int getRowCount() { return listSecretaire.size(); }
+        @Override public int getRowCount() { return ctrlAdmin.getListSecretaire().size(); }
         @Override public int getColumnCount() { return 9; }
         @Override public boolean isCellEditable(int row, int column) { return false; }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
-                case ID: return listSecretaire.get(rowIndex).getId();
-                case NAME: return listSecretaire.get(rowIndex).getPrenom() + " " + listSecretaire.get(rowIndex).getNom();
-                case BIRTHDATE: return sdf.format(listSecretaire.get(rowIndex).getDateNaissance());
-                case SEX: return listSecretaire.get(rowIndex).getSexe().toString();
-                case NATIONAL_NUMBER: return listSecretaire.get(rowIndex).getRegistreNat();
-                case TEL: return listSecretaire.get(rowIndex).getTel();
-                case BEGIN_WORK: return sdf.format(listSecretaire.get(rowIndex).getDebutTravail());
-                case ADDRESS: return listSecretaire.get(rowIndex).getAdresse().getAdresse();
-                case CP: return listSecretaire.get(rowIndex).getAdresse().getCp().getCodePostal();
+                case ID: return ctrlAdmin.getListSecretaire().get(rowIndex).getId();
+                case NAME: return ctrlAdmin.getListSecretaire().get(rowIndex).getPrenom() + " " + ctrlAdmin.getListSecretaire().get(rowIndex).getNom();
+                case BIRTHDATE: return sdf.format(ctrlAdmin.getListSecretaire().get(rowIndex).getDateNaissance());
+                case SEX: return ctrlAdmin.getListSecretaire().get(rowIndex).getSexe().toString();
+                case NATIONAL_NUMBER: return ctrlAdmin.getListSecretaire().get(rowIndex).getRegistreNat();
+                case TEL: return ctrlAdmin.getListSecretaire().get(rowIndex).getTel();
+                case BEGIN_WORK: return sdf.format(ctrlAdmin.getListSecretaire().get(rowIndex).getDebutTravail());
+                case ADDRESS: return ctrlAdmin.getListSecretaire().get(rowIndex).getAdresse().getAdresse();
+                case CP: return ctrlAdmin.getListSecretaire().get(rowIndex).getAdresse().getCp().getCodePostal();
                 default: return "NO DATA";
             }
         }
@@ -400,25 +403,25 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     public class ModeleJTableInfirmiere extends DefaultTableModel implements Observer {
 
         public ModeleJTableInfirmiere() {
-            super(entetePersonnel, listInfirmiere.size());
+            super(entetePersonnel, ctrlAdmin.getListInfirmiere().size());
         }
 
-        @Override public int getRowCount() { return listInfirmiere.size(); }
+        @Override public int getRowCount() { return ctrlAdmin.getListInfirmiere().size(); }
         @Override public int getColumnCount() { return 9; }
         @Override public boolean isCellEditable(int row, int column) { return false; }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
-                case ID: return listInfirmiere.get(rowIndex).getId();
-                case NAME: return listInfirmiere.get(rowIndex).getPrenom() + " " + listInfirmiere.get(rowIndex).getNom();
-                case BIRTHDATE: return sdf.format(listInfirmiere.get(rowIndex).getDateNaissance());
-                case SEX: return listInfirmiere.get(rowIndex).getSexe().toString();
-                case NATIONAL_NUMBER: return listInfirmiere.get(rowIndex).getRegistreNat();
-                case TEL: return listInfirmiere.get(rowIndex).getTel();
-                case BEGIN_WORK: return sdf.format(listInfirmiere.get(rowIndex).getDebutTravail());
-                case ADDRESS: return listInfirmiere.get(rowIndex).getAdresse().getAdresse();
-                case CP: return listInfirmiere.get(rowIndex).getAdresse().getCp().getCodePostal();
+                case ID: return ctrlAdmin.getListInfirmiere().get(rowIndex).getId();
+                case NAME: return ctrlAdmin.getListInfirmiere().get(rowIndex).getPrenom() + " " + ctrlAdmin.getListInfirmiere().get(rowIndex).getNom();
+                case BIRTHDATE: return sdf.format(ctrlAdmin.getListInfirmiere().get(rowIndex).getDateNaissance());
+                case SEX: return ctrlAdmin.getListInfirmiere().get(rowIndex).getSexe().toString();
+                case NATIONAL_NUMBER: return ctrlAdmin.getListInfirmiere().get(rowIndex).getRegistreNat();
+                case TEL: return ctrlAdmin.getListInfirmiere().get(rowIndex).getTel();
+                case BEGIN_WORK: return sdf.format(ctrlAdmin.getListInfirmiere().get(rowIndex).getDebutTravail());
+                case ADDRESS: return ctrlAdmin.getListInfirmiere().get(rowIndex).getAdresse().getAdresse();
+                case CP: return ctrlAdmin.getListInfirmiere().get(rowIndex).getAdresse().getCp().getCodePostal();
                 default: return "NO DATA";
             }
         }
@@ -433,19 +436,19 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     public class ModeleJTableSpecialisation extends DefaultTableModel implements Observer {
 
         public ModeleJTableSpecialisation() {
-            super(enteteSpecialisation, listSpecialisation.size());
+            super(enteteSpecialisation, ctrlAdmin.getListSpecialisation().size());
         }
 
-        @Override public int getRowCount() { return listSpecialisation.size(); }
+        @Override public int getRowCount() { return ctrlAdmin.getListSpecialisation().size(); }
         @Override public int getColumnCount() { return 3; }
         @Override public boolean isCellEditable(int row, int column) { return false; }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
-                case ID: return listSpecialisation.get(rowIndex).getId();
-                case LABEL: return listSpecialisation.get(rowIndex).getLabel();
-                case DELAY: return listSpecialisation.get(rowIndex).getDuree();
+                case ID: return ctrlAdmin.getListSpecialisation().get(rowIndex).getId();
+                case LABEL: return ctrlAdmin.getListSpecialisation().get(rowIndex).getLabel();
+                case DELAY: return ctrlAdmin.getListSpecialisation().get(rowIndex).getDuree();
                 default: return "NO DATA";
             }
         }
@@ -460,7 +463,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     public class ModeleJTableSpecialisationMedecin extends DefaultTableModel implements Observer {
         
         public ModeleJTableSpecialisationMedecin() {
-            super(enteteSpecialisation, listSpecialisation.size());
+            super(enteteSpecialisation, ctrlAdmin.getListSpecialisation().size());
         }
 
         @Override public int getRowCount() { return 3; }
@@ -474,9 +477,9 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             }
             
             switch (columnIndex) {
-                case ID: return listSpecialisation.get(rowIndex).getId();
-                case LABEL: return listSpecialisation.get(rowIndex).getLabel();
-                case DELAY: return listSpecialisation.get(rowIndex).getDuree();
+                case ID: return ctrlAdmin.getListSpecialisation().get(rowIndex).getId();
+                case LABEL: return ctrlAdmin.getListSpecialisation().get(rowIndex).getLabel();
+                case DELAY: return ctrlAdmin.getListSpecialisation().get(rowIndex).getDuree();
                 default: return "NO DATA";
             }
         }
@@ -761,11 +764,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private static final int DELAY = 2;
     
     // Autres attributs
-    private List<Medecin> listMedecin;
-    private List<Secretaire> listSecretaire;
-    private List<Infirmiere> listInfirmiere;
-    private List<Specialisation> listSpecialisation;
-
     private Vector<String> entetePersonnel;
     private Vector<String> enteteSpecialisation;
     private SimpleDateFormat sdf;
@@ -779,7 +777,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_MEDECIN, med);
             }
         }
@@ -792,7 +790,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "Update planning for physician: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -801,7 +799,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (listMedecinSpec.getSelectedValue() == null) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one specialisation");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -812,7 +810,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             } else {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this person?", "Delete this physician", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
-                    Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                    Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                     ctrlAdmin.deleteMedecin(med);
                 }
             }
@@ -825,7 +823,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableSecretaire.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Secretaire sec = listSecretaire.get(tableSecretaire.getSelectedRow());
+                Secretaire sec = ctrlAdmin.getListSecretaire().get(tableSecretaire.getSelectedRow());
                 ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_SECRETAIRE, sec);
             }
         }
@@ -838,7 +836,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -847,7 +845,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableSecretaire.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Secretaire sec = listSecretaire.get(tableSecretaire.getSelectedRow());
+                Secretaire sec = ctrlAdmin.getListSecretaire().get(tableSecretaire.getSelectedRow());
                 ctrlAdmin.deleteSecretaire(sec);
             }
         }
@@ -859,7 +857,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableInfirmiere.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Infirmiere inf = listInfirmiere.get(tableInfirmiere.getSelectedRow());
+                Infirmiere inf = ctrlAdmin.getListInfirmiere().get(tableInfirmiere.getSelectedRow());
                 ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_INFIRMIERE, inf);
             }
         }
@@ -872,7 +870,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -881,7 +879,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -893,7 +891,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -902,7 +900,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
@@ -911,14 +909,14 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableMedecin.getSelectedRowCount() != 1) {
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
-                Medecin med = listMedecin.get(tableMedecin.getSelectedRow());
+                Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "This physician called: " + med.getNom() + " " + med.getPrenom());
             }
         }
 
         private void jTableClick() {
             listModelSpec.removeAllElements();
-            Medecin m = listMedecin.get(tableMedecin.getSelectedRow());
+            Medecin m = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
             if (m.getSpecialisation() != null) {
                 for (Specialisation s : m.getSpecialisation()) {
                     listModelSpec.addElement(s);

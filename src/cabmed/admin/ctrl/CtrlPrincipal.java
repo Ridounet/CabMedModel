@@ -23,10 +23,10 @@ public final class CtrlPrincipal {
     private final Facade facade;
     private final SimpleDateFormat sdf;
     private Administrateur logged;
-    private List<Medecin> medecins;
-    private List<Infirmiere> infirmieres;
-    private List<Secretaire> secretaires;
-    private List<Specialisation> specialisations;
+    private List<Medecin> listMedecin;
+    private List<Infirmiere> listInfirmiere;
+    private List<Secretaire> listSecretaire;
+    private List<Specialisation> listSpecialisation;
     private List<Cp> listCp;
     
     public static void main(String[] args) {
@@ -35,7 +35,7 @@ public final class CtrlPrincipal {
     
     public CtrlPrincipal() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        facade = new Facade();
+        facade = new Facade(this);
         ctrlAdmin = new CtrlAdmin(this, facade);
         ctrlLogin = new CtrlLogin(this, facade);
         
@@ -55,10 +55,10 @@ public final class CtrlPrincipal {
         facade.initDB();
         
         listCp = facade.getListCp();
-        medecins = facade.getListMedecin();
-        infirmieres = facade.getListInfirmiere();
-        secretaires = facade.getListSecretaire();
-        specialisations = facade.getListSpecialisation();
+        listMedecin = facade.getListMedecin();
+        listInfirmiere = facade.getListInfirmiere();
+        listSecretaire = facade.getListSecretaire();
+        listSpecialisation = facade.getListSpecialisation();
         
         showLogin();
     }
@@ -69,16 +69,21 @@ public final class CtrlPrincipal {
 
     public void putLogged(Administrateur admin) { logged = admin; }
     public Administrateur getLogged() { return logged; }
-    
-    public List<Medecin> getMedecins() { return medecins; }
-    public void setMedecins(List<Medecin> medecins) { this.medecins = medecins; }
-    public List<Infirmiere> getInfirmieres() { return infirmieres; }
-    public void setInfirmieres(List<Infirmiere> infirmieres) { this.infirmieres = infirmieres; }
-    public List<Secretaire> getSecretaires() { return secretaires; }
-    public void setSecretaires(List<Secretaire> secretaires) { this.secretaires = secretaires; }
-    public List<Specialisation> getSpecialisations() { return specialisations; }
-    public void setSpecialisations(List<Specialisation> specialisations) { this.specialisations = specialisations; }
+
+    public List<Medecin> getListMedecin() { return listMedecin; }
+    public void setListMedecin(List<Medecin> listMedecin) { this.listMedecin = listMedecin; }
+    public List<Infirmiere> getListInfirmiere() { return listInfirmiere; }
+    public void setListInfirmiere(List<Infirmiere> listInfirmiere) { this.listInfirmiere = listInfirmiere; }
+    public List<Secretaire> getListSecretaire() { return listSecretaire; }
+    public void setListSecretaire(List<Secretaire> listSecretaire) { this.listSecretaire = listSecretaire; }
+    public List<Specialisation> getListSpecialisation() { return listSpecialisation; }
+    public void setListSpecialisation(List<Specialisation> listSpecialisation) { this.listSpecialisation = listSpecialisation; }
     public List<Cp> getListCp() { return listCp; }
+    public void setListCp(List<Cp> listCp) { this.listCp = listCp; }
     
+    public void addMedecin(Medecin medecin) { listMedecin.add(medecin); }
+    public void addSecretaire(Secretaire secretaire) { listSecretaire.add(secretaire); }
+    public void addInfirmiere(Infirmiere infirmiere) { listInfirmiere.add(infirmiere); }
+    public void addSpecialisation(Specialisation specialisation) { listSpecialisation.add(specialisation); }
     
 }

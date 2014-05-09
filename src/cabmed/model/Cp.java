@@ -7,11 +7,8 @@ public class Cp {
     // Attributs
     @Id @GeneratedValue
     private int id;
-    
     private int codePostal;
     private String nom;
-
-    
     
     // Constructeurs
     public Cp() { }

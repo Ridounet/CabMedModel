@@ -26,7 +26,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO, IPatientDAO, IPlanningDAO {
     
@@ -75,8 +74,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     // CRUD Cp
     public List<Cp> getListCp() {
-        
-        return null;
+        return cpDAO.getListCp();
     }
     
     public static List<Cp> getListCpByCodePostal(int codePostal) {
@@ -90,15 +88,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         return true;
     }
     
-    public static Planning getPlanningByMedecin(Medecin medecin) {
-        
-        return null;
-    }
-    
-    
-    
-    
-    
+    // CRUD Général
     public Administrateur login(String login, String password) {
         Administrateur result;
         try {

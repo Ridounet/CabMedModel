@@ -121,24 +121,10 @@ public class CtrlAdmin {
     }
 
     // Generalites
-    public List<Cp> getListCp() {
-        return facade.getListCp();
-    }
-
-    public List<Medecin> getListMedecin() {
-        return facade.getListMedecin();
-    }
-
-    public List<Secretaire> getListSecretaire() {
-        return facade.getListSecretaire();
-    }
-
-    public List<Infirmiere> getListInfirmiere() {
-        return facade.getListInfirmiere();
-    }
-
-    public List<Specialisation> getListSpecialisation() {
-        return facade.getListSpecialisation();
-    }
+    public List<Cp> getListCp() { return ctrlPrincipal.getListCp(); }
+    public List<Medecin> getListMedecin() { return ctrlPrincipal.getListMedecin(); }
+    public List<Secretaire> getListSecretaire() { return ctrlPrincipal.getListSecretaire(); }
+    public List<Infirmiere> getListInfirmiere() { return ctrlPrincipal.getListInfirmiere(); }
+    public List<Specialisation> getListSpecialisation() { return ctrlPrincipal.getListSpecialisation(); }
 
 }

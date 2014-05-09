@@ -1,5 +1,6 @@
 package cabmed.admin.main;
 
+import cabmed.admin.ctrl.CtrlPrincipal;
 import cabmed.ressources.Observer;
 import java.util.List;
 import cabmed.dao.*;
@@ -15,7 +16,10 @@ import java.util.LinkedList;
 
 public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     
-    public Facade() { }
+    private CtrlPrincipal ctrl;
+    
+    public Facade(CtrlPrincipal ctrlPrincipal) { this.ctrl = ctrlPrincipal; }
+    
     // Pattern Observer
     private static final List<Observer> listObservers = new ArrayList<>();
     private static void notifyObservers() {
@@ -60,8 +64,12 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     // Medecin
     @Override
     public boolean deleteMedecin(Medecin med) {
-        // TODO
-        return DAOMySQL.getInstance().deleteMedecin(med);
+        if (DAOMySQL.getInstance().deleteMedecin(med)) {
+            ctrl.setListMedecin(getListMedecin());
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -72,22 +80,33 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
     
     @Override
     public boolean addMedecin(Medecin medecin) {
-        boolean result = DAOMySQL.getInstance().addMedecin(medecin);
-        notifyObservers();
-        return result;
+        if (DAOMySQL.getInstance().addMedecin(medecin)) {
+            ctrl.addMedecin(medecin);
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     // Personnel
     @Override
     public boolean addInfirmiere(Infirmiere infirmiere) {
-        // TODO
-        return DAOMySQL.getInstance().addInfirmiere(infirmiere);
+        if (DAOMySQL.getInstance().addInfirmiere(infirmiere)) {
+            ctrl.addInfirmiere(infirmiere);
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean addSecretaire(Secretaire secretaire) {
-        // TODO
-        return DAOMySQL.getInstance().addSecretaire(secretaire);
+        if (DAOMySQL.getInstance().addSecretaire(secretaire)) {
+            ctrl.addSecretaire(secretaire);
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -98,6 +117,11 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO{
 
     @Override
     public boolean deleteSecretaire(Secretaire secretaire) {
-       return DAOMySQL.getInstance().deleteSecretaire(secretaire);
+        if (DAOMySQL.getInstance().deleteSecretaire(secretaire)) {
+            ctrl.setListSecretaire(getListSecretaire());
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 }
