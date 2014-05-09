@@ -1,14 +1,11 @@
 package cabmed.admin.ihm;
 
 import cabmed.admin.ctrl.CtrlAdmin;
-import cabmed.model.Adresse;
 import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
 import cabmed.model.Secretaire;
-import cabmed.model.Sexe;
 import cabmed.model.Specialisation;
 import cabmed.ressources.Observer;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -791,6 +788,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 JOptionPane.showMessageDialog(null, "Please select one and only one physician");
             } else {
                 Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
+                ctrlAdmin.showViewModifPlanning(med);
                 JOptionPane.showMessageDialog(null, "Update planning for physician: " + med.getNom() + " " + med.getPrenom());
             }
         }

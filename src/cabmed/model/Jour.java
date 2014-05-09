@@ -3,20 +3,21 @@ package cabmed.model;
 import javax.persistence.*;
 
 public enum Jour {
-    LUNDI(0),
-    MARDI(1),
-    MERCREDI(2),
-    JEUDI(3),
-    VENDREDI(4),
-    SAMEDI(5);
+    LUNDI("Lundi", 0),
+    MARDI("Mardi", 1),
+    MERCREDI("Mercredi", 2),
+    JEUDI("Jeudi", 3),
+    VENDREDI("Vendredi", 4),
+    SAMEDI("Samedi", 5);
     
-    @Id @GeneratedValue
     private int id;
+    private String label;
 
     Jour() {
     }
     
-    Jour(int id){
+    Jour(String label, int id){
         this.id = id;
+        this.label = label;
     }
 }

@@ -2,13 +2,16 @@ package cabmed.admin.ctrl;
 
 import cabmed.admin.ihm.VueAdmin;
 import cabmed.admin.ihm.VueAdminModifPersonnel;
+import cabmed.admin.ihm.VueAdminModifPlanning;
 import cabmed.admin.main.Facade;
 import cabmed.model.Cp;
 import cabmed.model.Infirmiere;
+import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Personnel;
 import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
+import cabmed.model.Tranche;
 import java.awt.Dialog;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,6 +27,7 @@ public class CtrlAdmin {
     public static final String TYPE_MEDECIN = "Physician";
     public static final String TYPE_SECRETAIRE = "Secretary";
     public static final String TYPE_INFIRMIERE = "Nurse";
+    private VueAdminModifPlanning vueModifPlanning;
     
     public CtrlAdmin(CtrlPrincipal ctrlPrincipal, Facade facade) {
         this.ctrlPrincipal = ctrlPrincipal;
@@ -63,13 +67,30 @@ public class CtrlAdmin {
             vueModifPersonnel.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
             vueModifPersonnel.setVisible(true);
         }
-        
-        
     }
     
     public void hideVueModifPersonnel() {
         vueAdmin.setVisible(true);
         vueModifPersonnel.setVisible(false);
+    }
+    
+    public void showViewModifPlanning(Medecin med) {
+        if (vueModifPlanning == null) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    vueModifPlanning = new VueAdminModifPlanning();
+                    Facade.addObserver(vueModifPersonnel);
+                    vueModifPlanning.setPersonne(med);
+                    vueModifPlanning.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+                    vueModifPlanning.setVisible(true);
+                }
+            });
+        } else {
+            vueModifPlanning.setPersonne(med);
+            vueModifPlanning.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+            vueModifPlanning.showView(true);
+        }
     }
     
     
@@ -126,5 +147,11 @@ public class CtrlAdmin {
     public List<Secretaire> getListSecretaire() { return ctrlPrincipal.getListSecretaire(); }
     public List<Infirmiere> getListInfirmiere() { return ctrlPrincipal.getListInfirmiere(); }
     public List<Specialisation> getListSpecialisation() { return ctrlPrincipal.getListSpecialisation(); }
+    public Tranche[] getTranches() { return Tranche.values(); }
+    public Jour[] getJours() { return Jour.values(); }
+    public Medecin getSelectedPhysician() {
+        
+        return null;
+    }
 
 }
