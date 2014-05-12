@@ -8,10 +8,8 @@ import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 public class MedecinDAO implements IMedecinDAO{
@@ -19,9 +17,9 @@ public class MedecinDAO implements IMedecinDAO{
     @Override
     public boolean deleteMedecin(Medecin med) {
         EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        med.setVisible(false);
         tx.begin();
         try{
-            DAOMySQL.getEntityManager().remove(med);
             tx.commit();
             return true;
         } catch(Exception e) {

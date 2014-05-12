@@ -22,9 +22,9 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     // Pattern Observer
     private static final List<Observer> listObservers = new ArrayList<>();
     private static void notifyObservers() {
-        listObservers.stream().forEach((ob) -> {
-            ob.update();
-        });
+        for (Observer o: listObservers) {
+            o.update();
+        }
     }
     public static void addObserver(Observer o) {
         listObservers.add(o);

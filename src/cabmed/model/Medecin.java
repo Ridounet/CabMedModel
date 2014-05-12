@@ -14,7 +14,7 @@ public class Medecin extends Personnel {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Specialisation> specialisation;
     
-    @OneToMany(cascade = CascadeType.DETACH)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @ElementCollection(fetch = FetchType.LAZY)
     private List<Rdv> rdv;
     

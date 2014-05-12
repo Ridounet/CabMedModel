@@ -73,7 +73,7 @@ public class CtrlAdmin {
         vueModifPersonnel.setVisible(false);
     }
     
-    public void showViewModifPlanning(Medecin med) {
+    public void showViewModifPlanning(final Medecin med) {
         if (vueModifPlanning == null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override

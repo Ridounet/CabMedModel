@@ -49,7 +49,6 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
         tablePlanning = new javax.swing.JTable();
         lbTitre = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Manage planning");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
