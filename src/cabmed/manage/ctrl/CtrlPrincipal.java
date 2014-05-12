@@ -18,7 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public final class CtrlPrincipal {
     
     private final CtrlLogin ctrlLogin;
-    private final CtrlManage ctrlManage;
+    private final CtrlRecherchePatient ctrlRecherchePatient;
     private final Facade facade;
     private final SimpleDateFormat sdf;
     private Administrateur logged;
@@ -35,7 +35,7 @@ public final class CtrlPrincipal {
     public CtrlPrincipal() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         facade = new Facade(this);
-        ctrlManage = new CtrlManage(this, facade);
+        ctrlRecherchePatient = new CtrlRecherchePatient(this, facade);
         ctrlLogin = new CtrlLogin(this, facade);
         
         try {
@@ -63,7 +63,7 @@ public final class CtrlPrincipal {
     }
     
     public void showLogin() { ctrlLogin.showView(); }
-    public void showPrincipal() { ctrlManage.showView(); }
+    public void showPrincipal() { ctrlRecherchePatient.showView(); }
     public SimpleDateFormat getSdf() { return sdf; }
 
     public void putLogged(Administrateur admin) { logged = admin; }

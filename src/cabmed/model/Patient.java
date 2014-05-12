@@ -12,14 +12,19 @@ public class Patient extends Personne implements Serializable {
     @Enumerated(EnumType.STRING)
     private Mutualite mutualite;
     
+    @Column(nullable = true, unique = true)
+    private String numSecuSocial;
+
     @OneToMany
     @ElementCollection(fetch = FetchType.LAZY)
     private List<Rdv> rdv;
 
     // Constructeurs
-    public Patient(Mutualite mutualite, String registreNat, String nom, String prenom, Date dateNaissance, Adresse adresse, String tel, Sexe sexe) {
+    public Patient(Mutualite mutualite, String registreNat, String nom, String prenom, 
+            Date dateNaissance, Adresse adresse, String tel, Sexe sexe, String numSecuSocial) {
         super(registreNat, nom, prenom, dateNaissance, adresse, tel, sexe);
         this.mutualite = mutualite;
+        this.numSecuSocial = numSecuSocial;
     }
     
     public Patient() { }
@@ -36,5 +41,7 @@ public class Patient extends Personne implements Serializable {
     public void setMutualite(Mutualite mutualite) { this.mutualite = mutualite; }
     public List<Rdv> getRdv() { return rdv; }
     public void setRdv(List<Rdv> rdv) { this.rdv = rdv; }
+    public String getNumSecuSocial() { return numSecuSocial; }
+    public void setNumSecuSocial(String numSecuSocial) { this.numSecuSocial = numSecuSocial; }
     
 }

@@ -165,7 +165,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
 
         tx.begin();
         em.persist(i1); em.persist(m1); em.persist(i2); em.persist(m4); em.persist(a1);
-        em.persist(p1); em.persist(s1);  em.persist(m3); em.persist(s2); em.persist(m2);
+        em.persist(p1); em.persist(s1); em.persist(m3); em.persist(s2); em.persist(m2);
         em.persist(s3); em.persist(i4); em.persist(i3); em.persist(s4);
         
         tx.commit();
@@ -197,12 +197,8 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         em.persist(planning);
         tx.commit();
         
-        Medecin m2 = em.find(Medecin.class, m1.getId());
-        //Medecin m2 = (Medecin) em.createQuery("SELECT m FROM Medecin m WHERE m.registreNat = " + REG_MED).getSingleResult();
-        System.out.println(m2.getPlanning().toString());
-        
         tx.begin();
-        Rdv rdv1 = new Rdv(new Date(), p1, m2, sp1, StatutRdv.EN_COURS, Tranche.H0900, 2);
+        Rdv rdv1 = new Rdv(new Date(), p1, m1, sp1, StatutRdv.EN_COURS, Tranche.H0900, 2);
         em.persist(rdv1);
         tx.commit();
         
@@ -236,7 +232,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static Cp cp10 = new Cp(1090, "Jette");
     
     private static Patient p1 = new Patient(Mutualite.PARTENAMUT, REG_PAT, "Amar Ouaali", "Riduan",
-        new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484848849", Sexe.HOMME);
+        new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484848849", Sexe.HOMME, "11414059330");
     private static Personnel a1 = new Administrateur(new Date(), REG_MED1, "Administrateur", "Moi",
             new Date(), new Adresse("Rue test 43", cp1), "0453945632", Sexe.HOMME);
     

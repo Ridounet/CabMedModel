@@ -148,9 +148,4 @@ public class CtrlAdmin {
     public List<Specialisation> getListSpecialisation() { return ctrlPrincipal.getListSpecialisation(); }
     public Tranche[] getTranches() { return Tranche.values(); }
     public Jour[] getJours() { return Jour.values(); }
-    public Medecin getSelectedPhysician() {
-        
-        return null;
-    }
-
 }
