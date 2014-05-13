@@ -2,9 +2,7 @@ package cabmed.manage.ctrl;
 
 import cabmed.manage.ihm.VueLogin;
 import cabmed.manage.main.Facade;
-import cabmed.model.Administrateur;
 import cabmed.model.Cp;
-import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
 import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
@@ -18,13 +16,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 public final class CtrlPrincipal {
     
     private final CtrlLogin ctrlLogin;
-    private final CtrlRecherchePatient ctrlRecherchePatient;
     private final Facade facade;
     private final SimpleDateFormat sdf;
-    private Administrateur logged;
+    private ICtrlSecondaire ctrlSecondaire;
     private List<Medecin> listMedecin;
-    private List<Infirmiere> listInfirmiere;
-    private List<Secretaire> listSecretaire;
     private List<Specialisation> listSpecialisation;
     private List<Cp> listCp;
     
@@ -35,7 +30,6 @@ public final class CtrlPrincipal {
     public CtrlPrincipal() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         facade = new Facade(this);
-        ctrlRecherchePatient = new CtrlRecherchePatient(this, facade);
         ctrlLogin = new CtrlLogin(this, facade);
         
         try {
@@ -55,34 +49,28 @@ public final class CtrlPrincipal {
         
         listCp = facade.getListCp();
         listMedecin = facade.getListMedecin();
-        listInfirmiere = facade.getListInfirmiere();
-        listSecretaire = facade.getListSecretaire();
         listSpecialisation = facade.getListSpecialisation();
         
         showLogin();
     }
     
+    public void showSecretaire(Secretaire secretaire) {
+        ctrlSecondaire = new CtrlSecretaire(this, facade, secretaire);
+        ctrlSecondaire.showView();
+    }
+    
+    public void showMedecin(Medecin medecin) { 
+        ctrlSecondaire = new CtrlMedecin(this, facade, medecin);
+        ctrlSecondaire.showView();
+    }
+    
     public void showLogin() { ctrlLogin.showView(); }
-    public void showPrincipal() { ctrlRecherchePatient.showView(); }
     public SimpleDateFormat getSdf() { return sdf; }
-
-    public void putLogged(Administrateur admin) { logged = admin; }
-    public Administrateur getLogged() { return logged; }
-
     public List<Medecin> getListMedecin() { return listMedecin; }
     public void setListMedecin(List<Medecin> listMedecin) { this.listMedecin = listMedecin; }
-    public List<Infirmiere> getListInfirmiere() { return listInfirmiere; }
-    public void setListInfirmiere(List<Infirmiere> listInfirmiere) { this.listInfirmiere = listInfirmiere; }
-    public List<Secretaire> getListSecretaire() { return listSecretaire; }
-    public void setListSecretaire(List<Secretaire> listSecretaire) { this.listSecretaire = listSecretaire; }
     public List<Specialisation> getListSpecialisation() { return listSpecialisation; }
     public void setListSpecialisation(List<Specialisation> listSpecialisation) { this.listSpecialisation = listSpecialisation; }
     public List<Cp> getListCp() { return listCp; }
     public void setListCp(List<Cp> listCp) { this.listCp = listCp; }
-    
-    public void addMedecin(Medecin medecin) { listMedecin.add(medecin); }
-    public void addSecretaire(Secretaire secretaire) { listSecretaire.add(secretaire); }
-    public void addInfirmiere(Infirmiere infirmiere) { listInfirmiere.add(infirmiere); }
-    public void addSpecialisation(Specialisation specialisation) { listSpecialisation.add(specialisation); }
     
 }

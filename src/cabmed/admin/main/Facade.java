@@ -36,7 +36,7 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     }
     
     public Administrateur login(String login, String password) {
-        return DAOMySQL.getInstance().login(login, password);
+        return DAOMySQL.getInstance().loginAdmin(login, password);
     }
 
     @Override

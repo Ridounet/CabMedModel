@@ -8,6 +8,7 @@ import cabmed.model.Administrateur;
 import cabmed.model.Cp;
 import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
+import cabmed.model.Patient;
 import cabmed.model.Personnel;
 import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
@@ -35,8 +36,24 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         DAOMySQL.getInstance();
     }
     
-    public Administrateur login(String login, String password) {
-        return DAOMySQL.getInstance().login(login, password);
+    public Administrateur loginAdmin(String login, String password) {
+        return DAOMySQL.getInstance().loginAdmin(login, password);
+    }
+    
+    public Medecin loginMedecin(String login, String password) {
+        return DAOMySQL.getInstance().loginMedecin(login, password);
+    }
+    
+    public Secretaire loginSecretaire(String login, String password) {
+        return DAOMySQL.getInstance().loginSecretaire(login, password);
+    }
+    
+    public Infirmiere loginInfirmiere(String login, String password) {
+        return DAOMySQL.getInstance().loginInfirmiere(login, password);
+    }
+    
+    public Patient loginPatient(String login, String password) {
+        return DAOMySQL.getInstance().loginPatient(login, password);
     }
 
     @Override
@@ -50,81 +67,33 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     }
     
     @Override
-    public List<Secretaire> getListSecretaire() {
-        return DAOMySQL.getInstance().getListSecretaire();
-    }
-
-    @Override
-    public List<Infirmiere> getListInfirmiere() {
-        return DAOMySQL.getInstance().getListInfirmiere();
-    }
-
-    @Override
     public List<Specialisation> getListSpecialisation() {
         return DAOMySQL.getInstance().getListSpecialisation();
     }
     
     // Medecin
-    @Override
-    public boolean deleteMedecin(Medecin med) {
-        if (DAOMySQL.getInstance().deleteMedecin(med)) {
-            ctrl.setListMedecin(getListMedecin());
-            notifyObservers();
-            return true;
-        }
-        return false;
-    }
+    
 
     @Override
     public boolean saveMedecin(Medecin medecin) {
         // TODO
         return DAOMySQL.getInstance().saveMedecin(medecin);
     }
+
     
-    @Override
-    public boolean addMedecin(Medecin medecin) {
-        if (DAOMySQL.getInstance().addMedecin(medecin)) {
-            ctrl.addMedecin(medecin);
-            notifyObservers();
-            return true;
-        }
-        return false;
-    }
-
-    // Personnel
-    @Override
-    public boolean addInfirmiere(Infirmiere infirmiere) {
-        if (DAOMySQL.getInstance().addInfirmiere(infirmiere)) {
-            ctrl.addInfirmiere(infirmiere);
-            notifyObservers();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean addSecretaire(Secretaire secretaire) {
-        if (DAOMySQL.getInstance().addSecretaire(secretaire)) {
-            ctrl.addSecretaire(secretaire);
-            notifyObservers();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean savePersonnel(Personnel personne) {
-        // TODO
-        return DAOMySQL.getInstance().savePersonnel(personne);
-    }
-
-    @Override
-    public boolean deleteSecretaire(Secretaire secretaire) {
-        if (DAOMySQL.getInstance().deleteSecretaire(secretaire)) {
-            ctrl.setListSecretaire(getListSecretaire());
-            notifyObservers();
-            return true;
-        }
-        return false;
-    }
+    
+    
+    
+    
+    
+    // Pas pour cette façade
+    @Override public boolean addInfirmiere(Infirmiere infirmiere) { return false; }
+    @Override public boolean addSecretaire(Secretaire secretaire) { return false; }
+    @Override public boolean deleteSecretaire(Secretaire secretaire) { return false; }
+    @Override public boolean savePersonnel(Personnel personne) { return false; }
+    @Override public List<Secretaire> getListSecretaire() { return null; }
+    @Override public List<Infirmiere> getListInfirmiere() { return null; }
+    @Override public boolean deleteMedecin(Medecin medecin) { return false; }
+    @Override public boolean addMedecin(Medecin medecin) { return false; }
+    
 }

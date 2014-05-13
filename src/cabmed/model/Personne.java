@@ -43,7 +43,8 @@ public abstract class Personne implements Serializable {
     // Constructeurs
     public Personne() { }
     
-    public Personne(String registreNat, String nom, String prenom, Date dateNaissance, Adresse adresse, String tel, Sexe sexe) {
+    public Personne(String registreNat, String nom, String prenom,
+            Date dateNaissance,Adresse adresse, String tel, Sexe sexe) {
         this.registreNat = registreNat;
         this.dateNaissance = dateNaissance;
         this.adresse = adresse;
@@ -99,4 +100,5 @@ public abstract class Personne implements Serializable {
     public void setId(int id) { this.id = id; }
     public boolean isVisible() { return visible; }
     public void setVisible(boolean visible) { this.visible = visible; }
+    
 }

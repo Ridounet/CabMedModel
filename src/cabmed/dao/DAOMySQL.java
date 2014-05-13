@@ -89,11 +89,49 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     }
     
     // CRUD Général
-    public Administrateur login(String login, String password) {
+    public Administrateur loginAdmin(String login, String password) {
         Administrateur result;
         try {
             result = (Administrateur) getEntityManager().createQuery("SELECT a FROM Administrateur a "
-                + "WHERE a.nom = '" + login + "' AND a.prenom = '" + password + "'").getSingleResult();
+                + "WHERE a.nom = '" + login + "' AND a.prenom = '" + password + "';").getSingleResult();
+        } catch(Exception e) {
+            result = null;
+        }
+        return result;
+    }
+    public Medecin loginMedecin(String login, String password) {
+        try {
+            Medecin personne = (Medecin) getEntityManager().createQuery("SELECT m FROM Medecin m "
+                + "WHERE m.nom = '" + login + "' AND m.prenom = '" + password + "';").getSingleResult();
+            return personne;
+        } catch(Exception e) {
+            return null;
+        }
+    }
+    public Secretaire loginSecretaire(String login, String password) {
+        try {
+            Secretaire personne = (Secretaire) getEntityManager().createQuery("SELECT s FROM Secretaire s "
+                + "WHERE s.nom = '" + login + "' AND s.prenom = '" + password + "';").getSingleResult();
+            return personne;
+        } catch(Exception e) {
+            return null;
+        }
+    }
+    public Patient loginPatient(String login, String password) {
+        Patient result;
+        try {
+            result = (Patient) getEntityManager().createQuery("SELECT p FROM Patient p "
+                + "WHERE p.nom = '" + login + "' AND p.prenom = '" + password + "';").getSingleResult();
+        } catch(Exception e) {
+            result = null;
+        }
+        return result;
+    }
+    public Infirmiere loginInfirmiere(String login, String password) {
+        Infirmiere result;
+        try {
+            result = (Infirmiere) getEntityManager().createQuery("SELECT i FROM Infirmiere i "
+                + "WHERE i.nom = '" + login + "' AND i.prenom = '" + password + "';").getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -140,14 +178,17 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         return medecinDAO.getListMedecin();
     }
     
+    @Override
     public List<Secretaire> getListSecretaire() {
         return personnelDAO.getListSecretaire();
     }
 
+    @Override
     public List<Infirmiere> getListInfirmiere() {
         return personnelDAO.getListInfirmiere();
     }
 
+    @Override
     public List<Specialisation> getListSpecialisation() {
         return specialisationDAO.getListSpecialisation();
     }
@@ -214,58 +255,58 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     // -------------------------------------------------------------------------
     // -------------------------------- @Entity --------------------------------
     // -------------------------------------------------------------------------
-    private static Map<Jour,Disponibilite> mapDisponibilite = new HashMap<>();
-    private static Disponibilite dis1 = new Disponibilite(Tranche.H0900, Tranche.H1400);
-    private static Disponibilite dis2 = new Disponibilite(Tranche.H0900, Tranche.H1400);
-    private static Disponibilite dis3 = new Disponibilite(Tranche.H0900, Tranche.H1400);
-    private static Disponibilite dis4 = new Disponibilite(Tranche.H0900, Tranche.H1830);
-    private static Disponibilite dis5 = new Disponibilite(Tranche.H1200, Tranche.H1530);
-    private static Cp cp1 = new Cp(1000, "Bruxelles");
-    private static Cp cp2 = new Cp(1020, "Laeken");
-    private static Cp cp3 = new Cp(1030, "Schaerbeek");
-    private static Cp cp4 = new Cp(1040, "Etterbeek");
-    private static Cp cp5 = new Cp(1050, "Ixelles");
-    private static Cp cp6 = new Cp(1060, "Saint-Gilles");
-    private static Cp cp7 = new Cp(1070, "Anderlecht");
-    private static Cp cp8 = new Cp(1080, "Molenbeek");
-    private static Cp cp9 = new Cp(1081, "Koekelberg");
-    private static Cp cp10 = new Cp(1090, "Jette");
+    private static final Map<Jour,Disponibilite> mapDisponibilite = new HashMap<>();
+    private static final Disponibilite dis1 = new Disponibilite(Tranche.H0900, Tranche.H1400);
+    private static final Disponibilite dis2 = new Disponibilite(Tranche.H0900, Tranche.H1400);
+    private static final Disponibilite dis3 = new Disponibilite(Tranche.H0900, Tranche.H1400);
+    private static final Disponibilite dis4 = new Disponibilite(Tranche.H0900, Tranche.H1830);
+    private static final Disponibilite dis5 = new Disponibilite(Tranche.H1200, Tranche.H1530);
+    private static final Cp cp1 = new Cp(1000, "Bruxelles");
+    private static final Cp cp2 = new Cp(1020, "Laeken");
+    private static final Cp cp3 = new Cp(1030, "Schaerbeek");
+    private static final Cp cp4 = new Cp(1040, "Etterbeek");
+    private static final Cp cp5 = new Cp(1050, "Ixelles");
+    private static final Cp cp6 = new Cp(1060, "Saint-Gilles");
+    private static final Cp cp7 = new Cp(1070, "Anderlecht");
+    private static final Cp cp8 = new Cp(1080, "Molenbeek");
+    private static final Cp cp9 = new Cp(1081, "Koekelberg");
+    private static final Cp cp10 = new Cp(1090, "Jette");
     
-    private static Patient p1 = new Patient(Mutualite.PARTENAMUT, REG_PAT, "Amar Ouaali", "Riduan",
+    private static final Patient p1 = new Patient(Mutualite.PARTENAMUT, REG_PAT, "Amar Ouaali", "Riduan",
         new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484848849", Sexe.HOMME, "11414059330");
-    private static Personnel a1 = new Administrateur(new Date(), REG_MED1, "Administrateur", "Moi",
+    private static final Personnel a1 = new Administrateur(new Date(), REG_MED1, "Administrateur", "Moi",
             new Date(), new Adresse("Rue test 43", cp1), "0453945632", Sexe.HOMME);
     
-    private static Personnel i1 = new Infirmiere(new Date(), "87122274535", "Amar Ouaali", 
+    private static final Personnel i1 = new Infirmiere(new Date(), "87122274535", "Amar Ouaali", 
         "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
-    private static Personnel i2 = new Infirmiere(new Date(), "19081052047", "Machin", "Chose", 
+    private static final Personnel i2 = new Infirmiere(new Date(), "19081052047", "Machin", "Chose", 
         new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
-    private static Personnel i3 = new Infirmiere(new Date(), "91017335418", "Louise", "Marie", 
+    private static final Personnel i3 = new Infirmiere(new Date(), "91017335418", "Louise", "Marie", 
         new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
-    private static Personnel i4 = new Infirmiere(new Date(), "63010124101", "Desaedeleer", 
+    private static final Personnel i4 = new Infirmiere(new Date(), "63010124101", "Desaedeleer", 
         "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
     
-    private static Personnel s1 = new Secretaire(new Date(), "87123274535", "Amar Ouaali", 
-        "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
-    private static Personnel s2 = new Secretaire(new Date(), "19089052047", "Machin", "Chose", 
+    private static final Personnel s1 = new Secretaire(new Date(), "87123274535", "Login", 
+        "Test", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
+    private static final Personnel s2 = new Secretaire(new Date(), "19089052047", "Machin", "Chose", 
         new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
-    private static Personnel s3 = new Secretaire(new Date(), "91015335418", "Louise", "Marie", 
+    private static final Personnel s3 = new Secretaire(new Date(), "91015335418", "Louise", "Marie", 
         new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
-    private static Personnel s4 = new Secretaire(new Date(), "63019124101", "Desaedeleer", 
+    private static final Personnel s4 = new Secretaire(new Date(), "63019124101", "Desaedeleer", 
         "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
     
-    private static Medecin m1 = new Medecin(new Date(), REG_MED1, "VO", "Didier",
+    private static final Medecin m1 = new Medecin(new Date(), REG_MED1, "VO", "Didier",
         new Date(), new Adresse("Rue de la loi 453", cp5), "0498234109", Sexe.HOMME);
-    private static Medecin m2 = new Medecin(new Date(), REG_MED2, "Decamp", "Test",
+    private static final Medecin m2 = new Medecin(new Date(), REG_MED2, "Decamp", "Test",
         new Date(), new Adresse("Rue du test 74", cp10), "0488932094", Sexe.HOMME);
-    private static Medecin m3 = new Medecin(new Date(), REG_MED3, "De Heneau", "Teste",
+    private static final Medecin m3 = new Medecin(new Date(), REG_MED3, "De Heneau", "Teste",
         new Date(), new Adresse("Rue Ici 982", cp8), "0494439092", Sexe.FEMME);
-    private static Medecin m4 = new Medecin(new Date(), REG_MED4, "Amar", "Machin",
+    private static final Medecin m4 = new Medecin(new Date(), REG_MED4, "Amar", "Machin",
         new Date(), new Adresse("Avenue de Moi 429", cp9), "0478439089", Sexe.HOMME);
     
-    private static List<Specialisation> listSpec = new ArrayList<>();
-    private static Specialisation sp1 = new Specialisation(1, "Généraliste");
-    private static Specialisation sp2 = new Specialisation(3, "Gynécologue");
-    private static Specialisation sp3 = new Specialisation(2, "Obstétricien");
+    private static final List<Specialisation> listSpec = new ArrayList<>();
+    private static final Specialisation sp1 = new Specialisation(1, "Généraliste");
+    private static final Specialisation sp2 = new Specialisation(3, "Gynécologue");
+    private static final Specialisation sp3 = new Specialisation(2, "Obstétricien");
 
 }

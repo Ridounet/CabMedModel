@@ -1,5 +1,8 @@
 package cabmed.manage.ihm;
 
+import cabmed.model.Rdv;
+import javax.swing.JOptionPane;
+
 public class VueDossierPatient extends javax.swing.JFrame {
 
     public VueDossierPatient() {
@@ -17,12 +20,28 @@ public class VueDossierPatient extends javax.swing.JFrame {
         scrollTableEnCours1 = new javax.swing.JScrollPane();
         tableRdvAncien = new javax.swing.JTable();
         btCloseRdv = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbTitre = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        ztNom = new javax.swing.JTextField();
+        ztPrenom = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        ztSexe = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        ztMutualite = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        ztNumSecuriteSocial = new javax.swing.JTextField();
+        ztRegistreNat = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Patient's case");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Generality");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Old Appointment");
 
         ztGeneralite.setColumns(20);
@@ -57,7 +76,24 @@ public class VueDossierPatient extends javax.swing.JFrame {
             }
         });
         tableRdvAncien.getTableHeader().setReorderingAllowed(false);
+        tableRdvAncien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableRdvAncienMouseClicked(evt);
+            }
+        });
         scrollTableEnCours1.setViewportView(tableRdvAncien);
+        if (tableRdvAncien.getColumnModel().getColumnCount() > 0) {
+            tableRdvAncien.getColumnModel().getColumn(0).setResizable(false);
+            tableRdvAncien.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableRdvAncien.getColumnModel().getColumn(1).setResizable(false);
+            tableRdvAncien.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tableRdvAncien.getColumnModel().getColumn(2).setResizable(false);
+            tableRdvAncien.getColumnModel().getColumn(2).setPreferredWidth(70);
+            tableRdvAncien.getColumnModel().getColumn(3).setResizable(false);
+            tableRdvAncien.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tableRdvAncien.getColumnModel().getColumn(4).setResizable(false);
+            tableRdvAncien.getColumnModel().getColumn(4).setPreferredWidth(50);
+        }
 
         btCloseRdv.setText("Close Appointment");
         btCloseRdv.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +101,37 @@ public class VueDossierPatient extends javax.swing.JFrame {
                 btCloseRdvActionPerformed(evt);
             }
         });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel3.setText("Double-clic on an appointment to see details");
+
+        lbTitre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbTitre.setText("Patient's info");
+
+        jLabel4.setText("Firstname");
+
+        jLabel5.setText("Lastname");
+
+        ztNom.setEnabled(false);
+
+        ztPrenom.setEnabled(false);
+
+        jLabel6.setText("Sex");
+
+        ztSexe.setEnabled(false);
+
+        jLabel7.setText("Mutuality");
+
+        ztMutualite.setEnabled(false);
+
+        jLabel8.setText("Social Security");
+
+        jLabel9.setText("National Number");
+
+        ztNumSecuriteSocial.setEnabled(false);
+
+        ztRegistreNat.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,12 +142,42 @@ public class VueDossierPatient extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollTableEnCours1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btCloseRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btCloseRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(ztSexe, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ztPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(ztNom, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ztMutualite, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ztRegistreNat, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ztNumSecuriteSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -88,14 +185,36 @@ public class VueDossierPatient extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lbTitre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(ztNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(ztMutualite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(ztPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(ztNumSecuriteSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(ztSexe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(ztRegistreNat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollTableEnCours1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(scrollTableEnCours1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btCloseRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -104,8 +223,15 @@ public class VueDossierPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCloseRdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseRdvActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btCloseRdvActionPerformed
+
+    private void tableRdvAncienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRdvAncienMouseClicked
+        if (evt.getClickCount() == 2) {
+            //Rdv rdv = tableRdvAncien.getSelectedRow();
+            JOptionPane.showMessageDialog(this, "Rdv selected: " + tableRdvAncien.getSelectedRow());
+        }
+    }//GEN-LAST:event_tableRdvAncienMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -143,9 +269,23 @@ public class VueDossierPatient extends javax.swing.JFrame {
     private javax.swing.JButton btCloseRdv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbTitre;
     private javax.swing.JScrollPane scrollTableEnCours1;
     private javax.swing.JTable tableRdvAncien;
     private javax.swing.JTextArea ztGeneralite;
+    private javax.swing.JTextField ztMutualite;
+    private javax.swing.JTextField ztNom;
+    private javax.swing.JTextField ztNumSecuriteSocial;
+    private javax.swing.JTextField ztPrenom;
+    private javax.swing.JTextField ztRegistreNat;
+    private javax.swing.JTextField ztSexe;
     // End of variables declaration//GEN-END:variables
 }

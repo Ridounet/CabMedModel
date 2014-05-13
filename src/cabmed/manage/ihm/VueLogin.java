@@ -1,8 +1,9 @@
 package cabmed.manage.ihm;
 
 import cabmed.manage.ctrl.CtrlLogin;
+import javax.swing.JOptionPane;
 
-public class VueLogin extends javax.swing.JFrame implements cabmed.ressources.Observer {
+public class VueLogin extends javax.swing.JFrame {
 
     private CtrlLogin ctrl;
     
@@ -98,7 +99,13 @@ public class VueLogin extends javax.swing.JFrame implements cabmed.ressources.Ob
     }//GEN-LAST:event_ztLoginActionPerformed
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        
+        String login = ztLogin.getText();
+        String password = ztPassword.getText();
+        if (login.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields");
+        } else {
+            ctrl.login(ztLogin.getText(),ztPassword.getText());
+        }
     }//GEN-LAST:event_btLoginActionPerformed
 
     public static void main(String args[]) {
@@ -127,6 +134,7 @@ public class VueLogin extends javax.swing.JFrame implements cabmed.ressources.Ob
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VueLogin().setVisible(true);
             }
@@ -141,8 +149,4 @@ public class VueLogin extends javax.swing.JFrame implements cabmed.ressources.Ob
     private javax.swing.JTextField ztPassword;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void update() {
-        // TODO
-    }
 }

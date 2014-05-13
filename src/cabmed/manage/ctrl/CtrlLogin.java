@@ -3,6 +3,10 @@ package cabmed.manage.ctrl;
 import cabmed.manage.ihm.VueLogin;
 import cabmed.manage.main.Facade;
 import cabmed.model.Administrateur;
+import cabmed.model.Medecin;
+import cabmed.model.Personnel;
+import cabmed.model.Secretaire;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class CtrlLogin {
@@ -16,11 +20,6 @@ public class CtrlLogin {
         this.ctrlPrincipal = ctrlPrincipal;
         this.facade = facade;
         me = this;
-        
-        //showView();
-        
-        // Recherche DB
-        
     }
     
     public void showView() {
@@ -29,7 +28,6 @@ public class CtrlLogin {
                 @Override
                 public void run() {
                     vueLogin = new VueLogin(me);
-                    Facade.addObserver(vueLogin);
                     vueLogin.setVisible(true);
                 }
             });
@@ -38,18 +36,20 @@ public class CtrlLogin {
         }
         
     }
-    
-    public void showAdmin() {
-        vueLogin.setVisible(false);
-        ctrlPrincipal.showPrincipal();
+
+    public void login(String login, String password) {
+        Personnel personne;
+        if ((personne = facade.loginMedecin(login, password)) != null) {
+            vueLogin.setVisible(false);
+            ctrlPrincipal.showMedecin((Medecin) personne);
+        } else if ((personne = facade.loginSecretaire(login, password)) != null) {
+            vueLogin.setVisible(false);
+            ctrlPrincipal.showSecretaire((Secretaire) personne);
+        } else {
+            JOptionPane.showMessageDialog(vueLogin, "Login or password incorrect");
+        }
+        
+        
     }
 
-    public Administrateur login(String login, String password) {
-        return facade.login(login, password);
-    }
-
-    public void putLogged(Administrateur admin) {
-        ctrlPrincipal.putLogged(admin);
-    }
-    
 }

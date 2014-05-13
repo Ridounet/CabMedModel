@@ -1,6 +1,6 @@
 package cabmed.manage.ihm;
 
-import cabmed.manage.ctrl.CtrlRecherchePatient;
+import cabmed.manage.ctrl.CtrlSecretaire;
 import cabmed.model.Mutualite;
 import cabmed.model.Sexe;
 import cabmed.ressources.Observer;
@@ -14,7 +14,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         initAttributes();
     }
 
-    public VueRecherchePatient(CtrlRecherchePatient me) {
+    public VueRecherchePatient(CtrlSecretaire me) {
         initComponents();
         initAttributes();
     }
