@@ -17,6 +17,7 @@ import cabmed.model.Sexe;
 import cabmed.model.Specialisation;
 import cabmed.model.StatutRdv;
 import cabmed.model.Tranche;
+import cabmed.ressources.Constantes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -93,7 +94,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Administrateur result;
         try {
             result = (Administrateur) getEntityManager().createQuery("SELECT a FROM Administrateur a "
-                + "WHERE a.nom = '" + login + "' AND a.prenom = '" + password + "';").getSingleResult();
+                + "WHERE a.nom = '" + login + "' AND a.prenom = '" + password + "' AND a.visible = " + Constantes.VISIBLE).getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -101,19 +102,27 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     }
     public Medecin loginMedecin(String login, String password) {
         try {
+            System.out.println("début try dans login medecin");
             Medecin personne = (Medecin) getEntityManager().createQuery("SELECT m FROM Medecin m "
-                + "WHERE m.nom = '" + login + "' AND m.prenom = '" + password + "';").getSingleResult();
+                + "WHERE m.nom = '" + login + "' AND m.prenom = '" + password + "' AND m.visible = " + Constantes.VISIBLE).getSingleResult();
+            System.out.println("après requete JPQL dans login medecin");
             return personne;
         } catch(Exception e) {
+            System.out.println("dans catch dans login medecin");
+            System.out.println(e.getMessage());
             return null;
         }
     }
     public Secretaire loginSecretaire(String login, String password) {
         try {
+            System.out.println("début try dans login secretaire");
             Secretaire personne = (Secretaire) getEntityManager().createQuery("SELECT s FROM Secretaire s "
-                + "WHERE s.nom = '" + login + "' AND s.prenom = '" + password + "';").getSingleResult();
+                + "WHERE s.nom = '" + login + "' AND s.prenom = '" + password + "' AND s.visible = " + Constantes.VISIBLE).getSingleResult();
+            System.out.println("apres requete JPQL");
             return personne;
         } catch(Exception e) {
+            System.out.println("dans catch dans login secretaire");
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -121,7 +130,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Patient result;
         try {
             result = (Patient) getEntityManager().createQuery("SELECT p FROM Patient p "
-                + "WHERE p.nom = '" + login + "' AND p.prenom = '" + password + "';").getSingleResult();
+                + "WHERE p.nom = '" + login + "' AND p.prenom = '" + password + "' AND p.visible = " + Constantes.VISIBLE).getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -131,7 +140,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Infirmiere result;
         try {
             result = (Infirmiere) getEntityManager().createQuery("SELECT i FROM Infirmiere i "
-                + "WHERE i.nom = '" + login + "' AND i.prenom = '" + password + "';").getSingleResult();
+                + "WHERE i.nom = '" + login + "' AND i.prenom = '" + password + "' AND i.visible = " + Constantes.VISIBLE).getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -196,6 +205,10 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     
     
+    public static void main(String[] args) {
+        initDB();
+    }
+    
     public static void initDB() {
         em = getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -208,20 +221,13 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         em.persist(i1); em.persist(m1); em.persist(i2); em.persist(m4); em.persist(a1);
         em.persist(p1); em.persist(s1); em.persist(m3); em.persist(s2); em.persist(m2);
         em.persist(s3); em.persist(i4); em.persist(i3); em.persist(s4);
-        
         tx.commit();
-
+        
         tx.begin();
-        listSpec.add(sp1);
-        listSpec.add(sp2);
-        listSpec.add(sp3);
         em.persist(sp1); em.persist(sp2); em.persist(sp3);
         tx.commit();
         
-        m1.setSpecialisation(listSpec);
-//        m2.setSpecialisation(listSpec);
-//        m3.setSpecialisation(listSpec);
-//        m4.setSpecialisation(listSpec);
+        
         
 //        tx.begin();
         mapDisponibilite.put(Jour.LUNDI, dis1);
@@ -241,6 +247,30 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         tx.begin();
         Rdv rdv1 = new Rdv(new Date(), p1, m1, sp1, StatutRdv.EN_COURS, Tranche.H0900, 2);
         em.persist(rdv1);
+        tx.commit();
+        
+        tx.begin();
+        m1.addSpecialisation(sp1);
+        m1.addSpecialisation(sp2);
+        m1.addSpecialisation(sp3);
+        tx.commit();
+        
+        tx.begin();
+        m2.addSpecialisation(sp1);
+        m2.addSpecialisation(sp2);
+        m2.addSpecialisation(sp3);
+        tx.commit();
+        
+        tx.begin();
+        m3.addSpecialisation(sp1);
+        m3.addSpecialisation(sp2);
+        m3.addSpecialisation(sp3);
+        tx.commit();
+        
+        tx.begin();
+        m4.addSpecialisation(sp1);
+        m4.addSpecialisation(sp2);
+        m4.addSpecialisation(sp3);
         tx.commit();
         
     }

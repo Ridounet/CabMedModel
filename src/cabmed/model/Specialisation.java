@@ -1,6 +1,8 @@
 package cabmed.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -15,6 +17,9 @@ public class Specialisation implements Serializable {
     
     @Column(nullable = false, unique = true)
     private String label;
+    
+    @ManyToMany(mappedBy = "specialisation")
+    private List<Medecin> medecin = new ArrayList<>();
     
     private boolean visible = true;
 
@@ -59,4 +64,9 @@ public class Specialisation implements Serializable {
     public void setLabel(String label) { this.label = label; }
     public boolean isVisible() { return visible; }
     public void setVisible(boolean visible) { this.visible = visible; }
+    
+    public void addMedecin(Medecin medecin) {
+        this.medecin.add(medecin);
+    }
+    
 }
