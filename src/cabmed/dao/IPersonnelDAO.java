@@ -9,6 +9,7 @@ public interface IPersonnelDAO {
     public boolean addInfirmiere(Infirmiere infirmiere);
     public boolean addSecretaire(Secretaire secretaire);
     public boolean deleteSecretaire(Secretaire secretaire);
+    public boolean deleteInfirmiere(Infirmiere infirmiere);
     public boolean savePersonnel(Personnel personne);
     public List<Secretaire> getListSecretaire();
     public List<Infirmiere> getListInfirmiere();

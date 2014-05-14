@@ -4,7 +4,6 @@ import cabmed.model.Disponibilite;
 import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Planning;
-import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,8 +29,16 @@ public class MedecinDAO implements IMedecinDAO{
 
     @Override
     public boolean saveMedecin(Medecin medecin) {
-        // TODO
-        return true;
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
+        try{
+            DAOMySQL.getEntityManager().persist(medecin);
+            tx.commit();
+            return true;
+        } catch(Exception e) {
+            tx.rollback();
+            return false;
+        }
     }
     
     
@@ -42,7 +49,7 @@ public class MedecinDAO implements IMedecinDAO{
             return DAOMySQL.getEntityManager().createQuery(
                     "SELECT m FROM Medecin m WHERE m.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return new ArrayList<Medecin>();
+            return new ArrayList<>();
         }
     }
 
@@ -57,7 +64,7 @@ public class MedecinDAO implements IMedecinDAO{
         disponibilite.put(Jour.VENDREDI, new Disponibilite());
         disponibilite.put(Jour.SAMEDI, new Disponibilite());
         planning.setDisponibilite(disponibilite);
-        medecin.setSpecialisation(new ArrayList<Specialisation>());
+        medecin.setSpecialisation(new ArrayList<>());
         EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
         tx.begin();
         try {
@@ -65,6 +72,33 @@ public class MedecinDAO implements IMedecinDAO{
             tx.commit();
             return true;
         } catch (Exception ex) {
+            tx.rollback();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removeSpecialisationPourMedecin(Medecin med, int index) {
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        try {
+            tx.begin();
+            med.getSpecialisation().remove(index);
+            tx.commit();
+            return true;
+        } catch(Exception e) {
+            tx.rollback();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addSpecialisationAMedecin(Medecin medecin) {
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
+        try {
+            tx.commit();
+            return true;
+        } catch(Exception e) {
             tx.rollback();
             return false;
         }

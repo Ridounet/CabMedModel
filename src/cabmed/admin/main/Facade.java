@@ -114,8 +114,11 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
 
     @Override
     public boolean savePersonnel(Personnel personne) {
-        // TODO
-        return DAOMySQL.getInstance().savePersonnel(personne);
+        if (DAOMySQL.getInstance().savePersonnel(personne)) {
+            notifyObservers();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -127,4 +130,26 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         }
         return false;
     }
+    
+    @Override
+    public boolean deleteInfirmiere(Infirmiere infirmiere) {
+        if (DAOMySQL.getInstance().deleteInfirmiere(infirmiere)) {
+            ctrl.setListInfirmiere(getListInfirmiere());
+            notifyObservers();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeSpecialisationPourMedecin(Medecin med, int index) {
+        return DAOMySQL.getInstance().removeSpecialisationPourMedecin(med, index);
+    }
+
+    @Override
+    public boolean addSpecialisationAMedecin(Medecin medecin) {
+        return DAOMySQL.getInstance().addSpecialisationAMedecin(medecin);
+    }
+
+    
 }

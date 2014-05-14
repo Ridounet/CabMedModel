@@ -95,5 +95,20 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     @Override public List<Infirmiere> getListInfirmiere() { return null; }
     @Override public boolean deleteMedecin(Medecin medecin) { return false; }
     @Override public boolean addMedecin(Medecin medecin) { return false; }
+
+    @Override
+    public boolean removeSpecialisationPourMedecin(Medecin med, int selectedIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addSpecialisationAMedecin(Medecin medecin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteInfirmiere(Infirmiere infirmiere) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

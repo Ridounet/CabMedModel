@@ -26,7 +26,7 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
         initComponents();
         initAttributes();
     }
-    
+
     private void initAttributes() {
         cbSexe.addItem(Sexe.HOMME);
         cbSexe.addItem(Sexe.FEMME);

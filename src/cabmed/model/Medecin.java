@@ -10,7 +10,6 @@ import javax.persistence.*;
 public class Medecin extends Personnel {
     // Attributs
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
-    @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "medecin_specialisation", joinColumns = @JoinColumn(name = "medecin_id", unique = false), inverseJoinColumns = @JoinColumn(unique = false, name = "specialisation_id"))
     private List<Specialisation> specialisation = new ArrayList<>();
     

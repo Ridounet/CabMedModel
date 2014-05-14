@@ -18,7 +18,6 @@ import cabmed.model.Specialisation;
 import cabmed.model.StatutRdv;
 import cabmed.model.Tranche;
 import cabmed.ressources.Constantes;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -161,6 +160,16 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     public boolean saveMedecin(Medecin medecin) {
         return medecinDAO.saveMedecin(medecin);
     }
+    
+    @Override
+    public boolean addSpecialisationAMedecin(Medecin medecin) {
+        return medecinDAO.addSpecialisationAMedecin(medecin);
+    }
+    
+    @Override
+    public boolean removeSpecialisationPourMedecin(Medecin med, int index) {
+        return medecinDAO.removeSpecialisationPourMedecin(med, index);
+    }
 
     @Override
     public boolean addInfirmiere(Infirmiere infirmiere) {
@@ -180,6 +189,11 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     @Override
     public boolean deleteSecretaire(Secretaire secretaire) {
         return personnelDAO.deleteSecretaire(secretaire);
+    }
+    
+    @Override
+    public boolean deleteInfirmiere(Infirmiere infirmiere) {
+        return personnelDAO.deleteInfirmiere(infirmiere);
     }
 
     @Override
@@ -253,23 +267,10 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         m1.addSpecialisation(sp1);
         m1.addSpecialisation(sp2);
         m1.addSpecialisation(sp3);
-        tx.commit();
-        
-        tx.begin();
         m2.addSpecialisation(sp1);
         m2.addSpecialisation(sp2);
-        m2.addSpecialisation(sp3);
-        tx.commit();
-        
-        tx.begin();
-        m3.addSpecialisation(sp1);
         m3.addSpecialisation(sp2);
-        m3.addSpecialisation(sp3);
-        tx.commit();
-        
-        tx.begin();
         m4.addSpecialisation(sp1);
-        m4.addSpecialisation(sp2);
         m4.addSpecialisation(sp3);
         tx.commit();
         
@@ -280,7 +281,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static final String REG_MED3 = "21384902454";
     private static final String REG_MED4 = "43909564258";
     
-    private static final String REG_PAT = "90032943524";
+    private static final String REG_PAT = "90032943325";
     
     // -------------------------------------------------------------------------
     // -------------------------------- @Entity --------------------------------
@@ -303,7 +304,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static final Cp cp10 = new Cp(1090, "Jette");
     
     private static final Patient p1 = new Patient(Mutualite.PARTENAMUT, REG_PAT, "Amar Ouaali", "Riduan",
-        new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484848849", Sexe.HOMME, "11414059330");
+        new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484847749", Sexe.HOMME, "19214079440");
     private static final Personnel a1 = new Administrateur(new Date(), REG_MED1, "Administrateur", "Moi",
             new Date(), new Adresse("Rue test 43", cp1), "0453945632", Sexe.HOMME);
     
@@ -334,7 +335,6 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static final Medecin m4 = new Medecin(new Date(), REG_MED4, "Amar", "Machin",
         new Date(), new Adresse("Avenue de Moi 429", cp9), "0478439089", Sexe.HOMME);
     
-    private static final List<Specialisation> listSpec = new ArrayList<>();
     private static final Specialisation sp1 = new Specialisation(1, "Généraliste");
     private static final Specialisation sp2 = new Specialisation(3, "Gynécologue");
     private static final Specialisation sp3 = new Specialisation(2, "Obstétricien");

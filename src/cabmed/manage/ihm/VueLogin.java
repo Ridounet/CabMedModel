@@ -2,6 +2,8 @@ package cabmed.manage.ihm;
 
 import cabmed.manage.ctrl.CtrlLogin;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class VueLogin extends javax.swing.JFrame {
 
@@ -21,14 +23,13 @@ public class VueLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         ztLogin = new javax.swing.JTextField();
-        ztPassword = new javax.swing.JTextField();
         btLogin = new javax.swing.JButton();
         lbPassword = new javax.swing.JLabel();
         lbLogin = new javax.swing.JLabel();
+        ztPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Login");
-        setPreferredSize(new java.awt.Dimension(400, 235));
         setResizable(false);
 
         ztLogin.setName("ztLogin"); // NOI18N
@@ -37,8 +38,6 @@ public class VueLogin extends javax.swing.JFrame {
                 ztLoginActionPerformed(evt);
             }
         });
-
-        ztPassword.setName("ztPassword"); // NOI18N
 
         btLogin.setText("Log in");
         btLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -55,40 +54,41 @@ public class VueLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ztPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(ztLogin))
+                .addGap(98, 98, 98))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(163, 163, 163)
+                .addComponent(btLogin)
+                .addContainerGap(176, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(98, 98, 98)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbLogin)
-                                .addComponent(lbPassword))
-                            .addGap(30, 30, 30)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ztLogin)
-                                .addComponent(ztPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(63, 63, 63)
-                            .addComponent(btLogin)))
-                    .addContainerGap(98, Short.MAX_VALUE)))
+                        .addComponent(lbLogin)
+                        .addComponent(lbPassword))
+                    .addContainerGap(256, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 236, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(ztLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ztPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(btLogin)
+                .addContainerGap(58, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(68, 68, 68)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbLogin)
-                        .addComponent(ztLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(71, 71, 71)
+                    .addComponent(lbLogin)
                     .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbPassword)
-                        .addComponent(ztPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addComponent(btLogin)
-                    .addContainerGap(69, Short.MAX_VALUE)))
+                    .addComponent(lbPassword)
+                    .addContainerGap(119, Short.MAX_VALUE)))
         );
 
         pack();
@@ -100,7 +100,7 @@ public class VueLogin extends javax.swing.JFrame {
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
         String login = ztLogin.getText();
-        String password = ztPassword.getText();
+        String password = String.valueOf(ztPassword.getPassword());
         if (login.equals("") || password.equals("")) {
             JOptionPane.showMessageDialog(this, "Please fill all fields");
         } else {
@@ -121,19 +121,16 @@ public class VueLogin extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException |
+                InstantiationException |
+                IllegalAccessException |
+                UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VueLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new VueLogin().setVisible(true);
@@ -146,7 +143,7 @@ public class VueLogin extends javax.swing.JFrame {
     private javax.swing.JLabel lbLogin;
     private javax.swing.JLabel lbPassword;
     private javax.swing.JTextField ztLogin;
-    private javax.swing.JTextField ztPassword;
+    private javax.swing.JPasswordField ztPassword;
     // End of variables declaration//GEN-END:variables
 
 }
