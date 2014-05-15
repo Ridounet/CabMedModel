@@ -40,6 +40,12 @@ public class CtrlAdmin {
         me = this;
     }
     
+    
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --------------------------------- Vues ----------------------------------
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     public void showView() {
         if (vueAdmin == null) {
             SwingUtilities.invokeLater(new Runnable() {
@@ -131,19 +137,13 @@ public class CtrlAdmin {
         vueAddSpecAMedecin.setVisible(false);
     }
     
+
     
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    // ------------------------------ Ressources -------------------------------
+    // ------------------------------- Actions ---------------------------------
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
-
-    public SimpleDateFormat getSdf() {
-        return ctrlPrincipal.getSdf();
-    }
-
-    // Actions
     public boolean deleteMedecin(Medecin medecin) {
         if(facade.deleteMedecin(medecin)) {
             vueAdmin.update();
@@ -209,8 +209,22 @@ public class CtrlAdmin {
         }
     }
     
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        return facade.deleteSpecialisation(specialisation);
+    }
+    
+    private void errorOccured() {
+        JOptionPane.showMessageDialog(vueAdmin, "An error has occured, please try again.", "Error", JOptionPane.OK_OPTION);
+    }
+    
+    
 
-    // Generalites
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // ------------------------------ Ressources -------------------------------
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    public SimpleDateFormat getSdf() { return ctrlPrincipal.getSdf(); }
     public List<Cp> getListCp() { return ctrlPrincipal.getListCp(); }
     public List<Medecin> getListMedecin() { return ctrlPrincipal.getListMedecin(); }
     public List<Secretaire> getListSecretaire() { return ctrlPrincipal.getListSecretaire(); }
@@ -218,14 +232,5 @@ public class CtrlAdmin {
     public List<Specialisation> getListSpecialisation() { return ctrlPrincipal.getListSpecialisation(); }
     public Tranche[] getTranches() { return Tranche.values(); }
     public Jour[] getJours() { return Jour.values(); }
-    
-    
-    private void errorOccured() {
-        JOptionPane.showMessageDialog(vueAdmin, "An error has occured, please try again.", "Error", JOptionPane.OK_OPTION);
-    }
-
-    public boolean deleteSpecialisation(Specialisation specialisation) {
-        return facade.deleteSpecialisation(specialisation);
-    }
 
 }

@@ -49,11 +49,11 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         sdf = ctrlAdmin.getSdf();
         actions = new Actions();
         entetePersonnel = new Vector();
-        entetePersonnel.add("ID"); entetePersonnel.add("Name"); entetePersonnel.add("Birthdate");
-        entetePersonnel.add("Sex"); entetePersonnel.add("National Number"); entetePersonnel.add("Tel.");
-        entetePersonnel.add("Beginning work at"); entetePersonnel.add("Address"); entetePersonnel.add("Postal code");
+        entetePersonnel.add("ID"); entetePersonnel.add("Nom"); entetePersonnel.add("Date Naissance");
+        entetePersonnel.add("Sexe"); entetePersonnel.add("Num. National"); entetePersonnel.add("Tel.");
+        entetePersonnel.add("Début Travail"); entetePersonnel.add("Adresse"); entetePersonnel.add("CP");
         enteteSpecialisation = new Vector();
-        enteteSpecialisation.add("ID"); enteteSpecialisation.add("Label"); enteteSpecialisation.add("Delay");
+        enteteSpecialisation.add("ID"); enteteSpecialisation.add("Label"); enteteSpecialisation.add("Durée");
         tabbedPane = new JTabbedPane();
         panelMedecin = new JPanel();
         scrollPaneMedecin = new JScrollPane();
@@ -100,7 +100,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         // Initialisation de la vue
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cabmed - Administration");
+        //setTitle("Cabmed - Administration");
         setResizable(false);
 
         // -------------------- Debut Medecin --------------------
@@ -138,15 +138,15 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btMedecinDelete(evt);
             }
         });
-        btMedecinAdd.setText("Add a Physician");
+        btMedecinAdd.setText("Ajout Médecin");
         btMedecinAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btMedecinAdd(evt);
             }
         });
-        panelMedecinListSpec.setBorder(BorderFactory.createTitledBorder("List of Specialization"));
-        btMedecinDeleteSpec.setText("Delete Specialization");
+        panelMedecinListSpec.setBorder(BorderFactory.createTitledBorder("Liste des Specialisations"));
+        btMedecinDeleteSpec.setText("Retirer Specialisation");
         btMedecinDeleteSpec.setFocusable(false);
         btMedecinDeleteSpec.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btMedecinDeleteSpec.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -156,7 +156,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btMedecinDeleteSpec(evt);
             }
         });
-        btMedecinAddSpec.setText("Add Specialization");
+        btMedecinAddSpec.setText("Ajout Specialisation");
         btMedecinAddSpec.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -235,7 +235,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         
-        tabbedPane.addTab("Physician", panelMedecin);
+        tabbedPane.addTab("Médecins", panelMedecin);
 
         // -------------------- Debut Secretaire --------------------
         tableSecretaire.setModel(modeleSecretaire);
@@ -258,7 +258,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btSecretaireUpdate(evt);
             }
         });
-        btSecretaireAdd.setText("Add a Secretary");
+        btSecretaireAdd.setText("Ajout Secrétaire");
         btSecretaireAdd.addActionListener(new ActionListener() {
 
             @Override
@@ -299,7 +299,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 .addContainerGap(215, Short.MAX_VALUE))
         );
         
-        tabbedPane.addTab("Secretary", panelSecretaire);
+        tabbedPane.addTab("Secrétaire", panelSecretaire);
 
         // -------------------- Debut Infirmiere --------------------
         tableInfirmiere.setModel(modeleInfirmiere);
@@ -322,7 +322,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btInfirmiereDelete(evt);
             }
         });
-        btInfirmiereAdd.setText("Add a Nurse");
+        btInfirmiereAdd.setText("Ajout Infirmière");
         btInfirmiereAdd.addActionListener(new ActionListener() {
 
             @Override
@@ -363,7 +363,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 .addGap(98, 98, 98))
         );
         
-        tabbedPane.addTab("Nurse", panelInfirmiere);
+        tabbedPane.addTab("Infirmière", panelInfirmiere);
 
         // -------------------- Debut Specialisation --------------------
         tableSpec.setModel(modeleSpecialisation);
@@ -386,8 +386,8 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btSpecDelete(evt);
             }
         });
-        paneSpecAdd.setBorder(BorderFactory.createTitledBorder("Add a new Specialization"));
-        btSpecAdd.setText("Add");
+        paneSpecAdd.setBorder(BorderFactory.createTitledBorder("Ajout Specialisation"));
+        btSpecAdd.setText("Ajout");
         btSpecAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -395,7 +395,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             }
         });
         ztSpecDuree.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        lblSpecDuree.setText("Delay");
+        lblSpecDuree.setText("Durée");
         lblSpecLabel.setText("Label");
         
         // Placement des spécialisations
@@ -465,7 +465,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         
-        tabbedPane.addTab("Specialization", panelSpecialisation);
+        tabbedPane.addTab("Specialisation", panelSpecialisation);
 
         // Initialisation des JTable
         if (tableMedecin.getColumnModel().getColumnCount() > 0) {
@@ -752,12 +752,29 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
     private Actions actions;
     
     private class Actions {
+        
+        private void medecinUnique() {
+            JOptionPane.showMessageDialog(null, "Veuillez choisir un et un seul médecin");
+        }
+        
+        private void specialisationUnique() {
+            JOptionPane.showMessageDialog(null, "Veuillez choisir une et une seule spécialisation");
+        }
+        
+        private void infirmiereUnique() {
+            JOptionPane.showMessageDialog(null, "Veuillez choisir une et une seule infirmière");
+        }
+        
+        private void secretaireUnique() {
+            JOptionPane.showMessageDialog(null, "Veuillez choisir une et une seule secrétaire");
+        }
+        
         //----------------------------------------------------------------------
         //-----------------------------Medecin----------------------------------
         //----------------------------------------------------------------------
         public void btMedecinUpdate(ActionEvent evt) { // Bouton update Medecin
             if (tableMedecin.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+                medecinUnique();
             } else { // Si un seul élément selectionné
                 Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_MEDECIN, med);
@@ -770,7 +787,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         public void btMedecinUpdatePlanning(ActionEvent evt) { // Bouton update planning Medecin
             if (tableMedecin.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+                medecinUnique();
             } else { // Si un seul élément selectionné
                 Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                 ctrlAdmin.showViewModifPlanning(med);
@@ -779,11 +796,11 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         public void btMedecinDeleteSpec(ActionEvent evt) { // Bouton suppression d'une spécialisation pour un médecin
             if (listMedecinSpec.getSelectedValuesList().size() != 1) { // Si plus d'un élément selectionné dans la JList
-                JOptionPane.showMessageDialog(null, "Please select one and only one specialisation");
+                specialisationUnique();
             } else { // Si un seul élément selectionné
                 Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
-                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this specialization for this physician",
-                        "Remove a specialization", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir retirer cette spécialisation à ce médecin?",
+                        "Retirer une spécialisation", JOptionPane.YES_NO_OPTION);
                 if (option == 0) { // Si ok
                     ctrlAdmin.removeSpecialisationPourMedecin(med, listMedecinSpec.getSelectedIndex());
                     listModelSpec.removeAllElements();
@@ -796,10 +813,10 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         public void btMedecinDelete(ActionEvent evt) { // Supprime un médecin de la DB
             if (tableMedecin.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+                medecinUnique();
             } else { // Si un seul élément selectionné
-                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this person?",
-                        "Delete a physician", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer ce médecin?",
+                        "Suppression d'un médecin", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
                     Medecin med = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
                     if (ctrlAdmin.deleteMedecin(med)) {
@@ -811,7 +828,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         private void btMedecinAddSpec(ActionEvent evt) { // Pour ajouter une spécialisation à un médecin
             if (tableMedecin.getSelectedRowCount() != 1) { // Si plus ou moins d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one physician");
+                medecinUnique();
             } else { // Si un seul élément selectionné
                 ctrlAdmin.showViewAddSpec(ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow()));
             }
@@ -822,7 +839,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         //----------------------------------------------------------------------
         public void btSecretaireUpdate(ActionEvent evt) {
             if (tableSecretaire.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one Secretary");
+                secretaireUnique();
             } else { // Si un seul élément selectionné
                 Secretaire sec = ctrlAdmin.getListSecretaire().get(tableSecretaire.getSelectedRow());
                 ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_SECRETAIRE, sec);
@@ -835,10 +852,10 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         public void btSecretaireDelete(ActionEvent evt) {
             if (tableSecretaire.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one secretary");
+                secretaireUnique();
             } else { // Si un seul élément selectionné
-                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this person?",
-                        "Delete a secretary", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer cette secrétaire?",
+                        "Suppression d'une secrétaire", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
                     Secretaire sec = ctrlAdmin.getListSecretaire().get(tableSecretaire.getSelectedRow());
                     ctrlAdmin.deleteSecretaire(sec);
@@ -851,7 +868,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         //----------------------------------------------------------------------
         public void btInfirmiereUpdate(ActionEvent evt) {
             if (tableInfirmiere.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one nurse");
+                infirmiereUnique();
             } else { // Si un seul élément selectionné
                 Infirmiere inf = ctrlAdmin.getListInfirmiere().get(tableInfirmiere.getSelectedRow());
                 ctrlAdmin.showViewModifPersonnel(CtrlAdmin.TYPE_INFIRMIERE, inf);
@@ -864,10 +881,10 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         public void btInfirmiereDelete(ActionEvent evt) {
             if (tableInfirmiere.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one nurse");
+                infirmiereUnique();
             } else { // Si un seul élément selectionné
-                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this person?",
-                        "Delete a nurse", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer cette infirmière?",
+                        "Suppression d'une infirmière", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
                     Infirmiere inf = ctrlAdmin.getListInfirmiere().get(tableInfirmiere.getSelectedRow());
                     ctrlAdmin.deleteNurse(inf);
@@ -881,7 +898,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         //----------------------------------------------------------------------
         public void btSpecUpdate(ActionEvent evt) {
             if (tableSpec.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one specialization");
+                specialisationUnique();
             } else { // Si un seul élément selectionné
                 Specialisation spec = ctrlAdmin.getListSpecialisation().get(tableSpec.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "Specialization selected: " + spec.getLabel());
@@ -890,10 +907,10 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
 
         public void btSpecDelete(ActionEvent evt) {
             if (tableSpec.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one specialization");
+                specialisationUnique();
             } else { // Si un seul élément selectionné
-                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this specialization?",
-                        "Delete a specialization", JOptionPane.YES_NO_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer cette spécialisation?",
+                        "Suppression d'une specialisation", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
                     Specialisation spec = ctrlAdmin.getListSpecialisation().get(tableSpec.getSelectedRow());
                     ctrlAdmin.deleteSpecialisation(spec);
@@ -903,10 +920,10 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         
         public void btSpecAdd(ActionEvent evt) {
             if (tableSpec.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
-                JOptionPane.showMessageDialog(null, "Please select one and only one specialization");
+                specialisationUnique();
             } else { // Si un seul élément selectionné
                 Specialisation spec = ctrlAdmin.getListSpecialisation().get(tableSpec.getSelectedRow());
-                JOptionPane.showMessageDialog(null, "Specialization selected: " + spec.getLabel());
+                JOptionPane.showMessageDialog(null, "Specialisation choisie: " + spec.getLabel());
             }
         }
 

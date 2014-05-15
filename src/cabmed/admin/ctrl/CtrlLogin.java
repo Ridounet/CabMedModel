@@ -16,11 +16,6 @@ public class CtrlLogin {
         this.ctrlPrincipal = ctrlPrincipal;
         this.facade = facade;
         me = this;
-        
-        //showView();
-        
-        // Recherche DB
-        
     }
     
     public void showView() {
