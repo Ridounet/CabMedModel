@@ -110,5 +110,10 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     public boolean deleteInfirmiere(Infirmiere infirmiere) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

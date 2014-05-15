@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface ISpecialisationDAO {
     public List<Specialisation> getListSpecialisation();
+    public boolean deleteSpecialisation(Specialisation specialisation);
 }

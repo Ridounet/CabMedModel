@@ -151,5 +151,15 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         return DAOMySQL.getInstance().addSpecialisationAMedecin(medecin);
     }
 
+    @Override
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        if (DAOMySQL.getInstance().deleteSpecialisation(specialisation)) {
+            notifyObservers();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     
 }

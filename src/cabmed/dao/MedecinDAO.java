@@ -4,6 +4,7 @@ import cabmed.model.Disponibilite;
 import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Planning;
+import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class MedecinDAO implements IMedecinDAO{
         disponibilite.put(Jour.VENDREDI, new Disponibilite());
         disponibilite.put(Jour.SAMEDI, new Disponibilite());
         planning.setDisponibilite(disponibilite);
-        medecin.setSpecialisation(new ArrayList<>());
+        medecin.setSpecialisation(new ArrayList<Specialisation>());
         EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
         tx.begin();
         try {

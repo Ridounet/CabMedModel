@@ -339,4 +339,9 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static final Specialisation sp2 = new Specialisation(3, "Gynécologue");
     private static final Specialisation sp3 = new Specialisation(2, "Obstétricien");
 
+    @Override
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        return specialisationDAO.deleteSpecialisation(specialisation);
+    }
+
 }

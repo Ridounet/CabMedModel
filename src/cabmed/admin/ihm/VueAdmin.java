@@ -43,7 +43,9 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         initComponents();
     }
     
-    private void initAttributes() { // Initialise tous les attributs de cette classe
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        // Initialisation des attributs
         sdf = ctrlAdmin.getSdf();
         actions = new Actions();
         entetePersonnel = new Vector();
@@ -95,71 +97,8 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         modeleSecretaire = new ModeleJTableSecretaire();
         modeleInfirmiere = new ModeleJTableInfirmiere();
         modeleSpecialisation = new ModeleJTableSpecialisation();
-    }
-    
-    private void initJTables() { // Initialise la taille et le non redimensionnement des colonnes
-        if (tableMedecin.getColumnModel().getColumnCount() > 0) {
-            tableMedecin.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableMedecin.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tableMedecin.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tableMedecin.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tableMedecin.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tableMedecin.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableMedecin.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableMedecin.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tableMedecin.getColumnModel().getColumn(8).setPreferredWidth(45);
-        }
         
-        if (tableSecretaire.getColumnModel().getColumnCount() > 0) {
-            tableSecretaire.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableSecretaire.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tableSecretaire.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tableSecretaire.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tableSecretaire.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tableSecretaire.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableSecretaire.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableSecretaire.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tableSecretaire.getColumnModel().getColumn(8).setPreferredWidth(45);
-        }
-        
-        if (tableInfirmiere.getColumnModel().getColumnCount() > 0) {
-            tableInfirmiere.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableInfirmiere.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tableInfirmiere.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tableInfirmiere.getColumnModel().getColumn(3).setPreferredWidth(30);
-            tableInfirmiere.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tableInfirmiere.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableInfirmiere.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableInfirmiere.getColumnModel().getColumn(7).setPreferredWidth(70);
-            tableInfirmiere.getColumnModel().getColumn(8).setPreferredWidth(45);
-        }
-        
-        if (tableSpec.getColumnModel().getColumnCount() > 0) {
-            tableSpec.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableSpec.getColumnModel().getColumn(1).setPreferredWidth(40);
-            tableSpec.getColumnModel().getColumn(2).setPreferredWidth(20);
-        }
-        
-        for (int i = 0; i < tableMedecin.getColumnCount(); i++) {
-            tableMedecin.getColumnModel().getColumn(i).setResizable(false);
-        }
-        
-        for (int i = 0; i < tableSecretaire.getColumnCount(); i++) {
-            tableSecretaire.getColumnModel().getColumn(i).setResizable(false);
-        }
-        
-        for (int i = 0; i < tableInfirmiere.getColumnCount(); i++) {
-            tableInfirmiere.getColumnModel().getColumn(i).setResizable(false);
-        }
-        
-        for (int i = 0; i < tableSpec.getColumnCount(); i++) {
-            tableSpec.getColumnModel().getColumn(i).setResizable(false);
-        }
-    }
-    
-    @SuppressWarnings("unchecked")
-    private void initComponents() {
-        initAttributes();
+        // Initialisation de la vue
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Administration");
         setResizable(false);
@@ -228,7 +167,74 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         listMedecinSpec.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listMedecinSpec.setToolTipText("");
         scrollPaneMedecinListSpec.setViewportView(listMedecinSpec);
-        placementMedecin();
+        
+        // Placement des composants médecin
+        GroupLayout panelMedecinListSpecLayout = new GroupLayout(panelMedecinListSpec);
+        panelMedecinListSpec.setLayout(panelMedecinListSpecLayout);
+        panelMedecinListSpecLayout.setHorizontalGroup(
+            panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPaneMedecinListSpec, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(btMedecinDeleteSpec)
+                    .addComponent(btMedecinAddSpec))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelMedecinListSpecLayout.setVerticalGroup(
+            panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(scrollPaneMedecinListSpec, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
+                        .addComponent(btMedecinAddSpec, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btMedecinDeleteSpec, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        GroupLayout panelMedecinLayout = new GroupLayout(panelMedecin);
+        panelMedecin.setLayout(panelMedecinLayout);
+        panelMedecinLayout.setHorizontalGroup(
+            panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelMedecinLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(panelMedecinLayout.createSequentialGroup()
+                        .addComponent(scrollPaneMedecin, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                        .addGap(117, 117, 117))
+                    .addGroup(panelMedecinLayout.createSequentialGroup()
+                        .addComponent(btMedecinUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(btMedecinUpdatePlanning)
+                        .addGap(18, 18, 18)
+                        .addComponent(btMedecinAdd)
+                        .addGap(18, 18, 18)
+                        .addComponent(btMedecinDelete)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelMedecinLayout.createSequentialGroup()
+                        .addComponent(panelMedecinListSpec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        panelMedecinLayout.setVerticalGroup(
+            panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelMedecinLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPaneMedecin, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btMedecinDelete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btMedecinAdd, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(btMedecinUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btMedecinUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(panelMedecinListSpec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        
         tabbedPane.addTab("Physician", panelMedecin);
 
         // -------------------- Debut Secretaire --------------------
@@ -260,7 +266,39 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btSecretaireAdd(e);
             }
         });
-        placementSecretaire();
+        
+        // Placement des composants secrétaire
+        GroupLayout panelSecretaireLayout = new GroupLayout(panelSecretaire);
+        panelSecretaire.setLayout(panelSecretaireLayout);
+        panelSecretaireLayout.setHorizontalGroup(
+            panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelSecretaireLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, panelSecretaireLayout.createSequentialGroup()
+                        .addComponent(scrollPaneSecretaire, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                        .addGap(117, 117, 117))
+                    .addGroup(panelSecretaireLayout.createSequentialGroup()
+                        .addComponent(btSecretaireUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(btSecretaireAdd)
+                        .addGap(18, 18, 18)
+                        .addComponent(btSecretaireDelete)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        panelSecretaireLayout.setVerticalGroup(
+            panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelSecretaireLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPaneSecretaire, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSecretaireUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSecretaireAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                    .addComponent(btSecretaireDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(215, Short.MAX_VALUE))
+        );
+        
         tabbedPane.addTab("Secretary", panelSecretaire);
 
         // -------------------- Debut Infirmiere --------------------
@@ -292,7 +330,39 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
                 actions.btInfirmiereAdd(e);
             }
         });
-        placementInfirmiere();
+        
+        // Placement des infirmières
+        GroupLayout panelInfirmiereLayout = new GroupLayout(panelInfirmiere);
+        panelInfirmiere.setLayout(panelInfirmiereLayout);
+        panelInfirmiereLayout.setHorizontalGroup(
+            panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfirmiereLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfirmiereLayout.createSequentialGroup()
+                        .addComponent(scrollPaneInfirmiere, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+                        .addGap(117, 117, 117))
+                    .addGroup(panelInfirmiereLayout.createSequentialGroup()
+                        .addComponent(btInfirmiereUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(btInfirmiereAdd)
+                        .addGap(18, 18, 18)
+                        .addComponent(btInfirmiereDelete)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        panelInfirmiereLayout.setVerticalGroup(
+            panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfirmiereLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPaneInfirmiere, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btInfirmiereUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btInfirmiereAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                    .addComponent(btInfirmiereDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+                .addGap(98, 98, 98))
+        );
+        
         tabbedPane.addTab("Nurse", panelInfirmiere);
 
         // -------------------- Debut Specialisation --------------------
@@ -319,6 +389,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         paneSpecAdd.setBorder(BorderFactory.createTitledBorder("Add a new Specialization"));
         btSpecAdd.setText("Add");
         btSpecAdd.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 actions.btSpecAdd(evt);
             }
@@ -326,11 +397,150 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         ztSpecDuree.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         lblSpecDuree.setText("Delay");
         lblSpecLabel.setText("Label");
-        placementSpecialisation();
+        
+        // Placement des spécialisations
+        GroupLayout paneSpecAddLayout = new GroupLayout(paneSpecAdd);
+        paneSpecAdd.setLayout(paneSpecAddLayout);
+        paneSpecAddLayout.setHorizontalGroup(
+            paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(paneSpecAddLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSpecAjout, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(paneSpecAddLayout.createSequentialGroup()
+                        .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblSpecLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ztSpecLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSpecDuree, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ztSpecDuree, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))))
+                .addGap(24, 24, 24)
+                .addComponent(btSpecAdd, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        paneSpecAddLayout.setVerticalGroup(
+            paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(paneSpecAddLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblSpecAjout)
+                .addGap(18, 18, 18)
+                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSpecDuree)
+                    .addComponent(lblSpecLabel, GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(ztSpecLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSpecAdd)
+                    .addComponent(ztSpecDuree, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        GroupLayout panelSpecialisationLayout = new GroupLayout(panelSpecialisation);
+        panelSpecialisation.setLayout(panelSpecialisationLayout);
+        panelSpecialisationLayout.setHorizontalGroup(
+            panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelSpecialisationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(panelSpecialisationLayout.createSequentialGroup()
+                        .addComponent(btSpecUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(btSpecDelete))
+                    .addComponent(scrollPaneSpec, GroupLayout.PREFERRED_SIZE, 395, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paneSpecAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(494, Short.MAX_VALUE))
+        );
+        panelSpecialisationLayout.setVerticalGroup(
+            panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, panelSpecialisationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPaneSpec, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSpecUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSpecDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(paneSpecAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
+        
         tabbedPane.addTab("Specialization", panelSpecialisation);
 
-        initJTables();
-        placementGeneral();
+        // Initialisation des JTable
+        if (tableMedecin.getColumnModel().getColumnCount() > 0) {
+            tableMedecin.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableMedecin.getColumnModel().getColumn(1).setPreferredWidth(90);
+            tableMedecin.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableMedecin.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableMedecin.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tableMedecin.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tableMedecin.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tableMedecin.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tableMedecin.getColumnModel().getColumn(8).setPreferredWidth(45);
+        }
+        
+        if (tableSecretaire.getColumnModel().getColumnCount() > 0) {
+            tableSecretaire.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableSecretaire.getColumnModel().getColumn(1).setPreferredWidth(90);
+            tableSecretaire.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableSecretaire.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableSecretaire.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tableSecretaire.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tableSecretaire.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tableSecretaire.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tableSecretaire.getColumnModel().getColumn(8).setPreferredWidth(45);
+        }
+        
+        if (tableInfirmiere.getColumnModel().getColumnCount() > 0) {
+            tableInfirmiere.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableInfirmiere.getColumnModel().getColumn(1).setPreferredWidth(90);
+            tableInfirmiere.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tableInfirmiere.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableInfirmiere.getColumnModel().getColumn(4).setPreferredWidth(70);
+            tableInfirmiere.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tableInfirmiere.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tableInfirmiere.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tableInfirmiere.getColumnModel().getColumn(8).setPreferredWidth(45);
+        }
+        
+        if (tableSpec.getColumnModel().getColumnCount() > 0) {
+            tableSpec.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableSpec.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tableSpec.getColumnModel().getColumn(2).setPreferredWidth(20);
+        }
+        
+        for (int i = 0; i < tableMedecin.getColumnCount(); i++) {
+            tableMedecin.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        for (int i = 0; i < tableSecretaire.getColumnCount(); i++) {
+            tableSecretaire.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        for (int i = 0; i < tableInfirmiere.getColumnCount(); i++) {
+            tableInfirmiere.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        for (int i = 0; i < tableSpec.getColumnCount(); i++) {
+            tableSpec.getColumnModel().getColumn(i).setResizable(false);
+        }
+        
+        // Placement général
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(tabbedPane, GroupLayout.Alignment.TRAILING)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(tabbedPane)
+                .addContainerGap())
+        );
+        
         pack();
     }
 
@@ -377,6 +587,7 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             }
         }
         
+        @Override
         public void update() {
             
             fireTableDataChanged();
@@ -475,221 +686,6 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             fireTableDataChanged();
         }
 
-    }
-    
-    // Placement des composants
-    private void placementMedecin() {
-        GroupLayout panelMedecinListSpecLayout = new GroupLayout(panelMedecinListSpec);
-        panelMedecinListSpec.setLayout(panelMedecinListSpecLayout);
-        panelMedecinListSpecLayout.setHorizontalGroup(
-            panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneMedecinListSpec, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(btMedecinDeleteSpec)
-                    .addComponent(btMedecinAddSpec))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelMedecinListSpecLayout.setVerticalGroup(
-            panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelMedecinListSpecLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrollPaneMedecinListSpec, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelMedecinListSpecLayout.createSequentialGroup()
-                        .addComponent(btMedecinAddSpec, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btMedecinDeleteSpec, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-
-        GroupLayout panelMedecinLayout = new GroupLayout(panelMedecin);
-        panelMedecin.setLayout(panelMedecinLayout);
-        panelMedecinLayout.setHorizontalGroup(
-            panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelMedecinLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(panelMedecinLayout.createSequentialGroup()
-                        .addComponent(scrollPaneMedecin, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
-                        .addGap(117, 117, 117))
-                    .addGroup(panelMedecinLayout.createSequentialGroup()
-                        .addComponent(btMedecinUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btMedecinUpdatePlanning)
-                        .addGap(18, 18, 18)
-                        .addComponent(btMedecinAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btMedecinDelete)
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelMedecinLayout.createSequentialGroup()
-                        .addComponent(panelMedecinListSpec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        panelMedecinLayout.setVerticalGroup(
-            panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelMedecinLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneMedecin, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btMedecinDelete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btMedecinAdd, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelMedecinLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btMedecinUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btMedecinUpdatePlanning, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(panelMedecinListSpec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
-    }
-    private void placementSecretaire() {
-        GroupLayout panelSecretaireLayout = new GroupLayout(panelSecretaire);
-        panelSecretaire.setLayout(panelSecretaireLayout);
-        panelSecretaireLayout.setHorizontalGroup(
-            panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelSecretaireLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(GroupLayout.Alignment.TRAILING, panelSecretaireLayout.createSequentialGroup()
-                        .addComponent(scrollPaneSecretaire, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
-                        .addGap(117, 117, 117))
-                    .addGroup(panelSecretaireLayout.createSequentialGroup()
-                        .addComponent(btSecretaireUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btSecretaireAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btSecretaireDelete)
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        panelSecretaireLayout.setVerticalGroup(
-            panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelSecretaireLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneSecretaire, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelSecretaireLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSecretaireUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSecretaireAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                    .addComponent(btSecretaireDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(215, Short.MAX_VALUE))
-        );
-    }
-    private void placementInfirmiere() {
-        GroupLayout panelInfirmiereLayout = new GroupLayout(panelInfirmiere);
-        panelInfirmiere.setLayout(panelInfirmiereLayout);
-        panelInfirmiereLayout.setHorizontalGroup(
-            panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfirmiereLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInfirmiereLayout.createSequentialGroup()
-                        .addComponent(scrollPaneInfirmiere, GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
-                        .addGap(117, 117, 117))
-                    .addGroup(panelInfirmiereLayout.createSequentialGroup()
-                        .addComponent(btInfirmiereUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btInfirmiereAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btInfirmiereDelete)
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        panelInfirmiereLayout.setVerticalGroup(
-            panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfirmiereLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneInfirmiere, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelInfirmiereLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btInfirmiereUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btInfirmiereAdd, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                    .addComponent(btInfirmiereDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-                .addGap(98, 98, 98))
-        );
-    }
-    private void placementSpecialisation() {
-        GroupLayout paneSpecAddLayout = new GroupLayout(paneSpecAdd);
-        paneSpecAdd.setLayout(paneSpecAddLayout);
-        paneSpecAddLayout.setHorizontalGroup(
-            paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(paneSpecAddLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSpecAjout, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
-                    .addGroup(paneSpecAddLayout.createSequentialGroup()
-                        .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblSpecLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ztSpecLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSpecDuree, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ztSpecDuree, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))))
-                .addGap(24, 24, 24)
-                .addComponent(btSpecAdd, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        paneSpecAddLayout.setVerticalGroup(
-            paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(paneSpecAddLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblSpecAjout)
-                .addGap(18, 18, 18)
-                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSpecDuree)
-                    .addComponent(lblSpecLabel, GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(paneSpecAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(ztSpecLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSpecAdd)
-                    .addComponent(ztSpecDuree, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        GroupLayout panelSpecialisationLayout = new GroupLayout(panelSpecialisation);
-        panelSpecialisation.setLayout(panelSpecialisationLayout);
-        panelSpecialisationLayout.setHorizontalGroup(
-            panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelSpecialisationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(panelSpecialisationLayout.createSequentialGroup()
-                        .addComponent(btSpecUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btSpecDelete))
-                    .addComponent(scrollPaneSpec, GroupLayout.PREFERRED_SIZE, 395, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paneSpecAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(494, Short.MAX_VALUE))
-        );
-        panelSpecialisationLayout.setVerticalGroup(
-            panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, panelSpecialisationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneSpec, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelSpecialisationLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSpecUpdate, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSpecDelete, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(paneSpecAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
-        );
-    }
-    private void placementGeneral() {
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPane, GroupLayout.Alignment.TRAILING)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(tabbedPane)
-                .addContainerGap())
-        );
     }
     
     // Composants à afficher
@@ -896,8 +892,12 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
             if (tableSpec.getSelectedRowCount() != 1) { // Si plus d'un élément selectionné dans la JTable
                 JOptionPane.showMessageDialog(null, "Please select one and only one specialization");
             } else { // Si un seul élément selectionné
-                Specialisation spec = ctrlAdmin.getListSpecialisation().get(tableSpec.getSelectedRow());
-                JOptionPane.showMessageDialog(null, "Specialization selected: " + spec.getLabel());
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this specialization?",
+                        "Delete a specialization", JOptionPane.YES_NO_OPTION);
+                if (option == 0) {
+                    Specialisation spec = ctrlAdmin.getListSpecialisation().get(tableSpec.getSelectedRow());
+                    ctrlAdmin.deleteSpecialisation(spec);
+                }
             }
         }
         
@@ -916,10 +916,8 @@ public class VueAdmin extends JFrame implements cabmed.ressources.Observer{
         private void jTableClick(MouseEvent evt) {
             listModelSpec.removeAllElements();
             Medecin m = ctrlAdmin.getListMedecin().get(tableMedecin.getSelectedRow());
-            if (m.getSpecialisation() != null) {
-                for (Specialisation s : m.getSpecialisation()) {
-                    listModelSpec.addElement(s);
-                }
+            for (Specialisation s : m.getSpecialisation()) {
+                listModelSpec.addElement(s);
             }
         }
 

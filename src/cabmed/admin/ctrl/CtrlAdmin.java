@@ -98,7 +98,7 @@ public class CtrlAdmin {
     }
     
     public void showViewAddSpec(final Medecin med) {
-        List<Specialisation> listSpecMed = new ArrayList<>(); // Préparation de la liste des spécialités que ce médecin n'a pas
+        final List<Specialisation> listSpecMed = new ArrayList<>(); // Préparation de la liste des spécialités que ce médecin n'a pas
         for (Specialisation spec : getListSpecialisation()) {
             boolean result = true;
             for (Specialisation specMed : med.getSpecialisation()) {
@@ -222,6 +222,10 @@ public class CtrlAdmin {
     
     private void errorOccured() {
         JOptionPane.showMessageDialog(vueAdmin, "An error has occured, please try again.", "Error", JOptionPane.OK_OPTION);
+    }
+
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        return facade.deleteSpecialisation(specialisation);
     }
 
 }

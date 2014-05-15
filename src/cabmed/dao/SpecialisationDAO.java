@@ -4,6 +4,7 @@ import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.EntityTransaction;
 
 public class SpecialisationDAO implements ISpecialisationDAO{
 
@@ -15,6 +16,20 @@ public class SpecialisationDAO implements ISpecialisationDAO{
             return DAOMySQL.getEntityManager().createQuery(sql).getResultList();
         } catch (Exception ex) {
             return listSpecialisation;
+        }
+    }
+
+    @Override
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
+        tx.begin();
+        specialisation.setVisible(false);
+        try {
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            tx.rollback();
+            return false;
         }
     }
     
