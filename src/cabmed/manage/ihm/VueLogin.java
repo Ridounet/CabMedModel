@@ -39,16 +39,16 @@ public class VueLogin extends javax.swing.JFrame {
             }
         });
 
-        btLogin.setText("Log in");
+        btLogin.setText("Connexion");
         btLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btLoginActionPerformed(evt);
             }
         });
 
-        lbPassword.setText("Password");
+        lbPassword.setText("Mot de passe");
 
-        lbLogin.setText("Login");
+        lbLogin.setText("Identifiant");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,14 +63,14 @@ public class VueLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(163, 163, 163)
                 .addComponent(btLogin)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(98, 98, 98)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lbLogin)
                         .addComponent(lbPassword))
-                    .addContainerGap(256, Short.MAX_VALUE)))
+                    .addContainerGap(238, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

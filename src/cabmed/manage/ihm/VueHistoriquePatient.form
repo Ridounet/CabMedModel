@@ -53,8 +53,8 @@
         <Container class="javax.swing.JPanel" name="paneRdvEnCours">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Actual Appointment">
-                <Property name="tabTitle" type="java.lang.String" value="Actual Appointment"/>
+              <JTabbedPaneConstraints tabName="Rendez-vous actuels">
+                <Property name="tabTitle" type="java.lang.String" value="Rendez-vous actuels"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -108,10 +108,10 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="5">
                         <Column editable="false" title="ID" type="java.lang.Integer"/>
-                        <Column editable="false" title="Physician" type="java.lang.String"/>
-                        <Column editable="false" title="Specialization" type="java.lang.String"/>
+                        <Column editable="false" title="M&#xe9;decin" type="java.lang.String"/>
+                        <Column editable="false" title="Sp&#xe9;cialisation" type="java.lang.String"/>
                         <Column editable="false" title="Date" type="java.lang.String"/>
-                        <Column editable="false" title="Hour" type="java.lang.String"/>
+                        <Column editable="false" title="Heure" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -172,12 +172,12 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="CANCEL"/>
+                <Property name="text" type="java.lang.String" value="ANNULER"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btDetailEnCours">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Details"/>
+                <Property name="text" type="java.lang.String" value="D&#xe9;tails"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -185,8 +185,8 @@
         <Container class="javax.swing.JPanel" name="paneRdvPasses">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Old Appointment">
-                <Property name="tabTitle" type="java.lang.String" value="Old Appointment"/>
+              <JTabbedPaneConstraints tabName="Rendez-vous Anciens">
+                <Property name="tabTitle" type="java.lang.String" value="Rendez-vous Anciens"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -224,10 +224,10 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="5">
                         <Column editable="false" title="ID" type="java.lang.Integer"/>
-                        <Column editable="false" title="Physician" type="java.lang.String"/>
-                        <Column editable="false" title="Specialization" type="java.lang.String"/>
+                        <Column editable="false" title="M&#xe9;decin" type="java.lang.String"/>
+                        <Column editable="false" title="Sp&#xe9;cialisation" type="java.lang.String"/>
                         <Column editable="false" title="Date" type="java.lang.String"/>
-                        <Column editable="false" title="Hour" type="java.lang.String"/>
+                        <Column editable="false" title="Heure" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -271,8 +271,8 @@
         <Container class="javax.swing.JPanel" name="paneRdvNouveau">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="New Appointment">
-                <Property name="tabTitle" type="java.lang.String" value="New Appointment"/>
+              <JTabbedPaneConstraints tabName="Nouveau rendez-vous">
+                <Property name="tabTitle" type="java.lang.String" value="Nouveau rendez-vous"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -325,12 +325,12 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add an appointment for this patient:"/>
+                <Property name="text" type="java.lang.String" value="Ajout d&apos;un rendez-vous:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btAddRdv">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add"/>
+                <Property name="text" type="java.lang.String" value="Ajouter"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[58, 23]"/>
                 </Property>
@@ -341,7 +341,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btCancelRdv">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cancel"/>
+                <Property name="text" type="java.lang.String" value="Annuler"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[58, 23]"/>
                 </Property>
@@ -405,7 +405,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lbMedecin">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Physician"/>
+                    <Property name="text" type="java.lang.String" value="M&#xe9;decin"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbMedecin">
@@ -417,7 +417,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbSpecialisation">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Specialization"/>
+                    <Property name="text" type="java.lang.String" value="Sp&#xe9;cialisation"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbSpecialisation">
@@ -436,7 +436,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbHeure">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Hour"/>
+                    <Property name="text" type="java.lang.String" value="Heure"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbTranche">

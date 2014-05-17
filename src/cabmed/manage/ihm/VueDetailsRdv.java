@@ -27,21 +27,21 @@ public class VueDetailsRdv extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btClose.setText("Close");
+        btClose.setText("Fermer");
         btClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCloseActionPerformed(evt);
             }
         });
 
-        paneAddPrescription.setBorder(javax.swing.BorderFactory.createTitledBorder("Appointment's details"));
+        paneAddPrescription.setBorder(javax.swing.BorderFactory.createTitledBorder("Détails du rendez-vous"));
 
-        jLabel3.setText("Physician:");
+        jLabel3.setText("Médecin:");
 
         ztMedecin.setText("Test");
         ztMedecin.setEnabled(false);
 
-        jLabel4.setText("Specialization:");
+        jLabel4.setText("Spécialisation:");
 
         ztSpecialisation.setEnabled(false);
 
@@ -91,7 +91,7 @@ public class VueDetailsRdv extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Drug", "Duration (in days)", "Dosage (by day)"
+                "Médicament", "Durée (en jour)", "Posologie (par jour)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -104,15 +104,20 @@ public class VueDetailsRdv extends javax.swing.JFrame {
         });
         tablePrescription.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablePrescription);
+        if (tablePrescription.getColumnModel().getColumnCount() > 0) {
+            tablePrescription.getColumnModel().getColumn(0).setResizable(false);
+            tablePrescription.getColumnModel().getColumn(1).setResizable(false);
+            tablePrescription.getColumnModel().getColumn(2).setResizable(false);
+        }
 
-        jLabel2.setText("Prescription & Dosage:");
+        jLabel2.setText("Prescription & Posologie:");
 
         ztRecommandation.setColumns(20);
         ztRecommandation.setRows(5);
         ztRecommandation.setEnabled(false);
         jScrollPane1.setViewportView(ztRecommandation);
 
-        jLabel1.setText("Physician's recommendation:");
+        jLabel1.setText("Remarques du médecin:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

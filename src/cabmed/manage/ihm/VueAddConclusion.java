@@ -28,16 +28,16 @@ public class VueAddConclusion extends javax.swing.JFrame {
         btClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cabmed - Appointment's details");
+        setTitle("Cabmed - Clôture du rendez-vous");
         setResizable(false);
 
-        jLabel1.setText("Physician's recommendation:");
+        jLabel1.setText("Recommandation du médecin:");
 
         ztRecommandation.setColumns(20);
         ztRecommandation.setRows(5);
         jScrollPane1.setViewportView(ztRecommandation);
 
-        jLabel2.setText("Prescription & Dosage:");
+        jLabel2.setText("Prescription & posologie:");
 
         tablePrescription.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -48,7 +48,7 @@ public class VueAddConclusion extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Drug", "Duration (in days)", "Dosage (by day)"
+                "Médicament", "Durée (en jour)", "Posologie (par jour)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -67,22 +67,22 @@ public class VueAddConclusion extends javax.swing.JFrame {
             tablePrescription.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        paneAddPrescription.setBorder(javax.swing.BorderFactory.createTitledBorder("Add a prescription"));
+        paneAddPrescription.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter une prescription"));
 
-        jLabel3.setText("Drug:");
+        jLabel3.setText("Médicament:");
 
-        jLabel4.setText("Duration (in days):");
+        jLabel4.setText("Durée (en jour):");
 
-        jLabel5.setText("Dosage (by day):");
+        jLabel5.setText("Posologie (par jour):");
 
-        btAddPrescription.setText("Add");
+        btAddPrescription.setText("Ajouter");
         btAddPrescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAddPrescriptionActionPerformed(evt);
             }
         });
 
-        btClear.setText("Clear");
+        btClear.setText("Effacer");
         btClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btClearActionPerformed(evt);
@@ -130,7 +130,7 @@ public class VueAddConclusion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btClose.setText("Close");
+        btClose.setText("Clôturer");
         btClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCloseActionPerformed(evt);

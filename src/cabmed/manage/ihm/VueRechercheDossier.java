@@ -32,9 +32,9 @@ public class VueRechercheDossier extends JFrame implements Observer {
 
         paneRecherche.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Appointment ID");
+        jLabel1.setText("ID rendez-vous");
 
-        btSearch.setText("Search");
+        btSearch.setText("Recherche");
         btSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSearchActionPerformed(evt);
@@ -43,7 +43,7 @@ public class VueRechercheDossier extends JFrame implements Observer {
 
         lbErreur.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbErreur.setForeground(new java.awt.Color(255, 0, 51));
-        lbErreur.setText("No result was found !");
+        lbErreur.setText("Aucun résultat !");
 
         javax.swing.GroupLayout paneRechercheLayout = new javax.swing.GroupLayout(paneRecherche);
         paneRecherche.setLayout(paneRechercheLayout);

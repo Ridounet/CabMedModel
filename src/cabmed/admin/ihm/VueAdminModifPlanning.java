@@ -6,11 +6,9 @@ import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Tranche;
 import cabmed.ressources.Observer;
-import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -49,18 +47,18 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
         tablePlanning = new javax.swing.JTable();
         lbTitre = new javax.swing.JLabel();
 
-        setTitle("Cabmed - Manage planning");
+        setTitle("Cabmed - Gestion planning");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        btSave.setText("Save");
+        btSave.setText("Sauver");
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
             }
         });
 
-        btCancel.setText("Cancel");
+        btCancel.setText("Annuler");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
@@ -230,7 +228,7 @@ public class VueAdminModifPlanning extends javax.swing.JFrame implements Observe
     @Override
     public void update() {
         medecin = new Medecin();
-        lbTitre.setText("Update Planning");
+        lbTitre.setText("Mise à jour planning");
         //lbTitre.setText(medecin.getPrenom()+ " " + medecin.getNom());
         ((ModeleTablePlanning)tablePlanning.getModel()).update();
     }

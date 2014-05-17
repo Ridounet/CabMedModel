@@ -14,6 +14,9 @@ public class Rdv implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRdv;
     
+    @Enumerated(EnumType.STRING)
+    private Tranche heure;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     private Patient patient;
     
@@ -26,16 +29,10 @@ public class Rdv implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatutRdv statut;
     
-    @Enumerated(EnumType.STRING)
-    private Tranche heure;
-    
-    private int duree;
-    
     // Constructeurs
-    public Rdv(Date dateRdv, Patient patient, Medecin medecin, Specialisation typeRdv, StatutRdv statut, Tranche heure, int duree) {
+    public Rdv(Date dateRdv, Patient patient, Medecin medecin, Specialisation typeRdv, StatutRdv statut, Tranche heure) {
         this.dateRdv = dateRdv; this.patient = patient; this.medecin = medecin;
         this.typeRdv = typeRdv; this.statut = statut; this.heure = heure;
-        this.duree = duree;
     }
 
     public Rdv() { }
@@ -88,7 +85,5 @@ public class Rdv implements Serializable {
     public void setDateRdv(Date dateRdv) { this.dateRdv = dateRdv; }
     public Tranche getHeure() { return heure; }
     public void setHeure(Tranche heure) { this.heure = heure; }
-    public int getDuree() { return duree; }
-    public void setDuree(int duree) { this.duree = duree; }
     
 }

@@ -7,8 +7,8 @@ import javax.persistence.*;
 @Entity
 public abstract class Personnel extends Personne implements Serializable {
     // Attributs
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private java.util.Date debutTravail;
+    @Temporal(TemporalType.DATE)
+    private Date debutTravail;
     
     // Constructeurs
     public Personnel() { }

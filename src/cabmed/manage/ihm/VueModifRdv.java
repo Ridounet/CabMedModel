@@ -30,27 +30,27 @@ public class VueModifRdv extends javax.swing.JFrame {
         setTitle("Cabmed - Details appointment");
         setResizable(false);
 
-        jLabel2.setText("Physician:");
+        jLabel2.setText("Médecin:");
 
         jLabel3.setText("Date:");
 
-        jLabel5.setText("Hour:");
+        jLabel5.setText("Heure:");
 
-        btSave.setText("Save");
+        btSave.setText("Sauver");
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
             }
         });
 
-        btCancel.setText("Cancel");
+        btCancel.setText("Annuler");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Status");
+        jLabel4.setText("Statut");
 
         lbStatut.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbStatut.setText("lbStatut");

@@ -62,34 +62,34 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
         dpDebutTravail = new com.toedter.calendar.JDateChooser();
         cbCp = new javax.swing.JComboBox();
 
-        setTitle("Cabmed - modification Personal");
+        setTitle("Cabmed - Modification d'une personne");
         setResizable(false);
 
         lbDetailPersonne.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lbDetailPersonne.setText("Person's details");
+        lbDetailPersonne.setText("Détails de la personne");
         lbDetailPersonne.setToolTipText("");
 
         lbTitre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitre.setText("TODO");
 
-        lbNom.setText("Firstname");
+        lbNom.setText("Nom");
 
-        lbPrenom.setText("Lastname");
+        lbPrenom.setText("Prénom");
 
-        lbDateNaissance.setText("Birthdate");
+        lbDateNaissance.setText("Date de naissance");
 
-        lbSexe.setText("Sex");
+        lbSexe.setText("Sexe");
 
-        lbNumeroNational.setText("National number");
+        lbNumeroNational.setText("Num. National");
 
         lbTel.setText("Tel.");
 
-        lbBeginWork.setText("Beginning work at");
+        lbBeginWork.setText("Début travail");
 
-        lbAdresse.setText("Address");
+        lbAdresse.setText("Adresse");
 
-        lbCp.setText("Postal code");
+        lbCp.setText("Code postal");
 
         ztNom.setMaximumSize(new java.awt.Dimension(115, 22));
         ztNom.setPreferredSize(new java.awt.Dimension(115, 22));
@@ -105,14 +105,14 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
 
         ztAdresse.setPreferredSize(new java.awt.Dimension(115, 22));
 
-        btSave.setText("Save");
+        btSave.setText("Sauver");
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
             }
         });
 
-        btCancel.setText("Cancel");
+        btCancel.setText("Annuler");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
@@ -145,10 +145,11 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
                                 .addComponent(lbNom)
                                 .addComponent(lbAdresse)
                                 .addComponent(lbCp)
-                                .addComponent(lbNumeroNational)
                                 .addComponent(lbBeginWork)
                                 .addComponent(lbPrenom)
-                                .addComponent(lbDateNaissance)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lbDateNaissance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbNumeroNational, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(147, 147, 147)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -167,7 +168,7 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
                 .addComponent(btSave)
                 .addGap(18, 18, 18)
                 .addComponent(btCancel)
-                .addGap(95, 95, 95))
+                .addGap(86, 86, 86))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,11 +215,11 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbCp)
                     .addComponent(cbCp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSave)
                     .addComponent(btCancel))
-                .addGap(23, 23, 23))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -231,29 +232,29 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
                     Medecin med = new Medecin();
                     getDatas(med);
                     if (ctrlAdmin.addMedecin(med)) {
-                        JOptionPane.showMessageDialog(null, "Physician saved");
+                        JOptionPane.showMessageDialog(null, "Médecin sauvegardé");
                         ctrlAdmin.hideVueModifPersonnel();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Physician not saved", "An error has occured!", JOptionPane.ERROR_MESSAGE);
+                        erreur();
                     }
                 } else if (type.equals(CtrlAdmin.TYPE_INFIRMIERE)) {
                     Infirmiere inf = new Infirmiere();
                     getDatas(inf);
                     if (ctrlAdmin.addInfirmiere(inf)) {
-                        JOptionPane.showMessageDialog(null, "Nurse saved");
+                        JOptionPane.showMessageDialog(null, "Infirmière sauvegardée");
                         ctrlAdmin.hideVueModifPersonnel();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Nurse not saved");
+                        erreur();
                     }
                     ctrlAdmin.addInfirmiere(inf);
                 } else {
                     Secretaire sec = new Secretaire();
                     getDatas(sec);
                     if (ctrlAdmin.addSecretaire(sec)) {
-                        JOptionPane.showMessageDialog(null, "Secretary saved");
+                        JOptionPane.showMessageDialog(null, "Secrétaire sauvegardée");
                         ctrlAdmin.hideVueModifPersonnel();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Secretary not saved");
+                        erreur();
                     }
                     ctrlAdmin.addSecretaire(sec);
                 }
@@ -304,6 +305,10 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
         
     }
     
+    private void erreur() {
+        JOptionPane.showMessageDialog(null, "Une erreur est survenue, veuillez ré-essayer", "Erreur!", JOptionPane.ERROR_MESSAGE);
+    }
+    
     public Personnel getPersonne() { return personne; }
     
     public void setPersonne(String type, Personnel personne) {
@@ -336,7 +341,7 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
         cbSexe.setSelectedIndex(0);
         dpDateNaissance.setDate(dateDefaut);
         dpDebutTravail.setDate(new Date());
-        lbTitre.setText("New " + type);
+        lbTitre.setText("Nouveau " + type);
         ztAdresse.setText("");
         cbCp.setSelectedIndex(0);
         ztNom.setText("");

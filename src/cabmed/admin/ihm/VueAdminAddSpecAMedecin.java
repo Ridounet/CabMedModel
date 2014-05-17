@@ -6,11 +6,11 @@ import cabmed.model.Specialisation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
 
     private CtrlAdmin ctrl;
-    private List<Specialisation> listSpec;
     private Medecin medecin;
     
     public VueAdminAddSpecAMedecin() {
@@ -20,7 +20,16 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
     public VueAdminAddSpecAMedecin(CtrlAdmin ctrlAdmin) {
         initComponents();
         this.ctrl = ctrlAdmin;
-        listSpec = new ArrayList<>();
+    }
+    
+    public void showView(Medecin medecin, List<Specialisation> listSpecialisation) {
+        this.medecin = medecin;
+        cbSpec.removeAllItems();
+        cbSpec.addItem("");
+        for (Specialisation s : listSpecialisation) {
+            cbSpec.addItem(s);
+        }
+        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,21 +42,22 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
         btSave = new javax.swing.JButton();
         btCancel = new javax.swing.JButton();
 
-        setTitle("Cabmed - Add specialisation");
+        setTitle("Cabmed - Ajout de spécialisation");
+        setResizable(false);
 
         lbTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitre.setText("Select a Specialization");
+        lbTitre.setText("Sélectionnez une spécialisation");
 
         lbErreur.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        btSave.setText("Save");
+        btSave.setText("Ajouter");
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
             }
         });
 
-        btCancel.setText("Cancel");
+        btCancel.setText("Annuler");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
@@ -61,17 +71,16 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbSpec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btSave)
-                        .addGap(68, 68, 68)
-                        .addComponent(btCancel)
-                        .addGap(0, 10, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btCancel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbErreur, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbSpec, 0, 190, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(lbErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 4, Short.MAX_VALUE))
+                    .addComponent(lbTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +103,7 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         if (cbSpec.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Please select a specialization.");
+            JOptionPane.showMessageDialog(this, "Veuillez selectionner une spécialisation.");
         } else {
             Specialisation spec = (Specialisation) cbSpec.getSelectedItem();
             ctrl.addSpecialisationAMedecin(medecin, spec);
@@ -106,11 +115,6 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -118,13 +122,10 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueAdminAddSpecAMedecin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueAdminAddSpecAMedecin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueAdminAddSpecAMedecin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException |
+                InstantiationException |
+                IllegalAccessException |
+                UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VueAdminAddSpecAMedecin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -146,13 +147,4 @@ public class VueAdminAddSpecAMedecin extends javax.swing.JFrame {
     private javax.swing.JLabel lbTitre;
     // End of variables declaration//GEN-END:variables
 
-    public void showView(Medecin medecin, List<Specialisation> listSpecialisation) {
-        this.medecin = medecin;
-        cbSpec.removeAllItems();
-        cbSpec.addItem("");
-        for (Specialisation s : listSpecialisation) {
-            cbSpec.addItem(s);
-        }
-        setVisible(true);
-    }
 }

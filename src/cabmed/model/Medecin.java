@@ -41,10 +41,6 @@ public class Medecin extends Personnel {
     public List<Rdv> getRdv() { return rdv; }
     public void setRdv(List<Rdv> rdv) { this.rdv = rdv; }
     
-    public void addRdv(Rdv rdv) {
-        this.rdv.add(rdv);
-    }
-    
     public void addSpecialisation(Specialisation specialisation) {
         this.specialisation.add(specialisation);
         specialisation.addMedecin(this);

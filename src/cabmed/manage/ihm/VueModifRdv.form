@@ -78,7 +78,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Physician:"/>
+        <Property name="text" type="java.lang.String" value="M&#xe9;decin:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -88,7 +88,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Hour:"/>
+        <Property name="text" type="java.lang.String" value="Heure:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbMedecin">
@@ -109,7 +109,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btSave">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Save"/>
+        <Property name="text" type="java.lang.String" value="Sauver"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSaveActionPerformed"/>
@@ -117,7 +117,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btCancel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancel"/>
+        <Property name="text" type="java.lang.String" value="Annuler"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelActionPerformed"/>
@@ -125,7 +125,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Status"/>
+        <Property name="text" type="java.lang.String" value="Statut"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbStatut">

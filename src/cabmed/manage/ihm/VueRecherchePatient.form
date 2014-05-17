@@ -1,41 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Menu class="javax.swing.JMenuBar" name="menuBar">
-      <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuFile">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="File"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuLogout">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Logout"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuQuitter">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+F4"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Quit"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuQuitterActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-      </SubComponents>
-    </Menu>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
@@ -150,7 +120,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btLireCarte">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Read card"/>
+        <Property name="text" type="java.lang.String" value="Lire la carte"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btLireCarteActionPerformed"/>
@@ -158,7 +128,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbRegistreNat">
       <Properties>
-        <Property name="text" type="java.lang.String" value="National Number"/>
+        <Property name="text" type="java.lang.String" value="Num&#xe9;ro national:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="ztNumNational">
@@ -170,17 +140,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbNom">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Firstname"/>
+        <Property name="text" type="java.lang.String" value="Nom:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbPrenom">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Lastname"/>
+        <Property name="text" type="java.lang.String" value="Pr&#xe9;nom:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbSexe">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sex"/>
+        <Property name="text" type="java.lang.String" value="Sexe:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbSexe">
@@ -193,7 +163,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbDateNaissance">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Birthdate"/>
+        <Property name="text" type="java.lang.String" value="Date de naissance:"/>
       </Properties>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="dpDateNaissance">
@@ -204,7 +174,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbMutuality">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mutuality"/>
+        <Property name="text" type="java.lang.String" value="Mutualit&#xe9;:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbMutualite">
@@ -217,7 +187,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbNumSecuSocial">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Social Security Number"/>
+        <Property name="text" type="java.lang.String" value="Num&#xe9;ro s&#xe9;curit&#xe9; sociale:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="ztNumSecuSocial">
@@ -243,7 +213,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbAdresse">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Address"/>
+        <Property name="text" type="java.lang.String" value="Adresse:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="ztAdresse">
@@ -253,7 +223,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbCp">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Postal Code"/>
+        <Property name="text" type="java.lang.String" value="Code Postal:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbCp">
@@ -266,7 +236,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbTel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tel."/>
+        <Property name="text" type="java.lang.String" value="T&#xe9;l&#xe9;phone:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="ztTel">
@@ -279,7 +249,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btCancel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancel"/>
+        <Property name="text" type="java.lang.String" value="Annuler"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelActionPerformed"/>
@@ -287,7 +257,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btSaveSearch">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search / Save"/>
+        <Property name="text" type="java.lang.String" value="Chercher / Sauver"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSaveSearchActionPerformed"/>

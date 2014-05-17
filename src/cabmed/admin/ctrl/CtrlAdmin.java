@@ -29,9 +29,9 @@ public class CtrlAdmin {
     private VueAdminModifPlanning vueModifPlanning;
     private VueAdminModifPersonnel vueModifPersonnel;
     private VueAdminAddSpecAMedecin vueAddSpecAMedecin;
-    public static final String TYPE_MEDECIN = "Physician";
-    public static final String TYPE_SECRETAIRE = "Secretary";
-    public static final String TYPE_INFIRMIERE = "Nurse";
+    public static final String TYPE_MEDECIN = "Médecin";
+    public static final String TYPE_SECRETAIRE = "Secrétaire";
+    public static final String TYPE_INFIRMIERE = "Infirmière";
     
     @SuppressWarnings("LeakingThisInConstructor")
     public CtrlAdmin(CtrlPrincipal ctrlPrincipal, Facade facade) {
@@ -214,7 +214,7 @@ public class CtrlAdmin {
     }
     
     private void errorOccured() {
-        JOptionPane.showMessageDialog(vueAdmin, "An error has occured, please try again.", "Error", JOptionPane.OK_OPTION);
+        JOptionPane.showMessageDialog(vueAdmin, "Une erreur est survenue, veuillez re-essayer.", "Erreur", JOptionPane.OK_OPTION);
     }
     
     

@@ -63,43 +63,39 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         ztTel = new javax.swing.JFormattedTextField();
         btCancel = new javax.swing.JButton();
         btSaveSearch = new javax.swing.JButton();
-        menuBar = new javax.swing.JMenuBar();
-        menuFile = new javax.swing.JMenu();
-        menuLogout = new javax.swing.JMenuItem();
-        menuQuitter = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        btLireCarte.setText("Read card");
+        btLireCarte.setText("Lire la carte");
         btLireCarte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btLireCarteActionPerformed(evt);
             }
         });
 
-        lbRegistreNat.setText("National Number");
+        lbRegistreNat.setText("Numéro national:");
 
         ztNumNational.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        lbNom.setText("Firstname");
+        lbNom.setText("Nom:");
 
-        lbPrenom.setText("Lastname");
+        lbPrenom.setText("Prénom:");
 
-        lbSexe.setText("Sex");
+        lbSexe.setText("Sexe:");
 
         cbSexe.setEnabled(false);
 
-        lbDateNaissance.setText("Birthdate");
+        lbDateNaissance.setText("Date de naissance:");
 
         dpDateNaissance.setDateFormatString("dd/MM/yyyy");
         dpDateNaissance.setEnabled(false);
 
-        lbMutuality.setText("Mutuality");
+        lbMutuality.setText("Mutualité:");
 
         cbMutualite.setEnabled(false);
 
-        lbNumSecuSocial.setText("Social Security Number");
+        lbNumSecuSocial.setText("Numéro sécurité sociale:");
 
         ztNumSecuSocial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         ztNumSecuSocial.setEnabled(false);
@@ -113,50 +109,32 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
 
         ztNom.setEnabled(false);
 
-        lbAdresse.setText("Address");
+        lbAdresse.setText("Adresse:");
 
         ztAdresse.setEnabled(false);
 
-        lbCp.setText("Postal Code");
+        lbCp.setText("Code Postal:");
 
         cbCp.setEnabled(false);
 
-        lbTel.setText("Tel.");
+        lbTel.setText("Téléphone:");
 
         ztTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         ztTel.setEnabled(false);
 
-        btCancel.setText("Cancel");
+        btCancel.setText("Annuler");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
             }
         });
 
-        btSaveSearch.setText("Search / Save");
+        btSaveSearch.setText("Chercher / Sauver");
         btSaveSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveSearchActionPerformed(evt);
             }
         });
-
-        menuFile.setText("File");
-
-        menuLogout.setText("Logout");
-        menuFile.add(menuLogout);
-
-        menuQuitter.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        menuQuitter.setText("Quit");
-        menuQuitter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuQuitterActionPerformed(evt);
-            }
-        });
-        menuFile.add(menuQuitter);
-
-        menuBar.add(menuFile);
-
-        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,10 +247,6 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         }
     }//GEN-LAST:event_btSaveSearchActionPerformed
 
-    private void menuQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuQuitterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuQuitterActionPerformed
-
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         viderChamps();
         disableChamps();
@@ -328,10 +302,6 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     private javax.swing.JLabel lbRegistreNat;
     private javax.swing.JLabel lbSexe;
     private javax.swing.JLabel lbTel;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenu menuFile;
-    private javax.swing.JMenuItem menuLogout;
-    private javax.swing.JMenuItem menuQuitter;
     private javax.swing.JTextField ztAdresse;
     private javax.swing.JTextField ztNom;
     private javax.swing.JFormattedTextField ztNumNational;

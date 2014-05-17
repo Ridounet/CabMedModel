@@ -64,6 +64,8 @@ public class Specialisation implements Serializable {
     public void setLabel(String label) { this.label = label; }
     public boolean isVisible() { return visible; }
     public void setVisible(boolean visible) { this.visible = visible; }
+    public List<Medecin> getMedecin() { return medecin; }
+    public void setMedecin(List<Medecin> medecin) { this.medecin = medecin; }
     
     public void addMedecin(Medecin medecin) {
         this.medecin.add(medecin);

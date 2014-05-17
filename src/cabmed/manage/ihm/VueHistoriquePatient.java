@@ -1,6 +1,5 @@
 package cabmed.manage.ihm;
 
-import java.util.Date;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -53,7 +52,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Physician", "Specialization", "Date", "Hour"
+                "ID", "Médecin", "Spécialisation", "Date", "Heure"
             }
         ) {
             Class[] types = new Class [] {
@@ -92,9 +91,9 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
         btCancelEnCours.setBackground(new java.awt.Color(255, 0, 0));
         btCancelEnCours.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btCancelEnCours.setForeground(new java.awt.Color(255, 255, 255));
-        btCancelEnCours.setText("CANCEL");
+        btCancelEnCours.setText("ANNULER");
 
-        btDetailEnCours.setText("Details");
+        btDetailEnCours.setText("Détails");
 
         javax.swing.GroupLayout paneRdvEnCoursLayout = new javax.swing.GroupLayout(paneRdvEnCours);
         paneRdvEnCours.setLayout(paneRdvEnCoursLayout);
@@ -126,7 +125,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        paneGeneral.addTab("Actual Appointment", paneRdvEnCours);
+        paneGeneral.addTab("Rendez-vous actuels", paneRdvEnCours);
 
         tableRdvAncien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,7 +136,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Physician", "Specialization", "Date", "Hour"
+                "ID", "Médecin", "Spécialisation", "Date", "Heure"
             }
         ) {
             Class[] types = new Class [] {
@@ -182,12 +181,12 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        paneGeneral.addTab("Old Appointment", paneRdvPasses);
+        paneGeneral.addTab("Rendez-vous Anciens", paneRdvPasses);
 
         lbTitre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbTitre.setText("Add an appointment for this patient:");
+        lbTitre.setText("Ajout d'un rendez-vous:");
 
-        btAddRdv.setText("Add");
+        btAddRdv.setText("Ajouter");
         btAddRdv.setPreferredSize(new java.awt.Dimension(58, 23));
         btAddRdv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,7 +194,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
             }
         });
 
-        btCancelRdv.setText("Cancel");
+        btCancelRdv.setText("Annuler");
         btCancelRdv.setPreferredSize(new java.awt.Dimension(58, 23));
         btCancelRdv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,13 +204,13 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lbMedecin.setText("Physician");
+        lbMedecin.setText("Médecin");
 
-        lbSpecialisation.setText("Specialization");
+        lbSpecialisation.setText("Spécialisation");
 
         lbDate.setText("Date");
 
-        lbHeure.setText("Hour");
+        lbHeure.setText("Heure");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -285,7 +284,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        paneGeneral.addTab("New Appointment", paneRdvNouveau);
+        paneGeneral.addTab("Nouveau rendez-vous", paneRdvNouveau);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

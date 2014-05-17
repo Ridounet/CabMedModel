@@ -60,9 +60,9 @@ public class VueLogin extends javax.swing.JFrame implements Observer {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        lblLogin.setText("Login");
-        lblPassword.setText("Password");
-        btLogin.setText("Log in");
+        lblLogin.setText("Identifiant");
+        lblPassword.setText("Mot de passe");
+        btLogin.setText("Connexion");
         
         btLogin.addActionListener(new ActionListener() {
             @Override

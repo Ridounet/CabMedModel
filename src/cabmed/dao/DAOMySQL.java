@@ -259,7 +259,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         tx.commit();
         
         tx.begin();
-        Rdv rdv1 = new Rdv(new Date(), p1, m1, sp1, StatutRdv.EN_COURS, Tranche.H0900, 2);
+        Rdv rdv1 = new Rdv(new Date(), p1, m1, sp1, StatutRdv.EN_COURS, Tranche.H0900);
         em.persist(rdv1);
         tx.commit();
         
