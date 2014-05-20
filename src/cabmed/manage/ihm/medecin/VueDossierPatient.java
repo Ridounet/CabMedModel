@@ -1,4 +1,4 @@
-package cabmed.manage.ihm;
+package cabmed.manage.ihm.medecin;
 
 import cabmed.model.Rdv;
 import javax.swing.JOptionPane;

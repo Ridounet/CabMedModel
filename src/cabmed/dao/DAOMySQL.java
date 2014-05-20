@@ -29,6 +29,15 @@ import javax.persistence.Persistence;
 
 public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO, IPatientDAO, IPlanningDAO {
     
+    private static DAOMySQL instance;
+    
+    public static DAOMySQL getInstance() {
+        if (instance == null) {
+             instance = new DAOMySQL();
+        }
+        return instance;
+    }
+    
     private DAOMySQL() {
         cpDAO = new CpDAO();
         medecinDAO = new MedecinDAO();
@@ -39,14 +48,6 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         initDB();
     }
     
-    public static DAOMySQL getInstance() {
-        if (instance == null) {
-             instance = new DAOMySQL();
-        }
-        return instance;
-    }
-    
-    private static DAOMySQL instance;
     
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("cabmed");
     private static EntityManager em = null;

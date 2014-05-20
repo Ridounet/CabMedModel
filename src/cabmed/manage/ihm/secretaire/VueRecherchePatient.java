@@ -1,4 +1,4 @@
-package cabmed.manage.ihm;
+package cabmed.manage.ihm.secretaire;
 
 import cabmed.manage.ctrl.CtrlSecretaire;
 import cabmed.model.Mutualite;

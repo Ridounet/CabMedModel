@@ -1,4 +1,4 @@
-package cabmed.manage.ihm;
+package cabmed.manage.ihm.secretaire;
 
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;

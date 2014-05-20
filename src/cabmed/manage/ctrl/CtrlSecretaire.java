@@ -1,6 +1,6 @@
 package cabmed.manage.ctrl;
 
-import cabmed.manage.ihm.VueRecherchePatient;
+import cabmed.manage.ihm.secretaire.VueRecherchePatient;
 import cabmed.manage.main.Facade;
 import cabmed.model.Secretaire;
 import javax.swing.SwingUtilities;

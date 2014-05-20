@@ -1,6 +1,6 @@
 package cabmed.manage.ctrl;
 
-import cabmed.manage.ihm.VueRechercheDossier;
+import cabmed.manage.ihm.medecin.VueRechercheDossier;
 import cabmed.manage.main.Facade;
 import cabmed.model.Medecin;
 import javax.swing.SwingUtilities;

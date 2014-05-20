@@ -69,13 +69,11 @@ public class CtrlAdmin {
                     vueModifPersonnel = new VueAdminModifPersonnel(me);
                     Facade.addObserver(vueModifPersonnel);
                     vueModifPersonnel.setPersonne(type, personne);
-                    vueModifPersonnel.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
                     vueModifPersonnel.setVisible(true);
                 }
             });
         } else {
             vueModifPersonnel.setPersonne(type, personne);
-            vueModifPersonnel.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
             vueModifPersonnel.setVisible(true);
         }
     }

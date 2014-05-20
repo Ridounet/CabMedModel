@@ -11,7 +11,7 @@ import cabmed.model.Sexe;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed.ressources.Observer{
+public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed.ressources.Observer {
 
     private CtrlAdmin ctrlAdmin;
     private Personnel personne;
@@ -325,15 +325,15 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
     }
 
     private void fillFields() {
-        cbSexe.setSelectedItem(Sexe.HOMME);
+        cbSexe.setSelectedItem(personne.getSexe());
         dpDateNaissance.setDate(personne.getDateNaissance());
         dpDebutTravail.setDate(personne.getDebutTravail());
         lbTitre.setText(personne.getPrenom() + " " + personne.getNom());
         ztAdresse.setText(personne.getAdresse().getAdresse());
         cbCp.setSelectedItem(personne.getAdresse().getCp());
         ztNom.setText(personne.getNom());
-        ztNumeroNational.setText(personne.getRegistreNat());
         ztPrenom.setText(personne.getPrenom());
+        ztNumeroNational.setText(personne.getRegistreNat());
         ztTel.setText(personne.getTel());
     }
 
@@ -345,8 +345,8 @@ public class VueAdminModifPersonnel extends javax.swing.JFrame implements cabmed
         ztAdresse.setText("");
         cbCp.setSelectedIndex(0);
         ztNom.setText("");
-        ztNumeroNational.setText("");
         ztPrenom.setText("");
+        ztNumeroNational.setText("");
         ztTel.setText("");
     }
 

@@ -1,4 +1,4 @@
-package cabmed.manage.ihm;
+package cabmed.manage.ihm.medecin;
 
 import cabmed.manage.ctrl.CtrlMedecin;
 import cabmed.ressources.Observer;

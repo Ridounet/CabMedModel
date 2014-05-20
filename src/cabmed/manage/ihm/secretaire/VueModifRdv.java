@@ -1,4 +1,4 @@
-package cabmed.manage.ihm;
+package cabmed.manage.ihm.secretaire;
 
 import cabmed.model.Tranche;
 import javax.swing.JOptionPane;

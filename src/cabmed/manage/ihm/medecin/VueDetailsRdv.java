@@ -1,4 +1,4 @@
-package cabmed.manage.ihm;
+package cabmed.manage.ihm.medecin;
 
 public class VueDetailsRdv extends javax.swing.JFrame {
 
