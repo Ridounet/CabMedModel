@@ -54,8 +54,8 @@ public class EID {
         st2.nextToken();
         birthdate = st2.nextToken() + ":" + st2.nextToken() + ":" + st2.nextToken();
         try {
-            //SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
+            //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date d = sdf.parse(birthdate);
             sdf.applyPattern("dd-MM-yyyy");
             p.setDateNaissance(d);

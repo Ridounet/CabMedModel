@@ -7,8 +7,7 @@ public class VueDetailsRdv extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         btClose = new javax.swing.JButton();
         paneAddPrescription = new javax.swing.JPanel();
@@ -26,6 +25,7 @@ public class VueDetailsRdv extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cabmed - Détails d'un rendez-vous");
 
         btClose.setText("Fermer");
         btClose.addActionListener(new java.awt.event.ActionListener() {
@@ -38,15 +38,17 @@ public class VueDetailsRdv extends javax.swing.JFrame {
 
         jLabel3.setText("Médecin:");
 
-        ztMedecin.setText("Test");
+        ztMedecin.setText("Didier VO");
         ztMedecin.setEnabled(false);
 
         jLabel4.setText("Spécialisation:");
 
+        ztSpecialisation.setText("Généraliste");
         ztSpecialisation.setEnabled(false);
 
         jLabel5.setText("Date:");
 
+        ztDate.setText("07/05/2014");
         ztDate.setEnabled(false);
 
         javax.swing.GroupLayout paneAddPrescriptionLayout = new javax.swing.GroupLayout(paneAddPrescription);
@@ -114,6 +116,7 @@ public class VueDetailsRdv extends javax.swing.JFrame {
 
         ztRecommandation.setColumns(20);
         ztRecommandation.setRows(5);
+        ztRecommandation.setText("M. s'est présenté pour des douleurs au ventre.\nIl n'a qu'une indigestion.");
         ztRecommandation.setEnabled(false);
         jScrollPane1.setViewportView(ztRecommandation);
 
@@ -155,7 +158,7 @@ public class VueDetailsRdv extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
         // TODO add your handling code here:

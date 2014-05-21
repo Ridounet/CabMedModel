@@ -7,8 +7,7 @@ public class VueAddConclusion extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -35,6 +34,7 @@ public class VueAddConclusion extends javax.swing.JFrame {
 
         ztRecommandation.setColumns(20);
         ztRecommandation.setRows(5);
+        ztRecommandation.setText("M. est revenu pour des maux de ventre.\nIl a encore eu une indigestion.\nJe lui prescris de quoi l'apaiser.");
         jScrollPane1.setViewportView(ztRecommandation);
 
         jLabel2.setText("Prescription & posologie:");
@@ -71,9 +71,15 @@ public class VueAddConclusion extends javax.swing.JFrame {
 
         jLabel3.setText("Médicament:");
 
+        ztMedicament.setText("Médicament pour les maux de ventre");
+
         jLabel4.setText("Durée (en jour):");
 
+        ztDuree.setText("2");
+
         jLabel5.setText("Posologie (par jour):");
+
+        ztPosologie.setText("1x le matin, 1x le soir");
 
         btAddPrescription.setText("Ajouter");
         btAddPrescription.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +179,7 @@ public class VueAddConclusion extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
         // TODO add your handling code here:

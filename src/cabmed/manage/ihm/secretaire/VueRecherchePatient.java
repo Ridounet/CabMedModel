@@ -37,8 +37,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         btLireCarte = new javax.swing.JButton();
         lbRegistreNat = new javax.swing.JLabel();
@@ -65,6 +64,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         btSaveSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cabmed - Recherche d'un patient");
         setResizable(false);
 
         btLireCarte.setText("Lire la carte");
@@ -225,7 +225,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void ztNumSecuSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ztNumSecuSocialActionPerformed
         // TODO add your handling code here:

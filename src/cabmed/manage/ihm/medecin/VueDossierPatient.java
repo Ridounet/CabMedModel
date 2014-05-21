@@ -7,11 +7,17 @@ public class VueDossierPatient extends javax.swing.JFrame {
 
     public VueDossierPatient() {
         initComponents();
+        ztGeneralite.setText("Ce patient ne souffre d'aucun mal");
+        ztMutualite.setText("Partenamut");
+        ztNom.setText("Amar Ouaali");
+        ztNumSecuriteSocial.setText("12450352101");
+        ztPrenom.setText("Riduan");
+        ztRegistreNat.setText("900329-435-25");
+        ztSexe.setText("HOMME");
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -36,7 +42,7 @@ public class VueDossierPatient extends javax.swing.JFrame {
         ztRegistreNat = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cabmed - Patient's case");
+        setTitle("Cabmed - Dossier patient");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Généralités");
@@ -220,7 +226,7 @@ public class VueDossierPatient extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void btCloseRdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseRdvActionPerformed
         

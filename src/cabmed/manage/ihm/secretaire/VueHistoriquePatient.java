@@ -11,8 +11,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         paneGeneral = new javax.swing.JTabbedPane();
         paneRdvEnCours = new javax.swing.JPanel();
@@ -20,7 +19,6 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
         tableRdvEnCours = new javax.swing.JTable();
         btModifEnCours = new javax.swing.JButton();
         btCancelEnCours = new javax.swing.JButton();
-        btDetailEnCours = new javax.swing.JButton();
         paneRdvPasses = new javax.swing.JPanel();
         scrollTableEnCours1 = new javax.swing.JScrollPane();
         tableRdvAncien = new javax.swing.JTable();
@@ -39,7 +37,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
         cbTranche = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cabmed - History ");
+        setTitle("Cabmed - Historique patient");
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
         setResizable(false);
 
@@ -91,9 +89,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
         btCancelEnCours.setBackground(new java.awt.Color(255, 0, 0));
         btCancelEnCours.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btCancelEnCours.setForeground(new java.awt.Color(255, 255, 255));
-        btCancelEnCours.setText("ANNULER");
-
-        btDetailEnCours.setText("Détails");
+        btCancelEnCours.setText("DELETE");
 
         javax.swing.GroupLayout paneRdvEnCoursLayout = new javax.swing.GroupLayout(paneRdvEnCours);
         paneRdvEnCours.setLayout(paneRdvEnCoursLayout);
@@ -106,8 +102,6 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                     .addGroup(paneRdvEnCoursLayout.createSequentialGroup()
                         .addComponent(btModifEnCours, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btDetailEnCours, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btCancelEnCours, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -119,9 +113,8 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 .addComponent(scrollTableEnCours, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(paneRdvEnCoursLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btModifEnCours, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btCancelEnCours, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btDetailEnCours, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btModifEnCours, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                    .addComponent(btCancelEnCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
@@ -181,7 +174,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        paneGeneral.addTab("Rendez-vous Anciens", paneRdvPasses);
+        paneGeneral.addTab("Rendez-vous anciens", paneRdvPasses);
 
         lbTitre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbTitre.setText("Ajout d'un rendez-vous:");
@@ -304,7 +297,7 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void btModifEnCoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModifEnCoursActionPerformed
         
@@ -358,7 +351,6 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
     private javax.swing.JButton btAddRdv;
     private javax.swing.JButton btCancelEnCours;
     private javax.swing.JButton btCancelRdv;
-    private javax.swing.JButton btDetailEnCours;
     private javax.swing.JButton btModifEnCours;
     private javax.swing.JComboBox cbMedecin;
     private javax.swing.JComboBox cbSpecialisation;

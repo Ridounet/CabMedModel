@@ -79,6 +79,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="M. est revenu pour des maux de ventre.&#xa;Il a encore eu une indigestion.&#xa;Je lui prescris de quoi l&apos;apaiser."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -193,6 +194,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="ztMedicament">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="M&#xe9;dicament pour les maux de ventre"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -200,6 +204,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="ztDuree">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="2"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -207,6 +214,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="ztPosologie">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1x le matin, 1x le soir"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btAddPrescription">
           <Properties>
