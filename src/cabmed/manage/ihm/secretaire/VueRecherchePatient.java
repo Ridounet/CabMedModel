@@ -228,7 +228,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     }//GEN-END:initComponents
 
     private void ztNumSecuSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ztNumSecuSocialActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_ztNumSecuSocialActionPerformed
 
     private void btLireCarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLireCarteActionPerformed

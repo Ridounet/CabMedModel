@@ -18,6 +18,8 @@ public class Patient extends Personne implements Serializable {
     @OneToMany
     @ElementCollection(fetch = FetchType.LAZY)
     private List<Rdv> rdv;
+    
+    private String remarques;
 
     // Constructeurs
     public Patient(Mutualite mutualite, String registreNat, String nom, String prenom, 
@@ -35,7 +37,6 @@ public class Patient extends Personne implements Serializable {
         return getPrenom() + " " + getNom() + " (patient)";
     }
     
-    
     // Getters & Setters
     public Mutualite getMutualite() { return mutualite; }
     public void setMutualite(Mutualite mutualite) { this.mutualite = mutualite; }
@@ -43,5 +44,7 @@ public class Patient extends Personne implements Serializable {
     public void setRdv(List<Rdv> rdv) { this.rdv = rdv; }
     public String getNumSecuSocial() { return numSecuSocial; }
     public void setNumSecuSocial(String numSecuSocial) { this.numSecuSocial = numSecuSocial; }
+    public String getRemarques() { return remarques; }
+    public void setRemarques(String remarques) { this.remarques = remarques; }
     
 }

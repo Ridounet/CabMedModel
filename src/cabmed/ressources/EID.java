@@ -1,7 +1,6 @@
 package cabmed.ressources;
 
 import cabmed.model.Adresse;
-import cabmed.model.Personne;
 import cabmed.model.Patient;
 import cabmed.model.Cp;
 import be.belgium.eid.eidlib.BeID;
@@ -17,11 +16,23 @@ import java.util.logging.Logger;
 
 public class EID {
     
-    public static Personne getData() throws EIDException {
+    public static void main(String[] args) {
+        try {
+            System.out.println(getData().getDateNaissance());
+        } catch (EIDException ex) {
+            Logger.getLogger(EID.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Patient getData() throws EIDException {
+        
+//        BeID eID = new BeID(true);
+//        System.out.println(eID.getIDData().toString());
+//        return null;
         BeID eID = new BeID(true);
         String birthdate;
         String eid = (eID.getIDData().toString().replaceAll(": ", ":"));
-        Personne p = new Patient();
+        Patient p = new Patient();
         //---------------------------------------
         //-            General Data             -
         //---------------------------------------
@@ -57,7 +68,7 @@ public class EID {
             SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
             //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date d = sdf.parse(birthdate);
-            sdf.applyPattern("dd-MM-yyyy");
+            //sdf.applyPattern("dd-MM-yyyy");
             p.setDateNaissance(d);
             System.out.println("newformat: " + p.getDateNaissance());
             

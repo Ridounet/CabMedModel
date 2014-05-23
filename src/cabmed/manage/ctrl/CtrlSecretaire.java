@@ -2,7 +2,9 @@ package cabmed.manage.ctrl;
 
 import cabmed.manage.ihm.secretaire.VueRecherchePatient;
 import cabmed.manage.main.Facade;
+import cabmed.model.Patient;
 import cabmed.model.Secretaire;
+import cabmed.ressources.EID;
 import javax.swing.SwingUtilities;
 
 public class CtrlSecretaire implements ICtrlSecondaire {
@@ -33,6 +35,14 @@ public class CtrlSecretaire implements ICtrlSecondaire {
             });
         } else {
             vueRecherchePatient.setVisible(true);
+        }
+    }
+    
+    public Patient lireCarte() {
+        try {
+            return EID.getData();
+        } catch (Exception e) {
+            return null;
         }
     }
     

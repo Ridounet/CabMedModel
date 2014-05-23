@@ -2,6 +2,7 @@ package cabmed.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -29,6 +30,12 @@ public class Rdv implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatutRdv statut;
     
+    @OneToMany
+    @ElementCollection
+    private List<Prescription> prescriptions;
+    
+    private String remarque;
+
     // Constructeurs
     public Rdv(Date dateRdv, Patient patient, Medecin medecin, Specialisation typeRdv, StatutRdv statut, Tranche heure) {
         this.dateRdv = dateRdv; this.patient = patient; this.medecin = medecin;
@@ -85,5 +92,9 @@ public class Rdv implements Serializable {
     public void setDateRdv(Date dateRdv) { this.dateRdv = dateRdv; }
     public Tranche getHeure() { return heure; }
     public void setHeure(Tranche heure) { this.heure = heure; }
+    public List<Prescription> getPrescriptions() { return prescriptions; }
+    public void setPrescriptions(List<Prescription> prescriptions) { this.prescriptions = prescriptions; }
+    public String getRemarque() { return remarque; }
+    public void setRemarque(String remarque) { this.remarque = remarque; }
     
 }
