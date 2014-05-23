@@ -32,7 +32,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="ztNumNational" max="32767" attributes="0"/>
                   <Component id="lbNom" alignment="0" max="32767" attributes="0"/>
-                  <Component id="lbRegistreNat" alignment="1" pref="207" max="32767" attributes="0"/>
+                  <Component id="lbRegistreNat" alignment="1" max="32767" attributes="0"/>
                   <Component id="lbPrenom" alignment="0" max="32767" attributes="0"/>
                   <Component id="lbSexe" alignment="0" max="32767" attributes="0"/>
                   <Component id="cbSexe" alignment="0" max="32767" attributes="0"/>
@@ -53,7 +53,9 @@
                   <Group type="102" attributes="0">
                       <Component id="btCancel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btSaveSearch" max="32767" attributes="0"/>
+                      <Component id="btRechercher" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btSauver" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -108,7 +110,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btCancel" max="32767" attributes="0"/>
-                          <Component id="btSaveSearch" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btSauver" alignment="3" max="32767" attributes="0"/>
+                              <Component id="btRechercher" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Component id="btLireCarte" max="32767" attributes="0"/>
@@ -250,18 +255,26 @@
     </Component>
     <Component class="javax.swing.JButton" name="btCancel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Annuler"/>
+        <Property name="text" type="java.lang.String" value="Effacer"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btSaveSearch">
+    <Component class="javax.swing.JButton" name="btSauver">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Chercher / Sauver"/>
+        <Property name="text" type="java.lang.String" value="Sauver"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSaveSearchActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSauverActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btRechercher">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Chercher"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRechercherActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

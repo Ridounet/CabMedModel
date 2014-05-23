@@ -38,6 +38,8 @@ public class CtrlSecretaire implements ICtrlSecondaire {
         }
     }
     
+    
+    
     public Patient lireCarte() {
         try {
             return EID.getData();

@@ -61,7 +61,8 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         lbTel = new javax.swing.JLabel();
         ztTel = new javax.swing.JFormattedTextField();
         btCancel = new javax.swing.JButton();
-        btSaveSearch = new javax.swing.JButton();
+        btSauver = new javax.swing.JButton();
+        btRechercher = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Recherche d'un patient");
@@ -122,17 +123,24 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         ztTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         ztTel.setEnabled(false);
 
-        btCancel.setText("Annuler");
+        btCancel.setText("Effacer");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
             }
         });
 
-        btSaveSearch.setText("Chercher / Sauver");
-        btSaveSearch.addActionListener(new java.awt.event.ActionListener() {
+        btSauver.setText("Sauver");
+        btSauver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSaveSearchActionPerformed(evt);
+                btSauverActionPerformed(evt);
+            }
+        });
+
+        btRechercher.setText("Chercher");
+        btRechercher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRechercherActionPerformed(evt);
             }
         });
 
@@ -147,7 +155,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ztNumNational)
                     .addComponent(lbNom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbRegistreNat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(lbRegistreNat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbPrenom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbSexe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbSexe, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -168,7 +176,9 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btSaveSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btRechercher)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btSauver)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -219,7 +229,9 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btSaveSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btSauver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btRechercher))))
                     .addComponent(btLireCarte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -232,6 +244,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     }//GEN-LAST:event_ztNumSecuSocialActionPerformed
 
     private void btLireCarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLireCarteActionPerformed
+                
         if (ztNom.isEnabled()) {
             disableChamps();
         } else {
@@ -239,18 +252,26 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         }
     }//GEN-LAST:event_btLireCarteActionPerformed
 
-    private void btSaveSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveSearchActionPerformed
+    private void btSauverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSauverActionPerformed
         if (validationChamps()) {
             JOptionPane.showMessageDialog(null, "All fields are OK");
         } else {
             JOptionPane.showMessageDialog(null, "Please fill all fields!");
         }
-    }//GEN-LAST:event_btSaveSearchActionPerformed
+    }//GEN-LAST:event_btSauverActionPerformed
 
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         viderChamps();
         disableChamps();
+        btSauver.enable(false);
     }//GEN-LAST:event_btCancelActionPerformed
+
+    private void btRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRechercherActionPerformed
+        
+        
+        
+        btSauver.enable(true);
+    }//GEN-LAST:event_btRechercherActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -287,7 +308,8 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btLireCarte;
-    private javax.swing.JButton btSaveSearch;
+    private javax.swing.JButton btRechercher;
+    private javax.swing.JButton btSauver;
     private javax.swing.JComboBox cbCp;
     private javax.swing.JComboBox cbMutualite;
     private javax.swing.JComboBox cbSexe;
