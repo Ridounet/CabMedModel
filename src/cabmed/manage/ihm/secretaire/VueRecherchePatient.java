@@ -7,6 +7,7 @@ import cabmed.model.Mutualite;
 import cabmed.model.Patient;
 import cabmed.model.Sexe;
 import cabmed.ressources.Observer;
+import java.awt.event.ActionEvent;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -289,7 +290,11 @@ public class VueRecherchePatient extends JFrame implements Observer {
         }
         btSauver.enable(true);
     }//GEN-LAST:event_btRechercherActionPerformed
-
+    
+    private void ztNumSecuSocialActionPerformed(ActionEvent evt) {
+        
+    }
+    
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
