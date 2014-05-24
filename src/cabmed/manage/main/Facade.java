@@ -14,7 +14,7 @@ import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
 import java.util.ArrayList;
 
-public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, ICpDAO {
+public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, ICpDAO, IPatientDAO {
     
     private final CtrlPrincipal ctrl;
     
@@ -114,6 +114,16 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     @Override
     public boolean deleteSpecialisation(Specialisation specialisation) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean savePatient(Patient patient) {
+        return DAOMySQL.getInstance().savePatient(patient);
+    }
+
+    @Override
+    public Patient getPatientByRegistreNat(String registreNat) {
+        return DAOMySQL.getInstance().getPatientByRegistreNat(registreNat);
     }
     
 }

@@ -1,13 +1,25 @@
 package cabmed.manage.ihm.secretaire;
 
+import cabmed.manage.ctrl.CtrlSecretaire;
+import cabmed.model.Patient;
+import cabmed.ressources.Observer;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class VueHistoriquePatient extends javax.swing.JFrame {
+public class VueHistoriquePatient extends JFrame implements Observer {
 
+    private CtrlSecretaire ctrl;
+    
     public VueHistoriquePatient() {
         initComponents();
         initAttributes();
+    }
+
+    public VueHistoriquePatient(CtrlSecretaire ctrl) {
+        initComponents();
+        initAttributes();
+        this.ctrl = ctrl;
     }
 
     @SuppressWarnings("unchecked")
@@ -388,6 +400,15 @@ public class VueHistoriquePatient extends javax.swing.JFrame {
         cbSpecialisation.addItem("Généraliste");
         cbSpecialisation.addItem("Specialiste des pieds");
         cbSpecialisation.addItem("Specialiste des doigts");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void showView(Patient patient) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private class ModeleRdvEnCours extends DefaultTableModel {

@@ -56,12 +56,12 @@ public final class CtrlPrincipal {
     
     public void showSecretaire(Secretaire secretaire) {
         ctrlSecondaire = new CtrlSecretaire(this, facade, secretaire);
-        ctrlSecondaire.showView();
+        ctrlSecondaire.showVuePrincipale();
     }
     
     public void showMedecin(Medecin medecin) { 
         ctrlSecondaire = new CtrlMedecin(this, facade, medecin);
-        ctrlSecondaire.showView();
+        ctrlSecondaire.showVuePrincipale();
     }
     
     public void showLogin() { ctrlLogin.showView(); }

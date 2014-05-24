@@ -7,20 +7,26 @@ public class PatientDAO implements IPatientDAO{
     
     @Override
     public boolean savePatient(Patient patient) {
-        boolean result;
+        EntityTransaction tx = DAOMySQL.getEntityManager().getTransaction();
         try {
-            EntityManager em = DAOMySQL.getEntityManager();
-            EntityTransaction tx = em.getTransaction();
             tx.begin();
-            em.persist(patient);
+            DAOMySQL.getEntityManager().persist(patient);
             tx.commit();
-            result = true;
+            return true;
         } catch(Exception e) {
-            
-            result = false;
+            tx.rollback();
+            return false;
         }
-        
-        return result;
+    }
+
+    @Override
+    public Patient getPatientByRegistreNat(String registreNat) {
+        try {
+            return (Patient)DAOMySQL.getEntityManager().createQuery(
+                    "SELECT p FROM Patient p WHERE p.registreNat = " + registreNat).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
     
 }

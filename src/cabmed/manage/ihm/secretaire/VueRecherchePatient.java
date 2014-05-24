@@ -1,20 +1,31 @@
 package cabmed.manage.ihm.secretaire;
 
 import cabmed.manage.ctrl.CtrlSecretaire;
+import cabmed.model.Adresse;
+import cabmed.model.Cp;
 import cabmed.model.Mutualite;
+import cabmed.model.Patient;
 import cabmed.model.Sexe;
 import cabmed.ressources.Observer;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 
-public class VueRecherchePatient extends javax.swing.JFrame implements Observer {
+public class VueRecherchePatient extends JFrame implements Observer {
 
+    CtrlSecretaire ctrl;
+    Patient patient;
+    
     public VueRecherchePatient() {
         initComponents();
         initAttributes();
     }
 
-    public VueRecherchePatient(CtrlSecretaire me) {
+    public VueRecherchePatient(CtrlSecretaire ctrl) {
+        this.ctrl = ctrl;
         initComponents();
         initAttributes();
     }
@@ -63,6 +74,8 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         btCancel = new javax.swing.JButton();
         btSauver = new javax.swing.JButton();
         btRechercher = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        ztEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Recherche d'un patient");
@@ -85,43 +98,28 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
 
         lbSexe.setText("Sexe:");
 
-        cbSexe.setEnabled(false);
-
         lbDateNaissance.setText("Date de naissance:");
 
         dpDateNaissance.setDateFormatString("dd/MM/yyyy");
-        dpDateNaissance.setEnabled(false);
 
         lbMutuality.setText("Mutualité:");
-
-        cbMutualite.setEnabled(false);
 
         lbNumSecuSocial.setText("Numéro sécurité sociale:");
 
         ztNumSecuSocial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        ztNumSecuSocial.setEnabled(false);
         ztNumSecuSocial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ztNumSecuSocialActionPerformed(evt);
             }
         });
 
-        ztPrenom.setEnabled(false);
-
-        ztNom.setEnabled(false);
-
         lbAdresse.setText("Adresse:");
 
-        ztAdresse.setEnabled(false);
-
         lbCp.setText("Code Postal:");
-
-        cbCp.setEnabled(false);
 
         lbTel.setText("Téléphone:");
 
         ztTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        ztTel.setEnabled(false);
 
         btCancel.setText("Effacer");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +141,8 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                 btRechercherActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Email:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,11 +174,16 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                     .addComponent(lbMutuality, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbNumSecuSocial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btRechercher)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSauver)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btCancel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btRechercher)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btSauver))
+                            .addComponent(jLabel1)
+                            .addComponent(ztEmail))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -226,12 +231,15 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                         .addComponent(lbTel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btSauver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btRechercher))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ztEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btCancel)
+                            .addComponent(btRechercher)
+                            .addComponent(btSauver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(btLireCarte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -239,46 +247,50 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         pack();
     }//GEN-END:initComponents
 
-    private void ztNumSecuSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ztNumSecuSocialActionPerformed
-        
-    }//GEN-LAST:event_ztNumSecuSocialActionPerformed
-
     private void btLireCarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLireCarteActionPerformed
                 
         if (ztNom.isEnabled()) {
-            disableChamps();
+            
         } else {
-            enableChamps();
+            
         }
     }//GEN-LAST:event_btLireCarteActionPerformed
 
     private void btSauverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSauverActionPerformed
         if (validationChamps()) {
-            JOptionPane.showMessageDialog(null, "All fields are OK");
+            Patient patient = new Patient();
+            patient.setNom(ztNom.getText());
+            patient.setPrenom(ztPrenom.getText());
+            patient.setNumSecuSocial(ztNumSecuSocial.getText());
+            patient.setRegistreNat(ztNumNational.getText());
+            patient.setDateNaissance(dpDateNaissance.getDate());
+            patient.setAdresse(new Adresse(ztAdresse.getText(), (Cp)cbCp.getSelectedItem()));
+            patient.setEmail(ztEmail.getText());
+            patient.setMutualite((Mutualite)cbMutualite.getSelectedItem());
+            patient.setSexe((Sexe)cbSexe.getSelectedItem());
+            patient.setTel(ztTel.getText());
+            ctrl.savePatient(patient);
         } else {
-            JOptionPane.showMessageDialog(null, "Please fill all fields!");
+            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs!");
         }
     }//GEN-LAST:event_btSauverActionPerformed
 
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         viderChamps();
-        disableChamps();
-        btSauver.enable(false);
     }//GEN-LAST:event_btCancelActionPerformed
 
     private void btRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRechercherActionPerformed
-        
-        
-        
+        String reg = ztNumNational.getText();
+        patient = ctrl.getPatientByRegistreNat(reg);
+        if (patient == null) {
+            JOptionPane.showMessageDialog(this, "Aucun patient n'existe avec ce numéro de registre national.");
+        } else {
+            
+        }
         btSauver.enable(true);
     }//GEN-LAST:event_btRechercherActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -286,19 +298,14 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueRecherchePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueRecherchePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueRecherchePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueRecherchePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException |
+                InstantiationException |
+                IllegalAccessException |
+                UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(VueRecherchePatient.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VueRecherchePatient().setVisible(true);
             }
@@ -314,6 +321,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     private javax.swing.JComboBox cbMutualite;
     private javax.swing.JComboBox cbSexe;
     private com.toedter.calendar.JDateChooser dpDateNaissance;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbAdresse;
     private javax.swing.JLabel lbCp;
     private javax.swing.JLabel lbDateNaissance;
@@ -325,6 +333,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
     private javax.swing.JLabel lbSexe;
     private javax.swing.JLabel lbTel;
     private javax.swing.JTextField ztAdresse;
+    private javax.swing.JTextField ztEmail;
     private javax.swing.JTextField ztNom;
     private javax.swing.JFormattedTextField ztNumNational;
     private javax.swing.JFormattedTextField ztNumSecuSocial;
@@ -347,6 +356,7 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         ztNumSecuSocial.setEnabled(true);
         ztTel.setEnabled(true);
         dpDateNaissance.setEnabled(true);
+        ztEmail.setEnabled(true);
     }
     
     public void disableChamps() {
@@ -359,9 +369,10 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         ztNumSecuSocial.setEnabled(false);
         ztTel.setEnabled(false);
         dpDateNaissance.setEnabled(false);
+        ztEmail.setEnabled(false);
     }
 
-    private void viderChamps() {
+    public void viderChamps() {
         ztNumNational.setText("");
         ztNom.setText("");
         ztPrenom.setText("");
@@ -372,10 +383,11 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
         cbMutualite.setSelectedIndex(0);
         cbCp.setSelectedIndex(0);
         dpDateNaissance.setDate(new Date("01/01/1980"));
+        ztEmail.setText("");
     }
     
     private boolean validationChamps() {
-        if (ztNumNational.getText().equals("") ||
+        return (ztNumNational.getText().equals("") ||
                 ztNom.getText().equals("") ||
                 ztPrenom.getText().equals("") ||
                 ztAdresse.getText().equals("") ||
@@ -384,11 +396,8 @@ public class VueRecherchePatient extends javax.swing.JFrame implements Observer 
                 cbCp.getSelectedIndex() == 0 ||
                 cbMutualite.getSelectedIndex() == 0 ||
                 cbSexe.getSelectedIndex() == 0 ||
-                dpDateNaissance.getDate() == null) {
-            return false;
-        } else {
-            return true;
-        }
+                dpDateNaissance.getDate() == null ||
+                ztEmail.getText().equals("")) ? false : true;
     }
 
 }

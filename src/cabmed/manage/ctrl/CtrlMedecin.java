@@ -21,7 +21,7 @@ public class CtrlMedecin implements ICtrlSecondaire {
     }
     
     @Override
-    public void showView() {
+    public void showVuePrincipale() {
         if (vueRechercheDossier == null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override

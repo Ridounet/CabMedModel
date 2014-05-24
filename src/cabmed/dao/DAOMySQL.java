@@ -345,4 +345,9 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         return specialisationDAO.deleteSpecialisation(specialisation);
     }
 
+    @Override
+    public Patient getPatientByRegistreNat(String registreNat) {
+        return patientDAO.getPatientByRegistreNat(registreNat);
+    }
+
 }
