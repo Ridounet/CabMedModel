@@ -23,8 +23,8 @@ public class Patient extends Personne implements Serializable {
 
     // Constructeurs
     public Patient(Mutualite mutualite, String registreNat, String nom, String prenom, 
-            Date dateNaissance, Adresse adresse, String tel, Sexe sexe, String numSecuSocial) {
-        super(registreNat, nom, prenom, dateNaissance, adresse, tel, sexe);
+            Date dateNaissance, Adresse adresse, String tel, Sexe sexe, String numSecuSocial, String email, String password) {
+        super(registreNat, nom, prenom, dateNaissance, adresse, tel, sexe, email, password);
         this.mutualite = mutualite;
         this.numSecuSocial = numSecuSocial;
     }

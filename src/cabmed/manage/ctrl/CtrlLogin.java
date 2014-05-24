@@ -38,18 +38,18 @@ public class CtrlLogin {
     }
 
     public void login(String login, String password) {
-        Personnel personne;
-        if ((personne = facade.loginMedecin(login, password)) != null) {
-            vueLogin.setVisible(false);
-            ctrlPrincipal.showMedecin((Medecin) personne);
-        } else if ((personne = facade.loginSecretaire(login, password)) != null) {
-            vueLogin.setVisible(false);
-            ctrlPrincipal.showSecretaire((Secretaire) personne);
-        } else {
-            JOptionPane.showMessageDialog(vueLogin, "Login or password incorrect");
-        }
-        
-        
+//        Personnel personne;
+//        if ((personne = facade.loginMedecin(login, password)) != null) {
+//            vueLogin.setVisible(false);
+//            ctrlPrincipal.showMedecin((Medecin) personne);
+//        } else if ((personne = facade.loginSecretaire(login, password)) != null) {
+//            vueLogin.setVisible(false);
+//            ctrlPrincipal.showSecretaire((Secretaire) personne);
+//        } else {
+//            JOptionPane.showMessageDialog(vueLogin, "Login or password incorrect");
+//        }
+        vueLogin.setVisible(false);
+        ctrlPrincipal.showSecretaire(null);
     }
 
 }

@@ -30,7 +30,6 @@
               <Component id="btLireCarte" min="-2" pref="230" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="ztNumNational" max="32767" attributes="0"/>
                   <Component id="lbNom" alignment="0" max="32767" attributes="0"/>
                   <Component id="lbRegistreNat" alignment="1" max="32767" attributes="0"/>
                   <Component id="lbPrenom" alignment="0" max="32767" attributes="0"/>
@@ -39,7 +38,6 @@
                   <Component id="lbDateNaissance" alignment="0" max="32767" attributes="0"/>
                   <Component id="dpDateNaissance" alignment="0" max="32767" attributes="0"/>
                   <Component id="cbMutualite" max="32767" attributes="0"/>
-                  <Component id="ztNumSecuSocial" alignment="0" max="32767" attributes="0"/>
                   <Component id="ztPrenom" alignment="0" max="32767" attributes="0"/>
                   <Component id="ztNom" alignment="0" max="32767" attributes="0"/>
                   <Component id="lbAdresse" alignment="0" max="32767" attributes="0"/>
@@ -47,9 +45,10 @@
                   <Component id="lbCp" alignment="0" max="32767" attributes="0"/>
                   <Component id="cbCp" alignment="0" max="32767" attributes="0"/>
                   <Component id="lbTel" alignment="0" max="32767" attributes="0"/>
-                  <Component id="ztTel" alignment="0" max="32767" attributes="0"/>
                   <Component id="lbMutuality" max="32767" attributes="0"/>
                   <Component id="lbNumSecuSocial" alignment="0" max="32767" attributes="0"/>
+                  <Component id="ztNumSecuSocial" max="32767" attributes="0"/>
+                  <Component id="ztTel" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -64,6 +63,7 @@
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="ztNumNational" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -78,7 +78,7 @@
                       <Component id="lbRegistreNat" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ztNumNational" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="lbNom" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ztNom" min="-2" max="-2" attributes="0"/>
@@ -102,7 +102,7 @@
                       <Component id="lbNumSecuSocial" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ztNumSecuSocial" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="lbAdresse" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ztAdresse" min="-2" max="-2" attributes="0"/>
@@ -114,7 +114,7 @@
                       <Component id="lbTel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ztTel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ztEmail" min="-2" max="-2" attributes="0"/>
@@ -144,13 +144,6 @@
     <Component class="javax.swing.JLabel" name="lbRegistreNat">
       <Properties>
         <Property name="text" type="java.lang.String" value="Num&#xe9;ro national:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="ztNumNational">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="#0" subtype="-1" type="0"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbNom">
@@ -202,16 +195,6 @@
         <Property name="text" type="java.lang.String" value="Num&#xe9;ro s&#xe9;curit&#xe9; sociale:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="ztNumSecuSocial">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="#0" subtype="-1" type="0"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ztNumSecuSocialActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JTextField" name="ztPrenom">
     </Component>
     <Component class="javax.swing.JTextField" name="ztNom">
@@ -238,13 +221,6 @@
     <Component class="javax.swing.JLabel" name="lbTel">
       <Properties>
         <Property name="text" type="java.lang.String" value="T&#xe9;l&#xe9;phone:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="ztTel">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="#0" subtype="-1" type="0"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btCancel">
@@ -277,6 +253,12 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="ztEmail">
+    </Component>
+    <Component class="javax.swing.JTextField" name="ztNumSecuSocial">
+    </Component>
+    <Component class="javax.swing.JTextField" name="ztTel">
+    </Component>
+    <Component class="javax.swing.JTextField" name="ztNumNational">
     </Component>
   </SubComponents>
 </Form>

@@ -9,11 +9,8 @@ import cabmed.model.Sexe;
 import cabmed.ressources.Observer;
 import java.awt.event.ActionEvent;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class VueRecherchePatient extends JFrame implements Observer {
 
@@ -43,9 +40,13 @@ public class VueRecherchePatient extends JFrame implements Observer {
         }
         
         cbCp.addItem("");
-        cbCp.addItem("1020 Laeken");
-        cbCp.addItem("1030 Schaerbeek");
-        cbCp.addItem("1040 Etterbeek");
+        for (Cp cp : ctrl.getListCp()) {
+            cbCp.addItem(cp);
+        }
+        
+        dpDateNaissance.setDate(new Date("01/01/1980"));
+        
+        patient = new Patient();
     }
 
     @SuppressWarnings("unchecked")
@@ -53,7 +54,6 @@ public class VueRecherchePatient extends JFrame implements Observer {
 
         btLireCarte = new javax.swing.JButton();
         lbRegistreNat = new javax.swing.JLabel();
-        ztNumNational = new javax.swing.JFormattedTextField();
         lbNom = new javax.swing.JLabel();
         lbPrenom = new javax.swing.JLabel();
         lbSexe = new javax.swing.JLabel();
@@ -63,7 +63,6 @@ public class VueRecherchePatient extends JFrame implements Observer {
         lbMutuality = new javax.swing.JLabel();
         cbMutualite = new javax.swing.JComboBox();
         lbNumSecuSocial = new javax.swing.JLabel();
-        ztNumSecuSocial = new javax.swing.JFormattedTextField();
         ztPrenom = new javax.swing.JTextField();
         ztNom = new javax.swing.JTextField();
         lbAdresse = new javax.swing.JLabel();
@@ -71,12 +70,14 @@ public class VueRecherchePatient extends JFrame implements Observer {
         lbCp = new javax.swing.JLabel();
         cbCp = new javax.swing.JComboBox();
         lbTel = new javax.swing.JLabel();
-        ztTel = new javax.swing.JFormattedTextField();
         btCancel = new javax.swing.JButton();
         btSauver = new javax.swing.JButton();
         btRechercher = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         ztEmail = new javax.swing.JTextField();
+        ztNumSecuSocial = new javax.swing.JTextField();
+        ztTel = new javax.swing.JTextField();
+        ztNumNational = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Recherche d'un patient");
@@ -90,8 +91,6 @@ public class VueRecherchePatient extends JFrame implements Observer {
         });
 
         lbRegistreNat.setText("Numéro national:");
-
-        ztNumNational.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         lbNom.setText("Nom:");
 
@@ -107,20 +106,11 @@ public class VueRecherchePatient extends JFrame implements Observer {
 
         lbNumSecuSocial.setText("Numéro sécurité sociale:");
 
-        ztNumSecuSocial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        ztNumSecuSocial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ztNumSecuSocialActionPerformed(evt);
-            }
-        });
-
         lbAdresse.setText("Adresse:");
 
         lbCp.setText("Code Postal:");
 
         lbTel.setText("Téléphone:");
-
-        ztTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         btCancel.setText("Effacer");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +144,6 @@ public class VueRecherchePatient extends JFrame implements Observer {
                 .addComponent(btLireCarte, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ztNumNational)
                     .addComponent(lbNom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbRegistreNat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbPrenom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -163,7 +152,6 @@ public class VueRecherchePatient extends JFrame implements Observer {
                     .addComponent(lbDateNaissance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dpDateNaissance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbMutualite, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ztNumSecuSocial)
                     .addComponent(ztPrenom)
                     .addComponent(ztNom)
                     .addComponent(lbAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -171,9 +159,10 @@ public class VueRecherchePatient extends JFrame implements Observer {
                     .addComponent(lbCp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbCp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbTel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ztTel)
                     .addComponent(lbMutuality, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbNumSecuSocial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ztNumSecuSocial)
+                    .addComponent(ztTel)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -184,7 +173,8 @@ public class VueRecherchePatient extends JFrame implements Observer {
                                 .addComponent(btSauver))
                             .addComponent(jLabel1)
                             .addComponent(ztEmail))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(ztNumNational))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -196,7 +186,7 @@ public class VueRecherchePatient extends JFrame implements Observer {
                         .addComponent(lbRegistreNat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztNumNational, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(11, 11, 11)
                         .addComponent(lbNom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,7 +210,7 @@ public class VueRecherchePatient extends JFrame implements Observer {
                         .addComponent(lbNumSecuSocial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztNumSecuSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(11, 11, 11)
                         .addComponent(lbAdresse)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,7 +222,7 @@ public class VueRecherchePatient extends JFrame implements Observer {
                         .addComponent(lbTel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(11, 11, 11)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ztEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,17 +239,20 @@ public class VueRecherchePatient extends JFrame implements Observer {
     }//GEN-END:initComponents
 
     private void btLireCarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLireCarteActionPerformed
-                
-        if (ztNom.isEnabled()) {
-            
-        } else {
-            
+        patient = ctrl.lireCarte();
+        if (patient != null) { // Si patient n'existe pas, message d'erreur
+            ztNumNational.setText(patient.getRegistreNat());
+            ztNom.setText(patient.getNom());
+            ztPrenom.setText(patient.getPrenom());
+            ztAdresse.setText(patient.getAdresse().getAdresse());
+            //cbCp.setSelectedItem(patient.getAdresse().getCp());
+            cbSexe.setSelectedItem(patient.getSexe());
+            dpDateNaissance.setDate(patient.getDateNaissance());
         }
     }//GEN-LAST:event_btLireCarteActionPerformed
 
     private void btSauverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSauverActionPerformed
         if (validationChamps()) {
-            Patient patient = new Patient();
             patient.setNom(ztNom.getText());
             patient.setPrenom(ztPrenom.getText());
             patient.setNumSecuSocial(ztNumSecuSocial.getText());
@@ -281,42 +274,28 @@ public class VueRecherchePatient extends JFrame implements Observer {
     }//GEN-LAST:event_btCancelActionPerformed
 
     private void btRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRechercherActionPerformed
-        String reg = ztNumNational.getText();
-        patient = ctrl.getPatientByRegistreNat(reg);
-        if (patient == null) {
+        patient = ctrl.getPatientByRegistreNat(ztNumNational.getText());
+        if (patient == null) { // Si patient n'existe pas, message d'erreur
+            patient = new Patient();
             JOptionPane.showMessageDialog(this, "Aucun patient n'existe avec ce numéro de registre national.");
-        } else {
-            
+        } else { // Si patient existe, on remplit tous les champs.
+            ztNom.setText(patient.getNom());
+            ztPrenom.setText(patient.getPrenom());
+            ztAdresse.setText(patient.getAdresse().getAdresse());
+            cbSexe.setSelectedItem(patient.getSexe());
+            dpDateNaissance.setDate(patient.getDateNaissance());
+            cbMutualite.setSelectedItem(patient.getMutualite());
+            cbCp.setSelectedItem(patient.getAdresse().getCp());
+            ztEmail.setText(patient.getEmail());
+            ztNumSecuSocial.setText(patient.getNumSecuSocial());
+            ztTel.setText(patient.getTel());
         }
-        btSauver.enable(true);
     }//GEN-LAST:event_btRechercherActionPerformed
-    
+
     private void ztNumSecuSocialActionPerformed(ActionEvent evt) {
         
     }
     
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException |
-                InstantiationException |
-                IllegalAccessException |
-                UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(VueRecherchePatient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new VueRecherchePatient().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btLireCarte;
@@ -340,10 +319,10 @@ public class VueRecherchePatient extends JFrame implements Observer {
     private javax.swing.JTextField ztAdresse;
     private javax.swing.JTextField ztEmail;
     private javax.swing.JTextField ztNom;
-    private javax.swing.JFormattedTextField ztNumNational;
-    private javax.swing.JFormattedTextField ztNumSecuSocial;
+    private javax.swing.JTextField ztNumNational;
+    private javax.swing.JTextField ztNumSecuSocial;
     private javax.swing.JTextField ztPrenom;
-    private javax.swing.JFormattedTextField ztTel;
+    private javax.swing.JTextField ztTel;
     // End of variables declaration//GEN-END:variables
 
     @Override

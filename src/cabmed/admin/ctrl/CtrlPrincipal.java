@@ -28,10 +28,6 @@ public final class CtrlPrincipal {
     private List<Specialisation> listSpecialisation;
     private List<Cp> listCp;
     
-    public static void main(String[] args) {
-        new CtrlPrincipal();
-    }
-    
     public CtrlPrincipal() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         facade = new Facade(this);

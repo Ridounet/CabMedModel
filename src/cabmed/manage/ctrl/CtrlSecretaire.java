@@ -4,9 +4,11 @@ import be.belgium.eid.exceptions.EIDException;
 import cabmed.manage.ihm.secretaire.VueHistoriquePatient;
 import cabmed.manage.ihm.secretaire.VueRecherchePatient;
 import cabmed.manage.main.Facade;
+import cabmed.model.Cp;
 import cabmed.model.Patient;
 import cabmed.model.Secretaire;
 import cabmed.ressources.EID;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -59,10 +61,17 @@ public class CtrlSecretaire implements ICtrlSecondaire {
         }
     }
     
+    public List<Cp> getListCp() {
+        return ctrlPrincipal.getListCp();
+    }
+    
     public Patient lireCarte() {
         try {
             return EID.getData();
         } catch (EIDException e) {
+            JOptionPane.showMessageDialog(vueRecherchePatient, 
+                    "Erreur lors de la lecture de la carte!\nVérifiez que le lecteur et la carte soient bien mis.",
+                    "Erreur!", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }

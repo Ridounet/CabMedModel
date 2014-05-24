@@ -94,7 +94,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Administrateur result;
         try {
             result = (Administrateur) getEntityManager().createQuery("SELECT a FROM Administrateur a "
-                + "WHERE a.nom = '" + login + "' AND a.prenom = '" + password + "' AND a.visible = " + Constantes.VISIBLE).getSingleResult();
+                + "WHERE a.email = '" + login + "' AND a.password = '" + password + "' AND a.visible = " + Constantes.VISIBLE).getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -104,7 +104,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         try {
             System.out.println("début try dans login medecin");
             Medecin personne = (Medecin) getEntityManager().createQuery("SELECT m FROM Medecin m "
-                + "WHERE m.nom = '" + login + "' AND m.prenom = '" + password + "' AND m.visible = " + Constantes.VISIBLE).getSingleResult();
+                + "WHERE m.email = '" + login + "' AND m.password = '" + password + "' AND m.visible = " + Constantes.VISIBLE).getSingleResult();
             System.out.println("après requete JPQL dans login medecin");
             return personne;
         } catch(Exception e) {
@@ -117,7 +117,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         try {
             System.out.println("début try dans login secretaire");
             Secretaire personne = (Secretaire) getEntityManager().createQuery("SELECT s FROM Secretaire s "
-                + "WHERE s.nom = '" + login + "' AND s.prenom = '" + password + "' AND s.visible = " + Constantes.VISIBLE).getSingleResult();
+                + "WHERE s.email = '" + login + "' AND s.password = '" + password + "' AND s.visible = " + Constantes.VISIBLE).getSingleResult();
             System.out.println("apres requete JPQL");
             return personne;
         } catch(Exception e) {
@@ -130,7 +130,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Patient result;
         try {
             result = (Patient) getEntityManager().createQuery("SELECT p FROM Patient p "
-                + "WHERE p.nom = '" + login + "' AND p.prenom = '" + password + "' AND p.visible = " + Constantes.VISIBLE).getSingleResult();
+                + "WHERE p.email = '" + login + "' AND p.password = '" + password + "' AND p.visible = " + Constantes.VISIBLE).getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -140,7 +140,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         Infirmiere result;
         try {
             result = (Infirmiere) getEntityManager().createQuery("SELECT i FROM Infirmiere i "
-                + "WHERE i.nom = '" + login + "' AND i.prenom = '" + password + "' AND i.visible = " + Constantes.VISIBLE).getSingleResult();
+                + "WHERE i.email = '" + login + "' AND i.password = '" + password + "' AND i.visible = " + Constantes.VISIBLE).getSingleResult();
         } catch(Exception e) {
             result = null;
         }
@@ -216,6 +216,20 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     public List<Specialisation> getListSpecialisation() {
         return specialisationDAO.getListSpecialisation();
     }
+    
+    @Override
+    public boolean deleteSpecialisation(Specialisation specialisation) {
+        return specialisationDAO.deleteSpecialisation(specialisation);
+    }
+
+    @Override
+    public Patient getPatientByRegistreNat(String registreNat) {
+        return patientDAO.getPatientByRegistreNat(registreNat);
+    }
+    
+    
+    
+    
     
     
     
@@ -303,51 +317,41 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private static final Cp cp8 = new Cp(1080, "Molenbeek");
     private static final Cp cp9 = new Cp(1081, "Koekelberg");
     private static final Cp cp10 = new Cp(1090, "Jette");
-    
+    //********************************************************************************************************************************************
     private static final Patient p1 = new Patient(Mutualite.PARTENAMUT, REG_PAT, "Amar Ouaali", "Riduan",
-        new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484847749", Sexe.HOMME, "19214079440");
+        new Date(),new Adresse("Rue Jan Bollen 62", cp2), "0484847749", Sexe.HOMME, "19214079440", "ridouan-amar@hotmail.com", "MDPpatient");
     private static final Personnel a1 = new Administrateur(new Date(), REG_MED1, "Administrateur", "Moi",
-            new Date(), new Adresse("Rue test 43", cp1), "0453945632", Sexe.HOMME);
-    
+            new Date(), new Adresse("Rue test 43", cp1), "0453945632", Sexe.HOMME, "admin@cabmed.be", "MDPadmin");
+    //********************************************************************************************************************************************
     private static final Personnel i1 = new Infirmiere(new Date(), "87122274535", "Amar Ouaali", 
-        "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
+        "Mohamed", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME, "infirmiere1@cabmed.be", "MDPinfirmiere1");
     private static final Personnel i2 = new Infirmiere(new Date(), "19081052047", "Machin", "Chose", 
-        new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
+        new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME, "infirmiere2@cabmed.be", "MDPinfirmiere2");
     private static final Personnel i3 = new Infirmiere(new Date(), "91017335418", "Louise", "Marie", 
-        new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
+        new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME, "infirmiere3@cabmed.be", "MDPinfirmiere3");
     private static final Personnel i4 = new Infirmiere(new Date(), "63010124101", "Desaedeleer", 
-        "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
-    
+        "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME, "infirmiere4@cabmed.be", "MDPinfirmiere4");
+    //********************************************************************************************************************************************
     private static final Personnel s1 = new Secretaire(new Date(), "87123274535", "Login", 
-        "Test", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME);
+        "Test", new Date(), new Adresse("Rue Fransman 122", cp2), "0472982610", Sexe.HOMME, "secretaire1@cabmed.be", "MDPsecretaire1");
     private static final Personnel s2 = new Secretaire(new Date(), "19089052047", "Machin", "Chose", 
-        new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME);
+        new Date(), new Adresse("Avenue Louise 22", cp1), "0474727272", Sexe.FEMME, "secretaire2@cabmed.be", "MDPsecretaire2");
     private static final Personnel s3 = new Secretaire(new Date(), "91015335418", "Louise", "Marie", 
-        new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME);
+        new Date(), new Adresse("Rue Joseph Buedts 4", cp4), "0493673256", Sexe.FEMME, "secretaire3@cabmed.be", "MDPsecretaire3");
     private static final Personnel s4 = new Secretaire(new Date(), "63019124101", "Desaedeleer", 
-        "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME);
-    
+        "Lionel", new Date(), new Adresse("Boulevard de la cambre 33", cp1), "0494093854", Sexe.HOMME, "secretaire4@cabmed.be", "MDPsecretaire4");
+    //********************************************************************************************************************************************
     private static final Medecin m1 = new Medecin(new Date(), REG_MED1, "VO", "Didier",
-        new Date(), new Adresse("Rue de la loi 453", cp5), "0498234109", Sexe.HOMME);
+        new Date(), new Adresse("Rue de la loi 453", cp5), "0498234109", Sexe.HOMME, "medecin1@cabmed.be", "MDPmedecin1");
     private static final Medecin m2 = new Medecin(new Date(), REG_MED2, "Decamp", "Test",
-        new Date(), new Adresse("Rue du test 74", cp10), "0488932094", Sexe.HOMME);
+        new Date(), new Adresse("Rue du test 74", cp10), "0488932094", Sexe.HOMME, "medecin2@cabmed.be", "MDPmedecin2");
     private static final Medecin m3 = new Medecin(new Date(), REG_MED3, "De Heneau", "Teste",
-        new Date(), new Adresse("Rue Ici 982", cp8), "0494439092", Sexe.FEMME);
+        new Date(), new Adresse("Rue Ici 982", cp8), "0494439092", Sexe.FEMME, "medecin3@cabmed.be", "MDPmedecin3");
     private static final Medecin m4 = new Medecin(new Date(), REG_MED4, "Amar", "Machin",
-        new Date(), new Adresse("Avenue de Moi 429", cp9), "0478439089", Sexe.HOMME);
-    
+        new Date(), new Adresse("Avenue de Moi 429", cp9), "0478439089", Sexe.HOMME, "medecin4@cabmed.be", "MDPmedecin4");
+    //********************************************************************************************************************************************
     private static final Specialisation sp1 = new Specialisation(1, "Généraliste");
-    private static final Specialisation sp2 = new Specialisation(3, "Gynécologue");
+    private static final Specialisation sp2 = new Specialisation(3, "Osthéopathe");
     private static final Specialisation sp3 = new Specialisation(2, "Obstétricien");
-
-    @Override
-    public boolean deleteSpecialisation(Specialisation specialisation) {
-        return specialisationDAO.deleteSpecialisation(specialisation);
-    }
-
-    @Override
-    public Patient getPatientByRegistreNat(String registreNat) {
-        return patientDAO.getPatientByRegistreNat(registreNat);
-    }
 
 }

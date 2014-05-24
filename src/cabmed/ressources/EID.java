@@ -33,9 +33,9 @@ public class EID {
         String birthdate;
         String eid = (eID.getIDData().toString().replaceAll(": ", ":"));
         Patient p = new Patient();
-        //---------------------------------------
-        //-            General Data             -
-        //---------------------------------------
+        //------------------------------------------
+        //-            Infos Générales             -
+        //------------------------------------------
         StringTokenizer st1 = new StringTokenizer(eid, "\n");
         StringTokenizer st2;
 
@@ -70,8 +70,6 @@ public class EID {
             Date d = sdf.parse(birthdate);
             //sdf.applyPattern("dd-MM-yyyy");
             p.setDateNaissance(d);
-            System.out.println("newformat: " + p.getDateNaissance());
-            
         } catch (ParseException ex) {
             Logger.getLogger(EID.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,7 +82,7 @@ public class EID {
             p.setSexe(Sexe.FEMME);
         
         //-------------------------------------------------
-        //-                   Address                     -
+        //-                   Adresse                     -
         //-------------------------------------------------
         eid = (eID.getIDAddress().toString().replaceAll(": ", ":"));
         st1 = new StringTokenizer(eid, "\n");

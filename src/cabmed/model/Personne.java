@@ -33,7 +33,7 @@ public abstract class Personne implements Serializable {
     @Column(nullable = true)
     private String tel;
     
-    @Column()
+    @Column(unique = true)
     private String email;
     
     @Column
@@ -49,8 +49,8 @@ public abstract class Personne implements Serializable {
     // Constructeurs
     public Personne() { }
     
-    public Personne(String registreNat, String nom, String prenom,
-            Date dateNaissance,Adresse adresse, String tel, Sexe sexe) {
+    public Personne(String registreNat, String nom, String prenom, Date dateNaissance, 
+            Adresse adresse, String tel, Sexe sexe, String email, String password) {
         this.registreNat = registreNat;
         this.dateNaissance = dateNaissance;
         this.adresse = adresse;
@@ -58,6 +58,7 @@ public abstract class Personne implements Serializable {
         this.sexe = sexe;
         this.nom = nom;
         this.prenom = prenom;
+        this.email = email;
     }
     
     // Surcharge "Object"

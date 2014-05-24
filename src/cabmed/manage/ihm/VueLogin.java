@@ -99,13 +99,14 @@ public class VueLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_ztLoginActionPerformed
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        String login = ztLogin.getText();
-        String password = String.valueOf(ztPassword.getPassword());
-        if (login.equals("") || password.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields");
-        } else {
-            ctrl.login(ztLogin.getText(),ztPassword.getText());
-        }
+//        String login = ztLogin.getText();
+//        String password = String.valueOf(ztPassword.getPassword());
+//        if (login.equals("") || password.equals("")) {
+//            JOptionPane.showMessageDialog(this, "Please fill all fields");
+//        } else {
+//            ctrl.login(ztLogin.getText(),ztPassword.getText());
+//        }
+        ctrl.login(ztLogin.getText(),ztPassword.getText());
     }//GEN-LAST:event_btLoginActionPerformed
 
     public static void main(String args[]) {

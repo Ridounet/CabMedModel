@@ -408,7 +408,7 @@ public class VueHistoriquePatient extends JFrame implements Observer {
     }
 
     public void showView(Patient patient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     private class ModeleRdvEnCours extends DefaultTableModel {

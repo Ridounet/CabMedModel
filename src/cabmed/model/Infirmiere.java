@@ -10,8 +10,8 @@ public class Infirmiere extends Personnel {
     public Infirmiere() { }
 
     public Infirmiere(Date debutTravail, String registreNat, String nom, 
-            String prenom, Date dateNaissance, Adresse adresse, String tel, Sexe sexe) {
-        super(debutTravail, registreNat, nom, prenom, dateNaissance, adresse, tel, sexe);
+            String prenom, Date dateNaissance, Adresse adresse, String tel, Sexe sexe, String email, String password) {
+        super(debutTravail, registreNat, nom, prenom, dateNaissance, adresse, tel, sexe, email, password);
     }
     
 }
