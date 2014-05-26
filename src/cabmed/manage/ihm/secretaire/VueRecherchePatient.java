@@ -36,7 +36,7 @@ public class VueRecherchePatient extends JFrame implements Observer {
         
         cbMutualite.addItem("");
         for (Mutualite m : Mutualite.values()) {
-            cbMutualite.addItem(m.getNom());
+            cbMutualite.addItem(m);
         }
         
         cbCp.addItem("");
@@ -279,6 +279,7 @@ public class VueRecherchePatient extends JFrame implements Observer {
             patient = new Patient();
             JOptionPane.showMessageDialog(this, "Aucun patient n'existe avec ce numéro de registre national.");
         } else { // Si patient existe, on remplit tous les champs.
+            System.out.println(patient.getMutualite().getNom());
             ztNom.setText(patient.getNom());
             ztPrenom.setText(patient.getPrenom());
             ztAdresse.setText(patient.getAdresse().getAdresse());
@@ -289,6 +290,7 @@ public class VueRecherchePatient extends JFrame implements Observer {
             ztEmail.setText(patient.getEmail());
             ztNumSecuSocial.setText(patient.getNumSecuSocial());
             ztTel.setText(patient.getTel());
+            System.out.println(patient.getMutualite().getNom());
         }
     }//GEN-LAST:event_btRechercherActionPerformed
 

@@ -2,14 +2,22 @@ package cabmed.manage.ihm.secretaire;
 
 import cabmed.manage.ctrl.CtrlSecretaire;
 import cabmed.model.Patient;
+import cabmed.model.Rdv;
+import cabmed.model.StatutRdv;
 import cabmed.ressources.Observer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class VueHistoriquePatient extends JFrame implements Observer {
 
     private CtrlSecretaire ctrl;
+    private Patient patient;
+    private List<Rdv> listRdvActuels;
+    private List<Rdv> listRdvAnciens;
     
     public VueHistoriquePatient() {
         initComponents();
@@ -31,9 +39,11 @@ public class VueHistoriquePatient extends JFrame implements Observer {
         tableRdvEnCours = new javax.swing.JTable();
         btModifEnCours = new javax.swing.JButton();
         btCancelEnCours = new javax.swing.JButton();
+        btCloture2 = new javax.swing.JButton();
         paneRdvPasses = new javax.swing.JPanel();
         scrollTableEnCours1 = new javax.swing.JScrollPane();
         tableRdvAncien = new javax.swing.JTable();
+        btCloture1 = new javax.swing.JButton();
         paneRdvNouveau = new javax.swing.JPanel();
         lbTitre = new javax.swing.JLabel();
         btAddRdv = new javax.swing.JButton();
@@ -47,6 +57,7 @@ public class VueHistoriquePatient extends JFrame implements Observer {
         dpDate = new com.toedter.calendar.JDateChooser();
         lbHeure = new javax.swing.JLabel();
         cbTranche = new javax.swing.JComboBox();
+        btCloture = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Historique patient");
@@ -101,7 +112,9 @@ public class VueHistoriquePatient extends JFrame implements Observer {
         btCancelEnCours.setBackground(new java.awt.Color(255, 0, 0));
         btCancelEnCours.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btCancelEnCours.setForeground(new java.awt.Color(255, 255, 255));
-        btCancelEnCours.setText("DELETE");
+        btCancelEnCours.setText("ANNULER");
+
+        btCloture2.setText("Clôturer");
 
         javax.swing.GroupLayout paneRdvEnCoursLayout = new javax.swing.GroupLayout(paneRdvEnCours);
         paneRdvEnCours.setLayout(paneRdvEnCoursLayout);
@@ -110,13 +123,18 @@ public class VueHistoriquePatient extends JFrame implements Observer {
             .addGroup(paneRdvEnCoursLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(paneRdvEnCoursLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollTableEnCours, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                    .addComponent(scrollTableEnCours, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
                     .addGroup(paneRdvEnCoursLayout.createSequentialGroup()
                         .addComponent(btModifEnCours, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btCancelEnCours, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(paneRdvEnCoursLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneRdvEnCoursLayout.createSequentialGroup()
+                    .addContainerGap(516, Short.MAX_VALUE)
+                    .addComponent(btCloture2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
         paneRdvEnCoursLayout.setVerticalGroup(
             paneRdvEnCoursLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,28 +145,33 @@ public class VueHistoriquePatient extends JFrame implements Observer {
                 .addGroup(paneRdvEnCoursLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btModifEnCours, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                     .addComponent(btCancelEnCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
+            .addGroup(paneRdvEnCoursLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneRdvEnCoursLayout.createSequentialGroup()
+                    .addContainerGap(289, Short.MAX_VALUE)
+                    .addComponent(btCloture2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         paneGeneral.addTab("Rendez-vous actuels", paneRdvEnCours);
 
         tableRdvAncien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Médecin", "Spécialisation", "Date", "Heure"
+                "ID", "Médecin", "Spécialisation", "Date", "Heure", "Statut"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -167,7 +190,15 @@ public class VueHistoriquePatient extends JFrame implements Observer {
             tableRdvAncien.getColumnModel().getColumn(2).setResizable(false);
             tableRdvAncien.getColumnModel().getColumn(3).setResizable(false);
             tableRdvAncien.getColumnModel().getColumn(4).setResizable(false);
+            tableRdvAncien.getColumnModel().getColumn(5).setResizable(false);
         }
+
+        btCloture1.setText("Clôturer");
+        btCloture1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCloture1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout paneRdvPassesLayout = new javax.swing.GroupLayout(paneRdvPasses);
         paneRdvPasses.setLayout(paneRdvPassesLayout);
@@ -175,15 +206,21 @@ public class VueHistoriquePatient extends JFrame implements Observer {
             paneRdvPassesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneRdvPassesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollTableEnCours1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                .addGroup(paneRdvPassesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollTableEnCours1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneRdvPassesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btCloture1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         paneRdvPassesLayout.setVerticalGroup(
             paneRdvPassesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneRdvPassesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollTableEnCours1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(scrollTableEnCours1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCloture1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         paneGeneral.addTab("Rendez-vous anciens", paneRdvPasses);
@@ -256,6 +293,13 @@ public class VueHistoriquePatient extends JFrame implements Observer {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
+        btCloture.setText("Clôturer");
+        btCloture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btClotureActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout paneRdvNouveauLayout = new javax.swing.GroupLayout(paneRdvNouveau);
         paneRdvNouveau.setLayout(paneRdvNouveauLayout);
         paneRdvNouveauLayout.setHorizontalGroup(
@@ -270,7 +314,9 @@ public class VueHistoriquePatient extends JFrame implements Observer {
                         .addGroup(paneRdvNouveauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btAddRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btCancelRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(btCloture, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         paneRdvNouveauLayout.setVerticalGroup(
             paneRdvNouveauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,7 +331,10 @@ public class VueHistoriquePatient extends JFrame implements Observer {
                         .addComponent(btCancelRdv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(paneRdvNouveauLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 16, Short.MAX_VALUE)))
+                        .addGap(0, 17, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneRdvNouveauLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btCloture, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -297,8 +346,8 @@ public class VueHistoriquePatient extends JFrame implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(paneGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(paneGeneral)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,17 +360,25 @@ public class VueHistoriquePatient extends JFrame implements Observer {
         pack();
     }//GEN-END:initComponents
 
-    private void btModifEnCoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModifEnCoursActionPerformed
-        
-    }//GEN-LAST:event_btModifEnCoursActionPerformed
-
-    private void btAddRdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddRdvActionPerformed
-        
-    }//GEN-LAST:event_btAddRdvActionPerformed
+    private void btClotureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btClotureActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btClotureActionPerformed
 
     private void btCancelRdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelRdvActionPerformed
         viderChamps();
     }//GEN-LAST:event_btCancelRdvActionPerformed
+
+    private void btAddRdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddRdvActionPerformed
+
+    }//GEN-LAST:event_btAddRdvActionPerformed
+
+    private void btModifEnCoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModifEnCoursActionPerformed
+
+    }//GEN-LAST:event_btModifEnCoursActionPerformed
+
+    private void btCloture1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloture1ActionPerformed
+        ctrl.showVuePrincipale();
+    }//GEN-LAST:event_btCloture1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,6 +420,9 @@ public class VueHistoriquePatient extends JFrame implements Observer {
     private javax.swing.JButton btAddRdv;
     private javax.swing.JButton btCancelEnCours;
     private javax.swing.JButton btCancelRdv;
+    private javax.swing.JButton btCloture;
+    private javax.swing.JButton btCloture1;
+    private javax.swing.JButton btCloture2;
     private javax.swing.JButton btModifEnCours;
     private javax.swing.JComboBox cbMedecin;
     private javax.swing.JComboBox cbSpecialisation;
@@ -404,11 +464,23 @@ public class VueHistoriquePatient extends JFrame implements Observer {
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ((DefaultTableModel)tableRdvAncien.getModel()).fireTableDataChanged();
+        ((DefaultTableModel)tableRdvEnCours.getModel()).fireTableDataChanged();
     }
 
     public void showView(Patient patient) {
+        this.patient = patient;
+        listRdvActuels = new ArrayList<>();
+        listRdvAnciens = new ArrayList<>();
+        JOptionPane.showMessageDialog(null, "L'ID du patient est: " + patient.getId());
+        for (Rdv rdv : patient.getRdv()) {
+            if (rdv.getStatut() == StatutRdv.EN_COURS) listRdvActuels.add(rdv);
+            else listRdvAnciens.add(rdv);
+        }
+        ((DefaultTableModel)tableRdvAncien.getModel()).fireTableDataChanged();
+        ((DefaultTableModel)tableRdvEnCours.getModel()).fireTableDataChanged();
         
+        setVisible(true);
     }
     
     private class ModeleRdvEnCours extends DefaultTableModel {

@@ -3,7 +3,7 @@ package cabmed.model;
 public enum Mutualite {
     PARTENAMUT(1,"Partenamut"),
     MUTUALITE_CHRETIENNE(2,"Mutualite Chretienne"),
-    SANS_MUT(3,"Sans Mutuelle"),
+    SANS_MUTUELLE(3,"Sans Mutuelle"),
     AUTRE(4,"Autre");
 
     Mutualite() {
@@ -22,5 +22,12 @@ public enum Mutualite {
     public void setId(int id) { this.id = id; }
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
+
+    @Override
+    public String toString() {
+        return nom;
+    }
+    
+    
     
 }

@@ -72,12 +72,20 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
     }
     
     // Medecin
-    
-
     @Override
     public boolean saveMedecin(Medecin medecin) {
-        // TODO
         return DAOMySQL.getInstance().saveMedecin(medecin);
+    }
+    
+    // Patient
+    @Override
+    public boolean savePatient(Patient patient) {
+        return DAOMySQL.getInstance().savePatient(patient);
+    }
+
+    @Override
+    public Patient getPatientByRegistreNat(String registreNat) {
+        return DAOMySQL.getInstance().getPatientByRegistreNat(registreNat);
     }
 
     
@@ -116,14 +124,4 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public boolean savePatient(Patient patient) {
-        return DAOMySQL.getInstance().savePatient(patient);
-    }
-
-    @Override
-    public Patient getPatientByRegistreNat(String registreNat) {
-        return DAOMySQL.getInstance().getPatientByRegistreNat(registreNat);
-    }
-    
 }
