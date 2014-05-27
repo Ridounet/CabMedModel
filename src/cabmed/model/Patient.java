@@ -15,8 +15,7 @@ public class Patient extends Personne implements Serializable {
     @Column(nullable = true, unique = true)
     private String numSecuSocial;
 
-    @OneToMany
-    @ElementCollection(fetch = FetchType.LAZY)
+    @Transient
     private List<Rdv> rdv;
     
     private String remarques;
@@ -29,7 +28,7 @@ public class Patient extends Personne implements Serializable {
         this.numSecuSocial = numSecuSocial;
     }
     
-    public Patient() { }
+    public Patient() {}
     
     // Override "Object"
     @Override

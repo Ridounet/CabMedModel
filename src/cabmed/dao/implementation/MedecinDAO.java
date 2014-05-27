@@ -1,5 +1,6 @@
-package cabmed.dao;
+package cabmed.dao.implementation;
 
+import cabmed.dao.IMedecinDAO;
 import cabmed.model.Disponibilite;
 import cabmed.model.Jour;
 import cabmed.model.Medecin;

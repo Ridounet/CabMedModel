@@ -1,5 +1,6 @@
-package cabmed.dao;
+package cabmed.dao.implementation;
 
+import cabmed.dao.IPersonnelDAO;
 import cabmed.model.Infirmiere;
 import cabmed.model.Personnel;
 import cabmed.model.Secretaire;

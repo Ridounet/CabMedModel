@@ -1,5 +1,11 @@
-package cabmed.dao;
+package cabmed.dao.implementation;
 
+import cabmed.dao.ICpDAO;
+import cabmed.dao.IMedecinDAO;
+import cabmed.dao.IPatientDAO;
+import cabmed.dao.IPersonnelDAO;
+import cabmed.dao.IPlanningDAO;
+import cabmed.dao.ISpecialisationDAO;
 import cabmed.model.Administrateur;
 import cabmed.model.Adresse;
 import cabmed.model.Cp;
@@ -225,6 +231,16 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     @Override
     public Patient getPatientByRegistreNat(String registreNat) {
         return patientDAO.getPatientByRegistreNat(registreNat);
+    }
+    
+    @Override
+    public List<Rdv> getRdvPatient(Patient patient) {
+        return patientDAO.getRdvPatient(patient);
+    }
+    
+    @Override
+    public boolean updateRdv(Rdv rdv) {
+        return patientDAO.updateRdv(rdv);
     }
     
     

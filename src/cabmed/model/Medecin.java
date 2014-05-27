@@ -13,8 +13,7 @@ public class Medecin extends Personnel {
     @JoinTable(name = "medecin_specialisation", joinColumns = @JoinColumn(name = "medecin_id", unique = false), inverseJoinColumns = @JoinColumn(unique = false, name = "specialisation_id"))
     private List<Specialisation> specialisation = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @ElementCollection(fetch = FetchType.LAZY)
+    @Transient
     private List<Rdv> rdv = new ArrayList<>();
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -46,5 +45,12 @@ public class Medecin extends Personnel {
         this.specialisation.add(specialisation);
         specialisation.addMedecin(this);
     }
+
+    @Override
+    public String toString() {
+        return getNom() + " " + getPrenom();
+    }
+    
+    
     
 }

@@ -69,7 +69,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btModifEnCours" min="-2" pref="114" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btCancelEnCours" min="-2" pref="114" max="-2" attributes="0"/>
+                              <Component id="btCancel" min="-2" pref="114" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -77,8 +77,8 @@
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="516" max="32767" attributes="0"/>
-                          <Component id="btCloture2" min="-2" pref="131" max="-2" attributes="0"/>
+                          <EmptySpace pref="520" max="32767" attributes="0"/>
+                          <Component id="btClotureActuel" min="-2" pref="127" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -92,14 +92,14 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btModifEnCours" pref="54" max="32767" attributes="0"/>
-                          <Component id="btCancelEnCours" max="32767" attributes="0"/>
+                          <Component id="btCancel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="67" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="289" max="32767" attributes="0"/>
-                          <Component id="btCloture2" min="-2" pref="52" max="-2" attributes="0"/>
+                          <EmptySpace pref="282" max="32767" attributes="0"/>
+                          <Component id="btClotureActuel" min="-2" pref="59" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -116,43 +116,11 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="tableRdvEnCours">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="5">
-                        <Column editable="false" title="ID" type="java.lang.Integer"/>
-                        <Column editable="false" title="M&#xe9;decin" type="java.lang.String"/>
-                        <Column editable="false" title="Sp&#xe9;cialisation" type="java.lang.String"/>
-                        <Column editable="false" title="Date" type="java.lang.String"/>
-                        <Column editable="false" title="Heure" type="java.lang.String"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new ModeleRdvEnCours()" type="code"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                      <TableColumnModel selectionModel="0">
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                      </TableColumnModel>
+                      <TableColumnModel selectionModel="0"/>
                     </Property>
                     <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
                       <JTableSelectionModel selectionMode="0"/>
@@ -172,7 +140,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btModifEnCoursActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btCancelEnCours">
+            <Component class="javax.swing.JButton" name="btCancel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -185,11 +153,17 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ANNULER"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btCloture2">
+            <Component class="javax.swing.JButton" name="btClotureActuel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cl&#xf4;turer"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btClotureActuelActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -208,10 +182,10 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="scrollTableEnCours1" alignment="1" pref="637" max="32767" attributes="0"/>
+                          <Component id="scrollTableEnCours1" pref="637" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btCloture1" min="-2" pref="127" max="-2" attributes="0"/>
+                              <Component id="btClotureAncien" min="-2" pref="127" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -223,9 +197,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="scrollTableEnCours1" min="-2" pref="265" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btCloture1" min="-2" pref="59" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btClotureAncien" min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -240,49 +214,11 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="tableRdvAncien">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="5">
-                        <Column editable="false" title="ID" type="java.lang.Integer"/>
-                        <Column editable="false" title="M&#xe9;decin" type="java.lang.String"/>
-                        <Column editable="false" title="Sp&#xe9;cialisation" type="java.lang.String"/>
-                        <Column editable="false" title="Date" type="java.lang.String"/>
-                        <Column editable="false" title="Heure" type="java.lang.String"/>
-                        <Column editable="false" title="Statut" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new ModeleRdvAncien()" type="code"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                      <TableColumnModel selectionModel="0">
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                      </TableColumnModel>
+                      <TableColumnModel selectionModel="0"/>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
@@ -291,12 +227,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btCloture1">
+            <Component class="javax.swing.JButton" name="btClotureAncien">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cl&#xf4;turer"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCloture1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btClotureAncienActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -322,12 +258,12 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btAddRdv" min="-2" pref="143" max="-2" attributes="0"/>
-                                  <Component id="btCancelRdv" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="btEffaceChamps" min="-2" pref="143" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
-                      <Component id="btCloture" min="-2" pref="127" max="-2" attributes="0"/>
+                      <Component id="btClotureNouveau" min="-2" pref="127" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -342,7 +278,7 @@
                           <Group type="102" attributes="0">
                               <Component id="btAddRdv" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btCancelRdv" max="32767" attributes="0"/>
+                              <Component id="btEffaceChamps" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -350,7 +286,7 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btCloture" min="-2" pref="59" max="-2" attributes="0"/>
+                              <Component id="btClotureNouveau" min="-2" pref="59" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -378,7 +314,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAddRdvActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btCancelRdv">
+            <Component class="javax.swing.JButton" name="btEffaceChamps">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Annuler"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -386,7 +322,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelRdvActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEffaceChampsActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel1">
@@ -453,6 +389,9 @@
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbMedecinItemStateChanged"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbSpecialisation">
                   <Properties>
@@ -465,6 +404,9 @@
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbSpecialisationItemStateChanged"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbDate">
                   <Properties>
@@ -472,6 +414,12 @@
                   </Properties>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="dpDate">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="dpDateInputMethodTextChanged"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbHeure">
                   <Properties>
@@ -487,12 +435,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btCloture">
+            <Component class="javax.swing.JButton" name="btClotureNouveau">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cl&#xf4;turer"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btClotureActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btClotureNouveauActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

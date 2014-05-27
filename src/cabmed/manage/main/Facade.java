@@ -1,5 +1,6 @@
 package cabmed.manage.main;
 
+import cabmed.dao.implementation.DAOMySQL;
 import cabmed.manage.ctrl.CtrlPrincipal;
 import cabmed.ressources.Observer;
 import java.util.List;
@@ -10,6 +11,7 @@ import cabmed.model.Infirmiere;
 import cabmed.model.Medecin;
 import cabmed.model.Patient;
 import cabmed.model.Personnel;
+import cabmed.model.Rdv;
 import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
 import java.util.ArrayList;
@@ -88,7 +90,20 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         return DAOMySQL.getInstance().getPatientByRegistreNat(registreNat);
     }
 
+    @Override
+    public List<Rdv> getRdvPatient(Patient patient) {
+        return DAOMySQL.getInstance().getRdvPatient(patient);
+    }
     
+    @Override
+    public boolean updateRdv(Rdv rdv) {
+        if (DAOMySQL.getInstance().updateRdv(rdv)) {
+            notifyObservers();
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
     

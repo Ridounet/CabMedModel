@@ -274,12 +274,14 @@ public class VueRecherchePatient extends JFrame implements Observer {
     }//GEN-LAST:event_btCancelActionPerformed
 
     private void btRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRechercherActionPerformed
-        patient = ctrl.getPatientByRegistreNat(ztNumNational.getText());
+        String s = ztNumNational.getText();
+        viderChamps();
+        ztNumNational.setText(s);
+        patient = ctrl.getPatientByRegistreNat(s);
         if (patient == null) { // Si patient n'existe pas, message d'erreur
             patient = new Patient();
             JOptionPane.showMessageDialog(this, "Aucun patient n'existe avec ce numéro de registre national.");
         } else { // Si patient existe, on remplit tous les champs.
-            System.out.println(patient.getMutualite().getNom());
             ztNom.setText(patient.getNom());
             ztPrenom.setText(patient.getPrenom());
             ztAdresse.setText(patient.getAdresse().getAdresse());
@@ -290,7 +292,6 @@ public class VueRecherchePatient extends JFrame implements Observer {
             ztEmail.setText(patient.getEmail());
             ztNumSecuSocial.setText(patient.getNumSecuSocial());
             ztTel.setText(patient.getTel());
-            System.out.println(patient.getMutualite().getNom());
         }
     }//GEN-LAST:event_btRechercherActionPerformed
 

@@ -1,14 +1,31 @@
 package cabmed.manage.ihm.secretaire;
 
+import cabmed.manage.ctrl.CtrlSecretaire;
+import cabmed.model.Medecin;
+import cabmed.model.Rdv;
+import cabmed.model.Specialisation;
 import cabmed.model.Tranche;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class VueModifRdv extends javax.swing.JFrame {
-
+    
+    private CtrlSecretaire ctrl;
+    private Rdv rdv;
+    private List<Medecin> listMedecin;
+    private List<Specialisation> listSpecialisation;
+    
     public VueModifRdv() {
         initComponents();
         initChamps();
         
+    }
+
+    public VueModifRdv(CtrlSecretaire ctrl) {
+        this.ctrl = ctrl;
+        initComponents();
+        initChamps();
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +51,9 @@ public class VueModifRdv extends javax.swing.JFrame {
         jLabel3.setText("Date:");
 
         jLabel5.setText("Heure:");
+
+        dpDate.setDateFormatString("dd-MM-yyyy");
+        dpDate.setMinSelectableDate(new Date());
 
         btSave.setText("Sauver");
         btSave.addActionListener(new java.awt.event.ActionListener() {
@@ -103,9 +123,24 @@ public class VueModifRdv extends javax.swing.JFrame {
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         if (validationChamps()) {
-            JOptionPane.showMessageDialog(this, "Champs ok");
+            int option = JOptionPane.showConfirmDialog(this,
+                    "Enregistrer ce rendez-vous?\n"
+                            + "Médecin: " + ((Medecin)cbMedecin.getSelectedItem()).getNom() + "\n"
+                            + "Spécialisation: " + ((Specialisation)cbSpecialisation.getSelectedItem()).getLabel() + "\n"
+                            + "Date: " + ctrl.getSdf().format(dpDate.getDate()) + "\n"
+                            + "Heure: " + cbTranche.getSelectedItem(),
+                    "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (option == 0) {
+                rdv.setDateRdv(dpDate.getDate());
+                rdv.setHeure((Tranche)cbTranche.getSelectedItem());
+                rdv.setMedecin((Medecin)cbMedecin.getSelectedItem());
+                rdv.setTypeRdv((Specialisation)cbSpecialisation.getSelectedItem());
+                if (ctrl.updateRdv(rdv)) {
+                    setVisible(false);
+                }
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Champs pas ok");
+            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs");
         }
     }//GEN-LAST:event_btSaveActionPerformed
 
@@ -162,28 +197,38 @@ public class VueModifRdv extends javax.swing.JFrame {
     private boolean validationChamps() {
         if (cbMedecin.getSelectedIndex() == 0 ||
                 cbTranche.getSelectedIndex() == 0 ||
-                dpDate.getDate() == null) {
+                cbSpecialisation.getSelectedIndex() == 0 ||
+                dpDate.getDate() == null)
             return false;
-        } else {
-            return true;
-        }
+        else return true;
     }
 
     private void initChamps() {
+        listMedecin = ctrl.getListMedecin();
         cbMedecin.addItem("");
-        cbMedecin.addItem("Medecin 1");
-        cbMedecin.addItem("Medecin 2");
-        cbMedecin.addItem("Medecin 3");
+        for (Medecin m : listMedecin) {
+            cbMedecin.addItem(m);
+        }
         
+        listSpecialisation = ctrl.getListSpecialisation();
         cbSpecialisation.addItem("");
-        cbSpecialisation.addItem("Généraliste");
-        cbSpecialisation.addItem("Obstétricien");
-        cbSpecialisation.addItem("Gynécologue");
+        for (Specialisation s : listSpecialisation) {
+            cbSpecialisation.addItem(s);
+        }
         
         cbTranche.addItem("");
         for (Tranche t : Tranche.values()) {
             cbTranche.addItem(t);
         }
+    }
+
+    public void showView(Rdv rdvRecu) {
+        this.rdv = rdvRecu;
+        cbMedecin.setSelectedItem(rdv.getMedecin());
+        cbSpecialisation.setSelectedItem(rdv.getTypeRdv());
+        cbTranche.setSelectedItem(rdv.getHeure());
+        dpDate.setDate(rdv.getDateRdv());
+        setVisible(true);
     }
     
 }

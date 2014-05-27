@@ -1,5 +1,6 @@
-package cabmed.dao;
+package cabmed.dao.implementation;
 
+import cabmed.dao.ISpecialisationDAO;
 import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.LinkedList;
@@ -25,6 +26,7 @@ public class SpecialisationDAO implements ISpecialisationDAO{
         tx.begin();
         specialisation.setVisible(false);
         try {
+            DAOMySQL.getEntityManager().persist(specialisation);
             tx.commit();
             return true;
         } catch (Exception e) {

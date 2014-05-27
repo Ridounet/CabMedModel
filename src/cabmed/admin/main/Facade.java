@@ -1,5 +1,6 @@
 package cabmed.admin.main;
 
+import cabmed.dao.implementation.DAOMySQL;
 import cabmed.admin.ctrl.CtrlPrincipal;
 import cabmed.ressources.Observer;
 import java.util.List;

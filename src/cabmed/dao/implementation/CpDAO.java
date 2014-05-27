@@ -1,5 +1,6 @@
-package cabmed.dao;
+package cabmed.dao.implementation;
 
+import cabmed.dao.ICpDAO;
 import cabmed.model.Cp;
 import java.util.ArrayList;
 import java.util.List;
