@@ -33,7 +33,7 @@ public class Patient extends Personne implements Serializable {
     // Override "Object"
     @Override
     public String toString() {
-        return getPrenom() + " " + getNom() + " (patient)";
+        return getNom() + " " + getPrenom();
     }
     
     // Getters & Setters

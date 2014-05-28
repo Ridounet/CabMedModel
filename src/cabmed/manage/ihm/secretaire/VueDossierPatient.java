@@ -1,7 +1,6 @@
 package cabmed.manage.ihm.secretaire;
 
 import cabmed.manage.ctrl.CtrlSecretaire;
-import cabmed.model.Horaire;
 import cabmed.model.Medecin;
 import cabmed.model.Patient;
 import cabmed.model.Rdv;
@@ -18,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class VueHistoriquePatient extends JFrame implements Observer {
+public class VueDossierPatient extends JFrame implements Observer {
 
     private CtrlSecretaire ctrl;
     private Patient patient;
@@ -34,15 +33,8 @@ public class VueHistoriquePatient extends JFrame implements Observer {
     private static final int DATE = 3;
     private static final int HEURE = 4;
     private static final int STATUT = 5;
-    
-    public VueHistoriquePatient() {
-        listRdvActuels = new ArrayList<>();
-        listRdvAnciens = new ArrayList<>();
-        initComponents();
-        initAttributes();
-    }
 
-    public VueHistoriquePatient(CtrlSecretaire ctrlSecretaire) {
+    public VueDossierPatient(CtrlSecretaire ctrlSecretaire) {
         this.ctrl = ctrlSecretaire;
         listRdvActuels = new ArrayList<>();
         listRdvAnciens = new ArrayList<>();
@@ -396,7 +388,7 @@ public class VueHistoriquePatient extends JFrame implements Observer {
             JOptionPane.showMessageDialog(this, "Veuillez choisir un et un seul rendez-vous!", "Erreur!", JOptionPane.WARNING_MESSAGE);
         } else {
             Rdv rdv = (Rdv) listRdvActuels.get(tableRdvEnCours.getSelectedRow());
-            ctrl.showModifRdv(rdv);
+            ctrl.showVueModifRdv(rdv);
         }
     }//GEN-LAST:event_btModifEnCoursActionPerformed
 
@@ -478,52 +470,11 @@ public class VueHistoriquePatient extends JFrame implements Observer {
         }
     }//GEN-LAST:event_dpDateInputMethodTextChanged
 
-    
-    
-    
-    
-    
     private void cloturer() {
         setVisible(false);
         ctrl.showVuePrincipale();
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueHistoriquePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueHistoriquePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueHistoriquePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueHistoriquePatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new VueHistoriquePatient().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddRdv;
     private javax.swing.JButton btCancel;

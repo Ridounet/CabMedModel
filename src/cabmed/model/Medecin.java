@@ -11,10 +11,10 @@ public class Medecin extends Personnel {
     // Attributs
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
     @JoinTable(name = "medecin_specialisation", joinColumns = @JoinColumn(name = "medecin_id", unique = false), inverseJoinColumns = @JoinColumn(unique = false, name = "specialisation_id"))
-    private List<Specialisation> specialisation = new ArrayList<>();
+    private List<Specialisation> specialisation = new ArrayList<Specialisation>();
     
     @Transient
-    private List<Rdv> rdv = new ArrayList<>();
+    private List<Rdv> rdv = new ArrayList<Rdv>();
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Planning planning;

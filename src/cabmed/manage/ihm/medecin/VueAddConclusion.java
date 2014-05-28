@@ -1,8 +1,31 @@
 package cabmed.manage.ihm.medecin;
 
+import cabmed.manage.ctrl.CtrlMedecin;
+import cabmed.model.Prescription;
+import cabmed.model.Rdv;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class VueAddConclusion extends javax.swing.JFrame {
 
+    private CtrlMedecin ctrl;
+    private Rdv rdv;
+    private List<Prescription> listPrescription;
+    
+    private static final int MEDICAMENT = 0;
+    private static final int DUREE = 1;
+    private static final int POSOLOGIE = 2;
+    
     public VueAddConclusion() {
+        initComponents();
+    }
+
+    public VueAddConclusion(CtrlMedecin ctrlMedecin) {
+        this.ctrl = ctrlMedecin;
+        rdv = new Rdv();
+        listPrescription = new ArrayList<>();
         initComponents();
     }
 
@@ -34,52 +57,21 @@ public class VueAddConclusion extends javax.swing.JFrame {
 
         ztRecommandation.setColumns(20);
         ztRecommandation.setRows(5);
-        ztRecommandation.setText("M. est revenu pour des maux de ventre.\nIl a encore eu une indigestion.\nJe lui prescris de quoi l'apaiser.");
         jScrollPane1.setViewportView(ztRecommandation);
 
         jLabel2.setText("Prescription & posologie:");
 
-        tablePrescription.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Médicament", "Durée (en jour)", "Posologie (par jour)"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tablePrescription.setModel(new ModeleJTable());
         tablePrescription.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablePrescription);
-        if (tablePrescription.getColumnModel().getColumnCount() > 0) {
-            tablePrescription.getColumnModel().getColumn(0).setResizable(false);
-            tablePrescription.getColumnModel().getColumn(1).setResizable(false);
-            tablePrescription.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         paneAddPrescription.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajouter une prescription"));
 
         jLabel3.setText("Médicament:");
 
-        ztMedicament.setText("Médicament pour les maux de ventre");
-
         jLabel4.setText("Durée (en jour):");
 
-        ztDuree.setText("2");
-
         jLabel5.setText("Posologie (par jour):");
-
-        ztPosologie.setText("1x le matin, 1x le soir");
 
         btAddPrescription.setText("Ajouter");
         btAddPrescription.addActionListener(new java.awt.event.ActionListener() {
@@ -182,49 +174,34 @@ public class VueAddConclusion extends javax.swing.JFrame {
     }//GEN-END:initComponents
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
-        // TODO add your handling code here:
+        rdv.setRemarque(ztRecommandation.getText());
+        rdv.setPrescriptions(listPrescription);
+        ctrl.saveRdv(rdv);
     }//GEN-LAST:event_btCloseActionPerformed
 
     private void btClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btClearActionPerformed
-        // TODO add your handling code here:
+        viderChamps();
     }//GEN-LAST:event_btClearActionPerformed
 
     private void btAddPrescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddPrescriptionActionPerformed
-        // TODO add your handling code here:
+        if (ztMedicament.getText().equals("") ||
+                ztDuree.getText().equals("") ||
+                ztPosologie.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs pour une préscriptions!");
+        } else {
+            Prescription pres = new Prescription(ztMedicament.getText(), ztPosologie.getText(), Integer.parseInt(ztDuree.getText()));
+            listPrescription.add(pres);
+            ((DefaultTableModel)tablePrescription.getModel()).fireTableDataChanged();
+            viderChamps();
+        }
     }//GEN-LAST:event_btAddPrescriptionActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueAddConclusion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueAddConclusion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueAddConclusion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueAddConclusion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VueAddConclusion().setVisible(true);
-            }
-        });
+    private void viderChamps() {
+        ztMedicament.setText("");
+        ztDuree.setText("");
+        ztPosologie.setText("");
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddPrescription;
     private javax.swing.JButton btClear;
@@ -243,4 +220,40 @@ public class VueAddConclusion extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField ztPosologie;
     private javax.swing.JTextArea ztRecommandation;
     // End of variables declaration//GEN-END:variables
+
+    public void showView(Rdv rendezVous) {
+        this.rdv = rendezVous;
+        listPrescription = new ArrayList<>();
+        rdv.setPrescriptions(listPrescription);
+        setVisible(true);
+    }
+    
+    public class ModeleJTable extends DefaultTableModel {
+        @Override
+        public boolean isCellEditable(int row, int column) { return false; }
+        @Override
+        public int getColumnCount() { return 3; }
+        @Override
+        public int getRowCount() { return listPrescription.size(); }
+
+        @Override
+        public String getColumnName(int column) {
+            switch(column) {
+                case MEDICAMENT : return "Médicament";
+                case DUREE : return "Durée (en jour)";
+                case POSOLOGIE : return "Posologie (par jour)";
+                default : return "NO DATA";
+            }
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            switch(column) {
+                case MEDICAMENT : return rdv.getPrescriptions().get(row).getMedicament();
+                case DUREE : return rdv.getPrescriptions().get(row).getDuree();
+                case POSOLOGIE : return rdv.getPrescriptions().get(row).getPosologie();
+                default: return "NO DATA";
+            }
+        }
+    }
 }

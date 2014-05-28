@@ -19,7 +19,7 @@ public class Specialisation implements Serializable {
     private String label;
     
     @ManyToMany(mappedBy = "specialisation")
-    private List<Medecin> medecin = new ArrayList<>();
+    private List<Medecin> medecin = new ArrayList<Medecin>();
     
     private boolean visible = true;
 

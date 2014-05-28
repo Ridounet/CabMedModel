@@ -162,5 +162,10 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         }
     }
 
+    @Override
+    public void getRdvMedecin(List<Medecin> listMedecin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

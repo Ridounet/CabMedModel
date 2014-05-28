@@ -16,7 +16,7 @@ import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
 import java.util.ArrayList;
 
-public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, ICpDAO, IPatientDAO {
+public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, ICpDAO, IPatientDAO, IRdvDAO {
     
     private final CtrlPrincipal ctrl;
     
@@ -103,6 +103,16 @@ public class Facade implements IPersonnelDAO, IMedecinDAO, ISpecialisationDAO, I
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public Rdv getRdvParId(int idRdv) {
+        return DAOMySQL.getInstance().getRdvParId(idRdv);
+    }
+    
+    @Override
+    public void getRdvMedecin(List<Medecin> listMedecin) {
+        DAOMySQL.getInstance().getRdvMedecin(listMedecin);
     }
     
     

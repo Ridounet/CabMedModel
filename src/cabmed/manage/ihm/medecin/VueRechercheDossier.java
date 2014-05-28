@@ -3,17 +3,19 @@ package cabmed.manage.ihm.medecin;
 import cabmed.manage.ctrl.CtrlMedecin;
 import cabmed.ressources.Observer;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class VueRechercheDossier extends JFrame implements Observer {
 
+    private CtrlMedecin ctrl;
+    
     public VueRechercheDossier() {
         initComponents();
         
-        lbErreur.setVisible(false);
-        
     }
 
-    public VueRechercheDossier(CtrlMedecin me) {
+    public VueRechercheDossier(CtrlMedecin ctrlMedecin) {
+        this.ctrl = ctrlMedecin;
         initComponents();
     }
 
@@ -23,7 +25,6 @@ public class VueRechercheDossier extends JFrame implements Observer {
         paneRecherche = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btSearch = new javax.swing.JButton();
-        lbErreur = new javax.swing.JLabel();
         ztRdv = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -40,9 +41,7 @@ public class VueRechercheDossier extends JFrame implements Observer {
             }
         });
 
-        lbErreur.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbErreur.setForeground(new java.awt.Color(255, 0, 51));
-        lbErreur.setText("Aucun résultat !");
+        ztRdv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         javax.swing.GroupLayout paneRechercheLayout = new javax.swing.GroupLayout(paneRecherche);
         paneRecherche.setLayout(paneRechercheLayout);
@@ -54,9 +53,7 @@ public class VueRechercheDossier extends JFrame implements Observer {
                     .addComponent(btSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(paneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbErreur)
-                    .addComponent(ztRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(ztRdv, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         paneRechercheLayout.setVerticalGroup(
@@ -67,10 +64,8 @@ public class VueRechercheDossier extends JFrame implements Observer {
                     .addComponent(jLabel1)
                     .addComponent(ztRdv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(paneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSearch)
-                    .addComponent(lbErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btSearch)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,10 +89,11 @@ public class VueRechercheDossier extends JFrame implements Observer {
     }//GEN-END:initComponents
 
     private void btSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchActionPerformed
-        if (lbErreur.isVisible()) {
-            lbErreur.setVisible(false);
+        String idRdv = ztRdv.getText();
+        if (idRdv.equals("")) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir le champ rendez-vous.", "Erreur", JOptionPane.WARNING_MESSAGE);
         } else {
-            lbErreur.setVisible(true);
+            ctrl.getRdvParId(Integer.parseInt(idRdv));
         }
     }//GEN-LAST:event_btSearchActionPerformed
 
@@ -127,6 +123,7 @@ public class VueRechercheDossier extends JFrame implements Observer {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new VueRechercheDossier().setVisible(true);
             }
@@ -136,7 +133,6 @@ public class VueRechercheDossier extends JFrame implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSearch;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lbErreur;
     private javax.swing.JPanel paneRecherche;
     private javax.swing.JFormattedTextField ztRdv;
     // End of variables declaration//GEN-END:variables
@@ -144,5 +140,10 @@ public class VueRechercheDossier extends JFrame implements Observer {
     @Override
     public void update() {
         
+    }
+
+    public void showView() {
+        ztRdv.setText("");
+        setVisible(true);
     }
 }

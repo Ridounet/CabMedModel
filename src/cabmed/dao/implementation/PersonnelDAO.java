@@ -87,7 +87,7 @@ public class PersonnelDAO implements IPersonnelDAO {
             return DAOMySQL.getEntityManager().createQuery(
                     "SELECT s FROM Secretaire s WHERE s.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return new ArrayList<>();
+            return new ArrayList<Secretaire>();
         }
     }
 
@@ -97,7 +97,7 @@ public class PersonnelDAO implements IPersonnelDAO {
             return DAOMySQL.getEntityManager().createQuery(
                     "SELECT i FROM Infirmiere i WHERE i.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return new ArrayList<>();
+            return new ArrayList<Infirmiere>();
         }
     }
 

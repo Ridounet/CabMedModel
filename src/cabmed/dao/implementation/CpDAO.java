@@ -12,7 +12,7 @@ public class CpDAO implements ICpDAO{
         try {
             return DAOMySQL.getEntityManager().createQuery("SELECT c FROM Cp c").getResultList();
         } catch(Exception e) {
-            return new ArrayList<>();
+            return new ArrayList<Cp>();
         }
     }
     

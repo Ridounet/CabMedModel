@@ -1,8 +1,23 @@
 package cabmed.manage.ihm.medecin;
 
-public class VueDetailsRdv extends javax.swing.JFrame {
+import cabmed.manage.ctrl.CtrlMedecin;
+import cabmed.model.Rdv;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
-    public VueDetailsRdv() {
+public class VueDetailsRdv extends javax.swing.JFrame implements cabmed.ressources.Observer {
+
+    private final CtrlMedecin ctrl;
+    private Rdv rdv;
+    
+    private static final int MEDICAMENT = 0;
+    private static final int DUREE = 1;
+    private static final int POSOLOGIE = 2;
+    
+    public VueDetailsRdv(CtrlMedecin ctrlMedecin) {
+        this.ctrl = ctrlMedecin;
+        rdv = new Rdv();
+        rdv.setPrescriptions(new ArrayList<>());
         initComponents();
     }
 
@@ -24,8 +39,8 @@ public class VueDetailsRdv extends javax.swing.JFrame {
         ztRecommandation = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Détails d'un rendez-vous");
+        setResizable(false);
 
         btClose.setText("Fermer");
         btClose.addActionListener(new java.awt.event.ActionListener() {
@@ -84,33 +99,9 @@ public class VueDetailsRdv extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tablePrescription.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Médicament", "Durée (en jour)", "Posologie (par jour)"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tablePrescription.setModel(new ModeleJTable());
         tablePrescription.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablePrescription);
-        if (tablePrescription.getColumnModel().getColumnCount() > 0) {
-            tablePrescription.getColumnModel().getColumn(0).setResizable(false);
-            tablePrescription.getColumnModel().getColumn(1).setResizable(false);
-            tablePrescription.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         jLabel2.setText("Prescription & Posologie:");
 
@@ -161,40 +152,8 @@ public class VueDetailsRdv extends javax.swing.JFrame {
     }//GEN-END:initComponents
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
     }//GEN-LAST:event_btCloseActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueDetailsRdv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueDetailsRdv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueDetailsRdv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueDetailsRdv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VueDetailsRdv().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
@@ -212,4 +171,52 @@ public class VueDetailsRdv extends javax.swing.JFrame {
     private javax.swing.JTextArea ztRecommandation;
     private javax.swing.JFormattedTextField ztSpecialisation;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update() {
+        ((DefaultTableModel)tablePrescription.getModel()).fireTableDataChanged();
+    }
+
+    public void showView(Rdv rendezVous) {
+        this.rdv = rendezVous;
+        if (rdv.getPrescriptions() == null) rdv.setPrescriptions(new ArrayList<>());
+        ztRecommandation.setText(rendezVous.getRemarque());
+        ztMedecin.setText(rendezVous.getMedecin().toString());
+        ztDate.setText(ctrl.getSdf().format(rendezVous.getDateRdv()));
+        ztSpecialisation.setText(rendezVous.getTypeRdv().getLabel());
+        
+        update();
+        setVisible(true);
+    }
+    
+    public class ModeleJTable extends DefaultTableModel {
+        
+        @Override
+        public boolean isCellEditable(int row, int column) { return false; }
+        @Override
+        public int getColumnCount() { return 3; }
+        @Override
+        public int getRowCount() { return rdv.getPrescriptions().size(); }
+
+        @Override
+        public String getColumnName(int column) {
+            switch(column) {
+                case MEDICAMENT : return "Médicament";
+                case DUREE : return "Durée (en jour)";
+                case POSOLOGIE : return "Posologie (par jour)";
+                default : return "NO DATA";
+            }
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            switch(column) {
+                case MEDICAMENT : return rdv.getPrescriptions().get(row).getMedicament();
+                case DUREE : return rdv.getPrescriptions().get(row).getDuree();
+                case POSOLOGIE : return rdv.getPrescriptions().get(row).getPosologie();
+                default: return "NO DATA";
+            }
+        }
+        
+    }
 }

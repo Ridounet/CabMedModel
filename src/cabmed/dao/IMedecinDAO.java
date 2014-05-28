@@ -10,5 +10,5 @@ public interface IMedecinDAO {
     public List<Medecin> getListMedecin();
     public boolean removeSpecialisationPourMedecin(Medecin med, int index);
     public boolean addSpecialisationAMedecin(Medecin medecin);
-    
+    public void getRdvMedecin(List<Medecin> listMedecin);
 }

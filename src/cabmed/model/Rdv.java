@@ -30,7 +30,7 @@ public class Rdv implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatutRdv statut;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
     private List<Prescription> prescriptions;
     

@@ -1,10 +1,29 @@
 package cabmed.manage.ihm.medecin;
 
+import cabmed.manage.ctrl.CtrlMedecin;
 import cabmed.model.Rdv;
 import javax.swing.JOptionPane;
+import cabmed.model.Patient;
+import cabmed.model.Medecin;
+import cabmed.model.StatutRdv;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-public class VueDossierPatient extends javax.swing.JFrame {
-
+public class VueDossierPatient extends javax.swing.JFrame implements cabmed.ressources.Observer {
+    
+    private CtrlMedecin ctrl;
+    private Patient patient;
+    private Medecin medecin;
+    private Rdv rdv;
+    private List<Rdv> listRdvAnciens;
+    
+    private static final int ID = 0;
+    private static final int MEDECIN = 1;
+    private static final int SPECIALISATION = 2;
+    private static final int DATE = 3;
+    private static final int HEURE = 4;
+    
     public VueDossierPatient() {
         initComponents();
         ztGeneralite.setText("Ce patient ne souffre d'aucun mal");
@@ -14,6 +33,12 @@ public class VueDossierPatient extends javax.swing.JFrame {
         ztPrenom.setText("Riduan");
         ztRegistreNat.setText("900329-435-25");
         ztSexe.setText("HOMME");
+    }
+
+    public VueDossierPatient(CtrlMedecin ctrlMedecin) {
+        this.ctrl = ctrlMedecin;
+        listRdvAnciens = new ArrayList<>();
+        initComponents();
     }
 
     @SuppressWarnings("unchecked")
@@ -43,6 +68,7 @@ public class VueDossierPatient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cabmed - Dossier patient");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Généralités");
@@ -54,33 +80,7 @@ public class VueDossierPatient extends javax.swing.JFrame {
         ztGeneralite.setRows(5);
         jScrollPane2.setViewportView(ztGeneralite);
 
-        tableRdvAncien.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Médecin", "Spécialisation", "Date", "Heure"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tableRdvAncien.setModel(new ModeleJTable());
         tableRdvAncien.getTableHeader().setReorderingAllowed(false);
         tableRdvAncien.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -88,18 +88,6 @@ public class VueDossierPatient extends javax.swing.JFrame {
             }
         });
         scrollTableEnCours1.setViewportView(tableRdvAncien);
-        if (tableRdvAncien.getColumnModel().getColumnCount() > 0) {
-            tableRdvAncien.getColumnModel().getColumn(0).setResizable(false);
-            tableRdvAncien.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tableRdvAncien.getColumnModel().getColumn(1).setResizable(false);
-            tableRdvAncien.getColumnModel().getColumn(1).setPreferredWidth(70);
-            tableRdvAncien.getColumnModel().getColumn(2).setResizable(false);
-            tableRdvAncien.getColumnModel().getColumn(2).setPreferredWidth(70);
-            tableRdvAncien.getColumnModel().getColumn(3).setResizable(false);
-            tableRdvAncien.getColumnModel().getColumn(3).setPreferredWidth(50);
-            tableRdvAncien.getColumnModel().getColumn(4).setResizable(false);
-            tableRdvAncien.getColumnModel().getColumn(4).setPreferredWidth(50);
-        }
 
         btCloseRdv.setText("Clôturer le rendez-vous");
         btCloseRdv.addActionListener(new java.awt.event.ActionListener() {
@@ -229,47 +217,16 @@ public class VueDossierPatient extends javax.swing.JFrame {
     }//GEN-END:initComponents
 
     private void btCloseRdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseRdvActionPerformed
-        
+        rdv.getPatient().setRemarques(ztGeneralite.getText());
+        ctrl.fermerDossier(rdv);
     }//GEN-LAST:event_btCloseRdvActionPerformed
 
     private void tableRdvAncienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRdvAncienMouseClicked
         if (evt.getClickCount() == 2) {
-            //Rdv rdv = tableRdvAncien.getSelectedRow();
-            JOptionPane.showMessageDialog(this, "Rdv selected: " + tableRdvAncien.getSelectedRow());
+            Rdv rdv = listRdvAnciens.get(tableRdvAncien.getSelectedRow());
+            ctrl.showVueRdv(rdv);
         }
     }//GEN-LAST:event_tableRdvAncienMouseClicked
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VueDossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VueDossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VueDossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VueDossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VueDossierPatient().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCloseRdv;
@@ -294,4 +251,72 @@ public class VueDossierPatient extends javax.swing.JFrame {
     private javax.swing.JTextField ztRegistreNat;
     private javax.swing.JTextField ztSexe;
     // End of variables declaration//GEN-END:variables
+
+    
+    public void showView(Rdv rendezVous) {
+        this.rdv = rendezVous;
+        this.patient = rdv.getPatient();
+        this.medecin = rdv.getMedecin();
+        ctrl.getRdvPatient(patient);
+        
+        // Remplissage des TextField
+        ztMutualite.setText(patient.getMutualite().getNom());
+        ztNom.setText(patient.getNom());
+        ztPrenom.setText(patient.getPrenom());
+        ztNumSecuriteSocial.setText(patient.getNumSecuSocial());
+        ztRegistreNat.setText(patient.getRegistreNat());
+        ztSexe.setText(patient.getSexe().toString());
+        ztGeneralite.setText(patient.getRemarques());
+        
+        // Préparation pour la JTable
+        listRdvAnciens = new ArrayList<>(); // Nouvelle liste
+        for (Rdv r : patient.getRdv()) { // Remplissage de la liste d'abord
+            if (r.getStatut() == StatutRdv.CLOTURE) {
+                listRdvAnciens.add(r);
+            }
+        }
+        
+        update();
+        setVisible(true);
+    }
+    
+    @Override
+    public void update() {
+        ((DefaultTableModel)tableRdvAncien.getModel()).fireTableDataChanged();
+    }
+    
+    public class ModeleJTable extends DefaultTableModel {
+
+        @Override
+        public boolean isCellEditable(int row, int column) { return false; }
+        @Override
+        public int getColumnCount() { return 5; }
+        @Override
+        public int getRowCount() { return listRdvAnciens.size(); }
+
+        @Override
+        public String getColumnName(int column) {
+            switch(column) {
+                case ID : return "ID";
+                case MEDECIN : return "Médecin";
+                case SPECIALISATION : return "Spécialisation";
+                case DATE : return "Date";
+                case HEURE : return "Heure";
+                default: return "NO DATA";
+            }
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            switch(column) {
+                case ID : return listRdvAnciens.get(row).getId();
+                case MEDECIN : return listRdvAnciens.get(row).getMedecin();
+                case SPECIALISATION : return listRdvAnciens.get(row).getTypeRdv().getLabel();
+                case DATE : return ctrl.getSdf().format(listRdvAnciens.get(row).getDateRdv());
+                case HEURE : return listRdvAnciens.get(row).getHeure().getLabel();
+                default: return "NO DATA";
+            }
+        }
+    }
+    
 }

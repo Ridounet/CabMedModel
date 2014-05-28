@@ -12,7 +12,7 @@ public class SpecialisationDAO implements ISpecialisationDAO{
     @Override
     public List<Specialisation> getListSpecialisation() {
         String sql = "SELECT s FROM Specialisation s WHERE s.visible = " + Constantes.VISIBLE;
-        List<Specialisation> listSpecialisation = new LinkedList<>();
+        List<Specialisation> listSpecialisation = new LinkedList<Specialisation>();
         try {
             return DAOMySQL.getEntityManager().createQuery(sql).getResultList();
         } catch (Exception ex) {

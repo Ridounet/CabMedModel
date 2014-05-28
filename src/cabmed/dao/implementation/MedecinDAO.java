@@ -5,6 +5,7 @@ import cabmed.model.Disponibilite;
 import cabmed.model.Jour;
 import cabmed.model.Medecin;
 import cabmed.model.Planning;
+import cabmed.model.Rdv;
 import cabmed.model.Specialisation;
 import cabmed.ressources.Constantes;
 import java.util.ArrayList;
@@ -51,14 +52,14 @@ public class MedecinDAO implements IMedecinDAO{
             return DAOMySQL.getEntityManager().createQuery(
                     "SELECT m FROM Medecin m WHERE m.visible = " + Constantes.VISIBLE).getResultList();
         } catch (Exception ex) {
-            return new ArrayList<>();
+            return new ArrayList<Medecin>();
         }
     }
 
     @Override
     public boolean addMedecin(Medecin medecin) {
         Planning planning = new Planning(medecin);
-        Map<Jour, Disponibilite> disponibilite = new HashMap<>();
+        Map<Jour, Disponibilite> disponibilite = new HashMap<Jour, Disponibilite>();
         disponibilite.put(Jour.LUNDI, new Disponibilite());
         disponibilite.put(Jour.MARDI, new Disponibilite());
         disponibilite.put(Jour.MERCREDI, new Disponibilite());
@@ -103,6 +104,17 @@ public class MedecinDAO implements IMedecinDAO{
         } catch(Exception e) {
             tx.rollback();
             return false;
+        }
+    }
+
+    @Override
+    public void getRdvMedecin(List<Medecin> listMedecin) {
+        try {
+            for (Medecin medecin : listMedecin) {
+                medecin.setRdv((List<Rdv>)DAOMySQL.getEntityManager().createQuery("SELECT r FROM Rdv r WHERE r.medecin = " + medecin).getResultList());
+            }
+        } catch (Exception e) {
+            
         }
     }
     

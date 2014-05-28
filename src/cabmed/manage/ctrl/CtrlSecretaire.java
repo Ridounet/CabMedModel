@@ -1,7 +1,7 @@
 package cabmed.manage.ctrl;
 
 import be.belgium.eid.exceptions.EIDException;
-import cabmed.manage.ihm.secretaire.VueHistoriquePatient;
+import cabmed.manage.ihm.secretaire.VueDossierPatient;
 import cabmed.manage.ihm.secretaire.VueModifRdv;
 import cabmed.manage.ihm.secretaire.VueRecherchePatient;
 import cabmed.manage.main.Facade;
@@ -13,7 +13,6 @@ import cabmed.model.Secretaire;
 import cabmed.model.Specialisation;
 import cabmed.ressources.EID;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -24,8 +23,13 @@ public class CtrlSecretaire implements ICtrlSecondaire {
     private final CtrlPrincipal ctrlPrincipal;
     private final Facade facade;
     private final Secretaire secretaire;
+    
+    private List<Medecin> listMedecin;
+    private List<Cp> listCp;
+    private List<Specialisation> listSpecialisation;
+    
     private VueRecherchePatient vueRecherchePatient;
-    private VueHistoriquePatient vueHistoriquePatient;
+    private VueDossierPatient vueDossierPatient;
     private VueModifRdv vueModifRdv;
     
     CtrlSecretaire(CtrlPrincipal ctrlPrincipal, Facade facade, Secretaire secretaire) {
@@ -35,8 +39,16 @@ public class CtrlSecretaire implements ICtrlSecondaire {
         me = this;
     }
     
+    private void initList() {
+        listSpecialisation = facade.getListSpecialisation();
+        listCp = facade.getListCp();
+        listMedecin = facade.getListMedecin();
+        facade.getRdvMedecin(listMedecin);
+    }
+
     @Override
     public void showVuePrincipale() {
+        initList();
         if (vueRecherchePatient == null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -52,23 +64,23 @@ public class CtrlSecretaire implements ICtrlSecondaire {
         }
     }
     
-    public void showHistoriquePatient(final Patient patient) {
-        if (vueHistoriquePatient == null) {
+    public void showVueDossierPatient(final Patient patient) {
+        if (vueDossierPatient == null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    vueHistoriquePatient = new VueHistoriquePatient(me);
-                    Facade.addObserver(vueHistoriquePatient);
-                    vueHistoriquePatient.showView(patient);
+                    vueDossierPatient = new VueDossierPatient(me);
+                    Facade.addObserver(vueDossierPatient);
+                    vueDossierPatient.showView(patient);
                 }
                 
             });
         } else {
-            vueHistoriquePatient.showView(patient);
+            vueDossierPatient.showView(patient);
         }
     }
     
-    public void showModifRdv(Rdv rdv) {
+    public void showVueModifRdv(Rdv rdv) {
         if (vueModifRdv == null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -82,9 +94,9 @@ public class CtrlSecretaire implements ICtrlSecondaire {
         }
     }
     
-    public List<Cp> getListCp() { return ctrlPrincipal.getListCp(); }
-    public List<Medecin> getListMedecin() { return facade.getListMedecin(); }
-    public List<Specialisation> getListSpecialisation() { return facade.getListSpecialisation(); }
+    public List<Medecin> getListMedecin() { return listMedecin; }
+    public List<Cp> getListCp() { return listCp; }
+    public List<Specialisation> getListSpecialisation() { return listSpecialisation; }
     public SimpleDateFormat getSdf() { return ctrlPrincipal.getSdf(); }
     
     public Patient lireCarte() {
@@ -101,7 +113,7 @@ public class CtrlSecretaire implements ICtrlSecondaire {
     public void savePatient(Patient patient) {
         if (facade.savePatient(patient)) {
             vueRecherchePatient.setVisible(false);
-            showHistoriquePatient(patient);
+            showVueDossierPatient(patient);
         } else {
             JOptionPane.showMessageDialog(vueRecherchePatient, 
                     "Une erreur est survenue pendant l'enregistrement!", 
@@ -119,12 +131,17 @@ public class CtrlSecretaire implements ICtrlSecondaire {
     
     public boolean updateRdv(Rdv rdv) {
         if (!facade.updateRdv(rdv)) {
-            JOptionPane.showMessageDialog(vueHistoriquePatient,
+            JOptionPane.showMessageDialog(vueDossierPatient,
                     "Une erreur est survenue lors de l'enregistrement du rendez-vous\nVeuillez ré-essayer",
                     "Erreur!", JOptionPane.ERROR_MESSAGE);
             return false;
         } else return true;
     }
+
+    
+    
+    
+    
     
     public boolean saveRdv(Rdv rdv) {
         Medecin med = rdv.getMedecin();
@@ -138,4 +155,5 @@ public class CtrlSecretaire implements ICtrlSecondaire {
             return false;
         }
     }
+
 }

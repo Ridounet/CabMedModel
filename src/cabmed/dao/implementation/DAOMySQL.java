@@ -5,6 +5,7 @@ import cabmed.dao.IMedecinDAO;
 import cabmed.dao.IPatientDAO;
 import cabmed.dao.IPersonnelDAO;
 import cabmed.dao.IPlanningDAO;
+import cabmed.dao.IRdvDAO;
 import cabmed.dao.ISpecialisationDAO;
 import cabmed.model.Administrateur;
 import cabmed.model.Adresse;
@@ -17,6 +18,7 @@ import cabmed.model.Mutualite;
 import cabmed.model.Patient;
 import cabmed.model.Personnel;
 import cabmed.model.Planning;
+import cabmed.model.Prescription;
 import cabmed.model.Rdv;
 import cabmed.model.Secretaire;
 import cabmed.model.Sexe;
@@ -24,6 +26,7 @@ import cabmed.model.Specialisation;
 import cabmed.model.StatutRdv;
 import cabmed.model.Tranche;
 import cabmed.ressources.Constantes;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +36,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO, IPatientDAO, IPlanningDAO {
+public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO, IPatientDAO, IPlanningDAO, IRdvDAO {
     
     private static DAOMySQL instance;
     
@@ -51,6 +54,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         personnelDAO = new PersonnelDAO();
         planningDAO = new PlanningDAO();
         specialisationDAO = new SpecialisationDAO();
+        rdvDAO = new RdvDAO();
         initDB();
     }
     
@@ -65,6 +69,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     private final IPersonnelDAO personnelDAO;
     private final IPlanningDAO planningDAO;
     private final ISpecialisationDAO specialisationDAO;
+    private final IRdvDAO rdvDAO;
     
     
     
@@ -235,12 +240,22 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     
     @Override
     public List<Rdv> getRdvPatient(Patient patient) {
-        return patientDAO.getRdvPatient(patient);
+        return rdvDAO.getRdvPatient(patient);
     }
     
     @Override
     public boolean updateRdv(Rdv rdv) {
-        return patientDAO.updateRdv(rdv);
+        return rdvDAO.updateRdv(rdv);
+    }
+    
+    @Override
+    public Rdv getRdvParId(int idRdv) {
+        return rdvDAO.getRdvParId(idRdv);
+    }
+    
+    @Override
+    public void getRdvMedecin(List<Medecin> listMedecin) {
+        medecinDAO.getRdvMedecin(listMedecin);
     }
     
     
@@ -263,6 +278,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         tx.commit();
 
         tx.begin();
+        p1.setRemarques("Ce patient est atteint d'un cancer du cerveau\nCe patient suit régulièrement un psychologue pour sa phobie de l'eau...");
         em.persist(i1); em.persist(m1); em.persist(i2); em.persist(m4); em.persist(a1);
         em.persist(p1); em.persist(s1); em.persist(m3); em.persist(s2); em.persist(m2);
         em.persist(s3); em.persist(i4); em.persist(i3); em.persist(s4);
@@ -290,8 +306,28 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
         tx.commit();
         
         tx.begin();
-        Rdv rdv1 = new Rdv(new Date(), p1, m1, sp1, StatutRdv.EN_COURS, Tranche.H0900);
-        em.persist(rdv1);
+        // Premier rdv clôturé mais sans prescription
+        Rdv rdv1 = new Rdv(new Date("18/02/2014"), p1, m4, sp1, StatutRdv.CLOTURE, Tranche.H1130);
+        // Deuxième rdv clôturé avec 3 prescriptions différentes
+        Rdv rdv2 = new Rdv(new Date("20/05/2014"), p1, m3, sp3, StatutRdv.CLOTURE, Tranche.H1500);
+        rdv2.setRemarque("Ce patient est Schysophrène");
+        List<Prescription> listPres1 = new ArrayList<Prescription>();
+        listPres1.add(new Prescription("Médicament 1", "Matin et soir", 4));
+        listPres1.add(new Prescription("Médicament 3", "4x par jout", 10));
+        listPres1.add(new Prescription("Médicament 7", "Avant de dormir", 2));
+        rdv2.setPrescriptions(listPres1);
+        // Troisième rdv clôturé avec 3 prescriptions différentes
+        Rdv rdv3 = new Rdv(new Date("10/05/2014"), p1, m2, sp2, StatutRdv.CLOTURE, Tranche.H1230);
+        rdv3.setRemarque("Maux de ventre");
+        List<Prescription> listPres2 = new ArrayList<Prescription>();
+        listPres2.add(new Prescription("Médicament 4", "2x/jour", 3));
+        listPres2.add(new Prescription("Médicament 9", "4x/jout", 7));
+        listPres2.add(new Prescription("Médicament 2", "Au réveil", 5));
+        rdv3.setPrescriptions(listPres2);
+        // Quatrième rdv en cours pour le jour au lancement de l'application
+        Rdv rdv4 = new Rdv(new Date(), p1, m1, sp1, StatutRdv.EN_COURS, Tranche.H0900);
+        
+        em.persist(rdv1); em.persist(rdv2); em.persist(rdv3); em.persist(rdv4);
         tx.commit();
         
         tx.begin();
@@ -317,7 +353,7 @@ public class DAOMySQL implements IMedecinDAO, IPersonnelDAO, ISpecialisationDAO,
     // -------------------------------------------------------------------------
     // -------------------------------- @Entity --------------------------------
     // -------------------------------------------------------------------------
-    private static final Map<Jour,Disponibilite> mapDisponibilite = new HashMap<>();
+    private static final Map<Jour,Disponibilite> mapDisponibilite = new HashMap<Jour,Disponibilite>();
     private static final Disponibilite dis1 = new Disponibilite(Tranche.H0900, Tranche.H1400);
     private static final Disponibilite dis2 = new Disponibilite(Tranche.H0900, Tranche.H1400);
     private static final Disponibilite dis3 = new Disponibilite(Tranche.H0900, Tranche.H1400);
